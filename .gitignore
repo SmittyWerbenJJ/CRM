@@ -10,3 +10,6 @@
 
 # 忽略 .idea 文件夹
 .idea
+
+# 忽略 target 文件夹
+target/
