@@ -1,3 +1,5 @@
+use crm;
+
 DROP TABLE IF EXISTS `tbl_user`;
 
 CREATE TABLE `tbl_user`

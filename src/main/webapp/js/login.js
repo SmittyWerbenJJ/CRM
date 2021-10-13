@@ -1,7 +1,14 @@
 $(function () {
 
-    // 给按钮点击绑定监听器
+    // 点击登录按钮进行登录验证
     $("#loginBtn").on("click", login)
+
+    // 按下回车进行登录验证
+    $(window).on("keydown", function (event) {
+        if (event.keyCode == 13) {
+            login()
+        }
+    })
 })
 
 
@@ -11,6 +18,7 @@ function login() {
         //发送请求
         $.ajax({
             url: "settings/user/login.do",
+            type: "post",
             dataType: "json",
             data: {
                 "loginAct": $("#userName").val(),

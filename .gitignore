@@ -13,3 +13,6 @@
 
 # 忽略 target 文件夹
 target/
+
+# 忽略 demo 文件
+test.js

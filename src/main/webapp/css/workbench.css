@@ -1,0 +1,49 @@
+.avatar {
+    display: inline-block;
+    position: relative;
+    width: 2.1rem;
+    height: 2.1rem;
+    text-align: center;
+    border: #dee2e6;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    line-height: 2.1rem;
+}
+
+
+.dropdown-menu {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border: none;
+}
+
+.dropdown-menu-animated {
+    position: absolute;
+    margin: 0;
+    transform:translate(0, -10px);
+    -webkit-transform:translate(0, -10px);
+    -webkit-animation-duration: .3s;
+    animation-duration: .3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    z-index: 1000;
+}
+
+#sidebar{
+    width: 300px;
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: hidden;
+    z-index: 6;
+}
+
+#workarea{
+    position: absolute;
+    top : 0px;
+    padding-left: 300px;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+}

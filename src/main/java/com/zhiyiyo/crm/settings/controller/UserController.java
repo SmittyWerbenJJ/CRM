@@ -5,6 +5,7 @@ import com.zhiyiyo.crm.settings.exception.LoginException;
 import com.zhiyiyo.crm.settings.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -26,7 +27,7 @@ public class UserController {
      * @return 登陆状态消息
      * @throws LoginException 登录失败异常
      */
-    @RequestMapping("/login.do")
+    @RequestMapping(value = "/login.do", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> login(HttpSession session, String loginAct, String loginPwd) throws LoginException {
         User user = userService.login(loginAct, loginPwd);
