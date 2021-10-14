@@ -8,6 +8,8 @@ import com.zhiyiyo.crm.utils.DateTimeUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 
@@ -41,5 +43,10 @@ public class UserServiceImpl implements UserService {
         // 验证 IP 地址
 
         return user;
+    }
+
+    @Override
+    public List<User> getUserList() {
+        return userDao.findAllUsers();
     }
 }

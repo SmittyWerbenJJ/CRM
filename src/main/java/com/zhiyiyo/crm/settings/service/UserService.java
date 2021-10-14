@@ -1,9 +1,10 @@
 package com.zhiyiyo.crm.settings.service;
 
+import java.util.List;
+
 import com.zhiyiyo.crm.settings.entity.User;
 
 import com.zhiyiyo.crm.settings.exception.LoginException;
-import org.springframework.stereotype.Service;
 
 public interface UserService {
     /**
@@ -14,4 +15,11 @@ public interface UserService {
      * @return 如果登录成功则将用户返回，否则抛出异常
      */
     User login(String loginAct, String loginPwd) throws LoginException;
+
+
+    /**
+     * 获取用户列表
+     * @return 用户列表
+     */
+    List<User> getUserList();
 }

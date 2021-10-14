@@ -26,7 +26,7 @@ function login() {
             }
         }).done(function (data) {
             if (data.success) {
-                location.href = "workbench/index.html"
+                location.href = "workbench/index.jsp"
             } else {
                 $("#msg").text(data.msg)
                 $("#tip").css("display", "block")
@@ -47,18 +47,18 @@ function verifyParams() {
     var userName = $("#userName").val()
     if (!/^\S+$/.test(userName)) {
         msg.push("用户名非法");
-        $("#userName").attr("class", "form-control is-invalid")
+        $("#userName").addClass("is-invalid")
     } else {
-        $("#userName").attr("class", "form-control")
+        $("#userName").removeClass("is-invalid")
     }
 
     // 验证密码，密码 6 到 20 位，其中可以包含数字、字母和下划线
     var password = $("#password").val()
     if (!/^(\w){6,20}$/.test(password)) {
         msg.push("密码非法")
-        $("#password").attr("class", "form-control is-invalid")
+        $("#password").addClass("is-invalid")
     } else {
-        $("#password").attr("class", "form-control")
+        $("#password").removeClass("is-invalid")
     }
 
     // 显示提示信息

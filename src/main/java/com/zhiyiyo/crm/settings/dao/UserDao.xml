@@ -24,4 +24,20 @@
     <insert id="insertUser">
         insert into tbl_user value (#{id}, #{loginAct}, #{name}, #{loginPwd}, #{email}, #{expireTime}, #{lockState}, #{deptno}, #{allowIps}, #{createTime}, #{createBy}, #{editTime}, #{editBy})
     </insert>
+
+    <select id="findAllUsers" resultType="User">
+        select id,
+               loginAct,
+               name,
+               email,
+               expireTime,
+               lockState,
+               deptno,
+               allowIps,
+               createTime,
+               createBy,
+               editTime,
+               editBy
+        from tbl_user
+    </select>
 </mapper>

@@ -23,9 +23,10 @@
     <!-- 创建 dao 对象-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-        <property name="basePackage" value="com.zhiyiyo.crm.settings.dao"/>
+        <property name="basePackage" value="com.zhiyiyo.crm.settings.dao,com.zhiyiyo.crm.workbench.dao" />
     </bean>
 
     <!-- 创建 Service 对象-->
     <context:component-scan base-package="com.zhiyiyo.crm.settings.service"/>
+    <context:component-scan base-package="com.zhiyiyo.crm.workbench.service"/>
 </beans>

@@ -58,5 +58,6 @@
     <filter-mapping>
         <filter-name>loginFilter</filter-name>
         <url-pattern>*.html</url-pattern>
+        <!--<url-pattern>*.jsp</url-pattern>-->
     </filter-mapping>
 </web-app>

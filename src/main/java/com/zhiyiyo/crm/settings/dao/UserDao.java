@@ -1,5 +1,7 @@
 package com.zhiyiyo.crm.settings.dao;
 
+import java.util.List;
+
 import com.zhiyiyo.crm.settings.entity.User;
 
 import org.apache.ibatis.annotations.Param;
@@ -20,4 +22,10 @@ public interface UserDao {
      * @return 受影响的行数
      */
     int insertUser(User user);
+
+    /**
+     * 查询所有用户
+     * @return 用户列表
+     */
+    List<User> findAllUsers();
 }
