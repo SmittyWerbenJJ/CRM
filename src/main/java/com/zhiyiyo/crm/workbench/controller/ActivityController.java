@@ -10,6 +10,7 @@ import com.zhiyiyo.crm.workbench.service.ActivityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -35,7 +36,7 @@ public class ActivityController {
      * @param activity 市场活动
      * @return 插入是否成功 json 数据
      */
-    @RequestMapping(value = "/add.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/addActivity.do", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> addActivity(HttpSession session, Activity activity) {
         // 更新市场活动的值
@@ -60,8 +61,20 @@ public class ActivityController {
     @RequestMapping("/getActivities.do")
     @ResponseBody
     public PaginationVo<Activity> getActivities(HttpSession session, Integer pageNum, Integer pageSize, String name, String owner,
-            String startDate, String endDate) {
+                                                String startDate, String endDate) {
         return activityService.getActivities(pageNum, pageSize, name, owner, startDate, endDate);
+    }
+
+
+    @RequestMapping(value = "/deleteActivities.do", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> deleteActivities(@RequestParam("ids[]") String[] ids) {
+        boolean success = activityService.deleteActivity(ids);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", success);
+
+        return data;
     }
 
 }

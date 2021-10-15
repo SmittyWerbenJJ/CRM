@@ -2,6 +2,7 @@ package com.zhiyiyo.crm.workbench.service.impl;
 
 import com.zhiyiyo.crm.vo.PaginationVo;
 import com.zhiyiyo.crm.workbench.dao.ActivityDao;
+import com.zhiyiyo.crm.workbench.dao.ActivityRemarkDao;
 import com.zhiyiyo.crm.workbench.entity.Activity;
 import com.zhiyiyo.crm.workbench.service.ActivityService;
 import org.springframework.stereotype.Service;
@@ -9,13 +10,15 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class ActivityServiceImpl implements ActivityService {
     @Resource
     private ActivityDao activityDao;
+
+    @Resource
+    private ActivityRemarkDao activityRemarkDao;
 
     @Override
     public boolean addActivity(Activity activity) {
@@ -28,12 +31,16 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public boolean deleteActivity(List<String> idList) {
-        return activityDao.delete(idList) == idList.size();
+    public boolean deleteActivity(String[] ids) {
+        Integer remarkCount = activityRemarkDao.queryRemarkCountByIds(ids);
+        Integer deleteRemarkCount = activityRemarkDao.deleteRemarkByIds(ids);
+        Integer deleteActivityCount = activityDao.delete(ids);
+
+        return deleteActivityCount.equals(ids.length) && remarkCount.equals(deleteRemarkCount);
     }
 
     @Override
-    public PaginationVo<Activity> getActivities(Integer pageNum, Integer pageSize,  String name, String owner, String startDate, String endDate) {
+    public PaginationVo<Activity> getActivities(Integer pageNum, Integer pageSize, String name, String owner, String startDate, String endDate) {
         int start = (pageNum - 1) * pageSize;
         Map<String, Object> map = new HashMap<>();
         map.put("start", start);

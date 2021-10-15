@@ -24,9 +24,9 @@ public interface ActivityService {
     /**
      * 删除多条市场活动
      *
-     * @param idList 市场活动列表
+     * @param ids 市场活动列表
      */
-    boolean deleteActivity(List<String> idList);
+    boolean deleteActivity(String[] ids);
 
     /**
      * 根据条件查询市场活动

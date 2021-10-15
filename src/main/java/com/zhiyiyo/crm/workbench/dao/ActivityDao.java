@@ -24,10 +24,10 @@ public interface ActivityDao {
     /**
      * 删除多条市场活动记录
      *
-     * @param idList 市场活动 id 列表
+     * @param ids 市场活动 id 列表
      * @return 受影响的行数
      */
-    int delete(List<String> idList);
+    Integer delete(String[] ids);
 
     /**
      * 查询符合匹配条件的市场活动总数

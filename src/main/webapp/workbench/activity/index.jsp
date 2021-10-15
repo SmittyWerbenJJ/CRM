@@ -91,18 +91,18 @@
         <!-- 增删改操作按钮组 -->
         <h3 class="mt-7 mb-4">数据管理</h3>
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-primary" id="addActivityBtn"><i class="bi bi-plus-lg me-1"></i>增加
+            <button type="button" class="btn btn-primary" id="addBtn"><i class="bi bi-plus-lg me-1"></i>增加
             </button>
             <button type="button" class="btn btn-light"><i class="bi bi-pencil me-1"></i>修改</button>
-            <button type="button" class="btn btn-danger"><i class="bi bi-dash-lg me-1"></i>删除</button>
+            <button type="button" class="btn btn-danger" id="deleteBtn"><i class="bi bi-dash-lg me-1"></i>删除</button>
         </div>
 
         <!-- 查询结果 -->
-        <div class="mt-4">
+        <div class="mt-3">
             <table class="table table-hover table-striped" id="activityTable">
                 <thead>
                     <tr>
-                        <td><input class="form-check-input" type="checkbox" id="selectAllCheckBox" /></td>
+                        <td><input class="form-check-input" type="checkbox" id="qx" /></td>
                         <td>名称</td>
                         <td>所有者</td>
                         <td>开始日期</td>
