@@ -2,6 +2,7 @@ package com.zhiyiyo.crm.workbench.service;
 
 import com.zhiyiyo.crm.vo.PaginationVo;
 import com.zhiyiyo.crm.workbench.entity.Activity;
+import com.zhiyiyo.crm.workbench.entity.ActivityRemark;
 
 import java.util.List;
 
@@ -41,4 +42,41 @@ public interface ActivityService {
      */
     PaginationVo<Activity> getActivities(Integer pageNum, Integer pageSize, String name, String owner, String startDate,
             String endDate);
+
+
+    /**
+     * 根据 id 获取一条市场活动信息
+     * @param id 市场活动的 id，市场活动的 owner 是用户的 UUID
+     * @return 市场活动
+     */
+    Activity getActivity(String id);
+
+    /**
+     * 根据 id 获取一条市场活动信息，市场活动的 owner 是用户名
+     * @param id 市场活动的 id
+     * @return 市场活动
+     */
+    Activity getActivityById(String id);
+
+
+    /**
+     * 通过市场活动的 id 获取评价列表
+     * @param id 市场活动 id
+     * @return 评价列表
+     */
+    List<ActivityRemark> getRemarksByAId(String id);
+
+    /**
+     * 添加市场活动的评论
+     * @param remark 评论
+     * @return 添加是否成功
+     */
+    boolean addRemark(ActivityRemark remark);
+
+    /**
+     * 更新市场活动评论
+     * @param remark 评论
+     * @return 更新是否成功
+     */
+    boolean updateRemark(ActivityRemark remark);
 }

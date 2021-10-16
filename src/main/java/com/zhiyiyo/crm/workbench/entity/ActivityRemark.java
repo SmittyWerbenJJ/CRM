@@ -7,7 +7,6 @@ public class ActivityRemark {
     String createBy;
     String editTime;
     String editBy;
-    String editFlag;
     String activityId;
 
     public String getId() {
@@ -56,14 +55,6 @@ public class ActivityRemark {
 
     public void setEditBy(String editBy) {
         this.editBy = editBy;
-    }
-
-    public String getEditFlag() {
-        return editFlag;
-    }
-
-    public void setEditFlag(String editFlag) {
-        this.editFlag = editFlag;
     }
 
     public String getActivityId() {

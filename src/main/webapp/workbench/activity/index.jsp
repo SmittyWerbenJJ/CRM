@@ -93,7 +93,7 @@
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
             <button type="button" class="btn btn-primary" id="addBtn"><i class="bi bi-plus-lg me-1"></i>增加
             </button>
-            <button type="button" class="btn btn-light"><i class="bi bi-pencil me-1"></i>修改</button>
+            <button type="button" class="btn btn-light" id="editBtn"><i class="bi bi-pencil me-1"></i>修改</button>
             <button type="button" class="btn btn-danger" id="deleteBtn"><i class="bi bi-dash-lg me-1"></i>删除</button>
         </div>
 
@@ -187,6 +187,73 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">关闭</button>
                         <button type="button" class="btn btn-primary" id="add-modalBtn">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 修改市场活动模态框 -->
+        <div class="modal fade" id="editActivityModal" tabindex="-1" aria-labelledby="editActivityModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editActivityModalLabel">修改市场活动</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="need-validation" id="edit-form">
+                            <input type="hidden" name="edit-id">
+                            <div class="row gx-7 gy-4 p-3">
+                                <div class="col-sm-6">
+                                    <label for="edit-owner" class="form-label">所有者</label>
+                                    <select class="form-select" name="owner" id="edit-owner" required>
+
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        请选择所有者
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="edit-name" class="form-label">名称</label>
+                                    <input type="text" class="form-control" id="edit-name" required>
+                                    <div class="invalid-feedback">
+                                        请填入市场活动名称
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="edit-start-date" class="form-label">开始日期</label>
+                                    <input type="text" class="form-control time bg-white" id="edit-start-date" required
+                                        autocomplete="off">
+                                    <div class="invalid-feedback">
+                                        请选择开始日期
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="edit-end-date" class="form-label">结束日期</label>
+                                    <input type="text" class="form-control time bg-white" id="edit-end-date" required
+                                        autocomplete="off">
+                                    <div class="invalid-feedback">
+                                        请选择结束日期
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="edit-cost" class="form-label">成本</label>
+                                    <input type="text" class="form-control" id="edit-cost" required>
+                                    <div class="invalid-feedback">
+                                        请填写成本
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <label for="edit-description" class="form-label">详细信息（选填）</label>
+                                    <textarea class="form-control" id="edit-description"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" id="update-modalBtn">更新</button>
                     </div>
                 </div>
             </div>

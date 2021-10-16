@@ -7,7 +7,6 @@ CREATE TABLE `tbl_activity_remark` (
   `createBy` varchar(255) DEFAULT NULL,
   `editTime` char(19) DEFAULT NULL,
   `editBy` varchar(255) DEFAULT NULL,
-  `editFlag` char(1) DEFAULT NULL COMMENT '是否修改标志，0表示未修改，1表示已修改',
   `activityId` char(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -20,7 +19,6 @@ insert into
     `createBy`,
     `editTime`,
     `editBy`,
-    `editFlag`,
     `activityId`
   )
 values
@@ -31,7 +29,6 @@ values
     '张三',
     '2021-10-15 02:24:37',
     '张三',
-    '0',
     '4c33a084fe044646b631390280033c0d'
   ),
   (
@@ -41,7 +38,6 @@ values
     '李四',
     NULL,
     NULL,
-    '0',
     '4c33a084fe044646b631390280033c0d'
   ),
   (
@@ -51,7 +47,6 @@ values
     '之一Yo',
     NULL,
     NULL,
-    '0',
     '4c33a084fe044646b631390280033c0d'
   ),
   (
@@ -61,6 +56,5 @@ values
     '李四',
     NULL,
     NULL,
-    '0',
     '4c33a084fe044646b631390280033c0e'
   );

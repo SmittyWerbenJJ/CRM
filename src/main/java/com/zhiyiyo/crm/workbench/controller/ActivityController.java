@@ -6,12 +6,14 @@ import com.zhiyiyo.crm.utils.DateTimeUtil;
 import com.zhiyiyo.crm.utils.UUIDUtil;
 import com.zhiyiyo.crm.vo.PaginationVo;
 import com.zhiyiyo.crm.workbench.entity.Activity;
+import com.zhiyiyo.crm.workbench.entity.ActivityRemark;
 import com.zhiyiyo.crm.workbench.service.ActivityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -60,11 +62,10 @@ public class ActivityController {
 
     @RequestMapping("/getActivities.do")
     @ResponseBody
-    public PaginationVo<Activity> getActivities(HttpSession session, Integer pageNum, Integer pageSize, String name, String owner,
-                                                String startDate, String endDate) {
+    public PaginationVo<Activity> getActivities(HttpSession session, Integer pageNum, Integer pageSize, String name,
+            String owner, String startDate, String endDate) {
         return activityService.getActivities(pageNum, pageSize, name, owner, startDate, endDate);
     }
-
 
     @RequestMapping(value = "/deleteActivities.do", method = RequestMethod.POST)
     @ResponseBody
@@ -73,6 +74,80 @@ public class ActivityController {
 
         Map<String, Object> data = new HashMap<>();
         data.put("success", success);
+
+        return data;
+    }
+
+    @RequestMapping("/getUserListAndActivity.do")
+    @ResponseBody
+    public Map<String, Object> getUserListAndActivity(String id) {
+        List<User> userList = userService.getUserList();
+        Activity activity = activityService.getActivity(id);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("userList", userList);
+        data.put("activity", activity);
+
+        return data;
+    }
+
+    @RequestMapping(value = "/updateActivity.do", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updateActivity(HttpSession session, Activity activity) {
+        activity.setEditTime(DateTimeUtil.getSysTime());
+        activity.setEditBy(((User) session.getAttribute("user")).getName());
+
+        boolean success = activityService.updateActivity(activity);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", success);
+
+        return data;
+    }
+
+    @RequestMapping("/showDetails.do")
+    public ModelAndView showDetails(String id) {
+        ModelAndView mv = new ModelAndView("/workbench/activity/details.jsp");
+        mv.addObject("activity", activityService.getActivityById(id));
+
+        return mv;
+    }
+
+    /**
+     * 通过市场活动的 id 获取评论列表
+     *
+     * @param id 市场活动的 id
+     * @return 评论列表
+     */
+    @RequestMapping("/getRemarksByAId.do")
+    @ResponseBody
+    public List<ActivityRemark> getRemarksByAId(String id) {
+        return activityService.getRemarksByAId(id);
+    }
+
+    @RequestMapping(value = "/addRemark.do", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> addRemark(HttpSession session, ActivityRemark remark) {
+        remark.setId(UUIDUtil.getUUID());
+        remark.setCreateTime(DateTimeUtil.getSysTime());
+        remark.setCreateBy(((User) session.getAttribute("user")).getName());
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", activityService.addRemark(remark));
+        data.put("remark", remark);
+
+        return data;
+    }
+
+    @RequestMapping(value = "/updateRemark.do", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updateRemark(HttpSession session, ActivityRemark remark) {
+        remark.setEditBy(((User) session.getAttribute("user")).getName());
+        remark.setEditTime(DateTimeUtil.getSysTime());
+        
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", activityService.updateRemark(remark));
+        data.put("remark", remark);
 
         return data;
     }

@@ -27,7 +27,9 @@
             startDate=#{startDate},
             endDate=#{endDate},
             cost=#{cost},
-            description=#{description}
+            description=#{description},
+            editTime = #{editTime},
+            editBy= #{editBy}
         where id = #{id}
     </update>
 
@@ -80,5 +82,39 @@
         </where>
         order by a.createTime desc
         limit #{start},#{pageSize}
+    </select>
+
+    <select id="queryActivity" resultType="Activity">
+        select id,
+               owner,
+               name,
+               startDate,
+               endDate,
+               cost,
+               description,
+               createTime,
+               createBy,
+               editTime,
+               editBy
+        from tbl_activity
+        where id = #{id}
+    </select>
+
+    <select id="queryActivityById" resultType="Activity">
+        select a.id,
+               u.name as owner,
+               a.name,
+               a.startDate,
+               a.endDate,
+               a.cost,
+               a.description,
+               a.createTime,
+               a.createBy,
+               a.editTime,
+               a.editBy
+        from tbl_activity a
+                 join tbl_user u
+                      on a.owner = u.id
+        where a.id = #{id}
     </select>
 </mapper>

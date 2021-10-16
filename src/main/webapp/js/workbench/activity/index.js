@@ -129,8 +129,89 @@ $(function () {
                 showToast(data.success, "删除所有选中的市场活动")
             })
         }
-
     })
+
+
+    // 修改按钮点击事件
+    $("#editBtn").on("click", function () {
+        var dx = $("input.dx:checked")
+
+        if (dx.length == 0) {
+            alert("请选择一项市场活动")
+        } else if (dx.length > 1) {
+            alert("一次只能修改一项市场活动")
+        } else {
+            $("#editActivityModal").modal("show")
+
+            // 市场活动的 id
+            var id = dx.val()
+
+            // 发送请求来获取用户列表和市场活动信息
+            $.ajax({
+                url: "workbench/activity/getUserListAndActivity.do",
+                dataType: "json",
+                data: {
+                    id
+                }
+            }).done(function (data) {
+                let html = '<option></option>'
+                for (const user of data.userList) {
+                    html += `<option value='${user.id}'>${user.name}</option>`
+                }
+
+                $("#edit-owner").html(html)
+                $("#edit-owner").val(data.activity.owner)
+                $("#edit-name").val(data.activity.name)
+                $("#edit-start-date").val(data.activity.startDate)
+                $("#edit-end-date").val(data.activity.endDate)
+                $("#edit-cost").val(data.activity.cost)
+                $("#edit-description").val(data.activity.description)
+
+            })
+        }
+    })
+
+
+    // 更新按钮点击事件
+    $("#update-modalBtn").on("click", function () {
+        $.ajax({
+            url: "workbench/activity/updateActivity.do",
+            dataType: "json",
+            type: "post",
+            data: {
+                id: $("input.dx:checked").val(),
+                owner: $("#edit-owner").val(),
+                name: $("#edit-name").val(),
+                startDate: $("#edit-start-date").val(),
+                endDate: $("#edit-end-date").val(),
+                cost: $("#edit-cost").val(),
+                description: $("#edit-description").val()
+            }
+        }).done(function (data) {
+            $("#editActivityModal").modal("hide")
+            showToast(data.success, "修改市场活动信息")
+
+            if (data.success) {
+                // 获取当前页码
+                var pageNum = parseInt($("li.active > a").text())
+                console.log(pageNum);
+                getActivities(pageNum, pageSize, false)
+
+            }
+        })
+    })
+
+    // 点击市场活动名字时发出请求
+    //$("#activityBody").on("click", "a", function () {
+    //    var id = $(this).prop("id").substring(2);
+//
+    //    $.ajax({
+    //        url: "workbench/activity/showDetails.do",
+    //        data: {
+    //            id
+    //        },
+    //    })
+    //})
 
 })
 
@@ -164,8 +245,8 @@ function getActivities(pageNum, pageSize, isCreatePagination = true) {
         for (const activity of data.dataList) {
             html += `
             <tr>
-                <td><input type="checkbox" class="form-check-input dx" value=${activity.id} /></td>
-                <td>${activity.name}</td>
+                <td><input type="checkbox" class="form-check-input dx" value="${activity.id}" /></td>
+                <td><a href="javascript:void(0)" class="text-decoration-none" onclick="location.href='workbench/activity/showDetails.do?id=${activity.id}'">${activity.name}</a></td>
                 <td>${activity.owner}</td>
                 <td>${activity.startDate}</td>
                 <td>${activity.endDate}</td>
@@ -176,7 +257,7 @@ function getActivities(pageNum, pageSize, isCreatePagination = true) {
         $("#activityBody").html(html)
 
         if (isCreatePagination) {
-            createPagination(data.count, pageSize)
+            createPagination(data.count, pageSize, pageNum)
         }
     })
 }
@@ -186,12 +267,13 @@ function getActivities(pageNum, pageSize, isCreatePagination = true) {
  * 创建分页部件
  * @param {int} count 总条数
  * @param {int} pageSize 每页显示的条数
+ * @param {int} pageNum 当前页码
  */
-function createPagination(count, pageSize) {
+function createPagination(count, pageSize, pageNum = 1) {
     $('#activityPage').Pagination({
         size: count,
         pageShow: 5,
-        page: 1,
+        page: pageNum,
         limit: pageSize,
     }, function (obj) {
         // 启用/禁用上一个按钮

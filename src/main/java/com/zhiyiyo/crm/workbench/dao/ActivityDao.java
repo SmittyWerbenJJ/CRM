@@ -11,15 +11,7 @@ public interface ActivityDao {
      * @param activity 市场活动
      * @return 受影响的行数
      */
-    int insert(Activity activity);
-
-    /**
-     * 更新市场活动信息
-     *
-     * @param activity 市场活动
-     * @return 受影响的行数
-     */
-    int update(Activity activity);
+    Integer insert(Activity activity);
 
     /**
      * 删除多条市场活动记录
@@ -42,4 +34,25 @@ public interface ActivityDao {
      * @return 符合匹配条件的分页查询结果
      */
     List<Activity> queryActivities(Map<String, Object> map);
+
+    /**
+     * 根据 id 获取一条市场活动信息，此时返回的 owner 是 UUID 序号而不是名字
+     *
+     * @return 市场活动信息
+     */
+    Activity queryActivity(String id);
+
+    /**
+     * 根据 id 获取一条市场活动信息，此时返回的 owner 是名字而不是 UUID 序号
+     *
+     * @return 市场活动信息
+     */
+    Activity queryActivityById(String id);
+
+    /**
+     * 更新市场活动信息
+     * @param activity 市场活动信息
+     * @return 受影响的行数
+     */
+    Integer update(Activity activity);
 }
