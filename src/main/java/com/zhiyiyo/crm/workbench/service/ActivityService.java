@@ -79,4 +79,11 @@ public interface ActivityService {
      * @return 更新是否成功
      */
     boolean updateRemark(ActivityRemark remark);
+
+    /**
+     * 删除一条市场活动备注
+     * @param id 备注的 id
+     * @return 删除是否成功
+     */
+    boolean deleteRemark(String id);
 }

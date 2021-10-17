@@ -26,7 +26,7 @@
 </head>
 
 <body>
-    <div class="px-6 pt-9">
+    <div class="px-8 pt-9">
         <div class="d-flex">
             <h2>市场活动列表</h2>
 
@@ -51,33 +51,29 @@
 
         <form class="row gx-3 gy-2 align-items-center">
             <div class="col-sm-4 col-lg-3">
-                <label class="visually-hidden" for="search-name">名称</label>
                 <div class="input-group">
-                    <div class="input-group-text">名称</div>
+                    <label class="input-group-text" for="search-name">名称</label>
                     <input type="text" class="form-control" id="search-name">
                 </div>
             </div>
 
             <div class="col-sm-4 col-lg-3">
-                <label class="visually-hidden" for="search-username">Username</label>
                 <div class="input-group">
-                    <div class="input-group-text">所有者</div>
+                    <label class="input-group-text" for="search-owner">所有者</label>
                     <input type="text" class="form-control" id="search-owner">
                 </div>
             </div>
 
             <div class="col-sm-4 col-lg-3">
-                <label class="visually-hidden" for="search-start-date">Username</label>
                 <div class="input-group">
-                    <div class="input-group-text">开始日期</div>
+                    <label class="input-group-text" for="search-start-date">开始日期</label>
                     <input type="text" class="form-control time bg-white" id="search-start-date" autocomplete="off">
                 </div>
             </div>
 
             <div class="col-sm-4 col-lg-3">
-                <label class="visually-hidden" for="search-end-date">Username</label>
                 <div class="input-group">
-                    <div class="input-group-text">结束日期</div>
+                    <label class="input-group-text" for="search-end-date">结束日期</label>
                     <input type="text" class="form-control time bg-white" id="search-end-date" autocomplete="off">
                 </div>
             </div>

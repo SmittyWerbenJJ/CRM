@@ -77,7 +77,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="javascript:void(0)" class="nav-link link-dark" target="workareaFrame">
+                    <a href="workbench/clue/index.jsp" class="nav-link link-dark" target="workareaFrame">
                         <i class="bi bi-search me-2 mb-1"></i>
                         线索
                     </a>

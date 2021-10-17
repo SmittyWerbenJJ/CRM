@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div class="px-6 pt-9">
+    <div class="px-8 pt-9">
         <div class="d-flex">
             <h2>市场活动详细信息</h2>
 
@@ -35,16 +35,10 @@
             </div>
         </div>
 
-        <hr>
-
-        <div class="card mt-5">
+        <div class="card overflow-hidden mt-5">
             <input type="hidden" id="hidden-activity-id" value="${activity.id}">
-            <div class="card-header d-flex">
-                <h4 class="pt-2">详细信息</h4>
-                <button class="btn btn-primary ms-auto">
-                    <i class="bi bi-pencil me-1"></i>
-                    编辑
-                </button>
+            <div class="card-header">
+                <h4>详细信息</h4>
             </div>
 
             <div class="card-body">
@@ -119,39 +113,36 @@
                     </ul>
                 </div>
             </div>
+            <div class="text-end card-footer">
+                <button type="submit" class="btn btn-primary">编辑信息</button>
+            </div>
         </div>
 
-        <!-- 评论列表 -->
-        <div id="comments" class="mt-8">
-            <h4 class="mb-4 pt-5 ps-5">评论</h4>
-            <div class="comment-body p-5">
+        <!-- 评论 -->
+        <div class="card overflow-hidden mt-7">
+            <div class="card-header">
+                <h4>评论列表</h4>
+            </div>
 
-                <!-- 用户评论 -->
-                <div class="mb-3" id="comment-list">
-
-                </div>
-
-                <!-- 提交评论区域 -->
-                <div>
-                    <img class="avatar me-2" src="image/avatar.png">
-                    之一Yo
-                    <div class="mt-4">
-                        <form>
-                            <textarea class="form-control" data-toggle="autosize" placeholder="快来吐槽一波吧~" rows="3"
-                                id="commentArea"></textarea>
-                            <button class="btn btn-primary mt-3" type="button" id="addCommentBtn">提交</button>
-                        </form>
-                    </div>
-                </div>
+            <!-- 用户评论列表 -->
+            <div class="list-group rounded-0" id="comment-list">
 
             </div>
+
+            <!-- 发表评论 -->
+            <div class="list-group py-6 px-6">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="快来吐槽一波吧~" id="commentInput">
+                    <button class="btn btn-primary" type="button" id="addCommentBtn">发送</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <!-- 编辑用户评论模态框 -->
     <div class="modal fade" id="edit-comment-modal" tabindex="-1" aria-labelledby="editCommentModalLabel"
         aria-hidden="true">
-        <input type="hidden" id="hidden-remark-id">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

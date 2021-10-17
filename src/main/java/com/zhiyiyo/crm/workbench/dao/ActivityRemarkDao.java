@@ -43,4 +43,11 @@ public interface ActivityRemarkDao {
      * @return 受影响的行数
      */
     Integer updateRemark(ActivityRemark remark);
+
+    /**
+     * 删除市场活动备注
+     * @param id 备注的 id
+     * @return 受影响的行数
+     */
+    Integer deleteRemark(String id);
 }

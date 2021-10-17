@@ -63,7 +63,7 @@ public class ActivityController {
     @RequestMapping("/getActivities.do")
     @ResponseBody
     public PaginationVo<Activity> getActivities(HttpSession session, Integer pageNum, Integer pageSize, String name,
-            String owner, String startDate, String endDate) {
+                                                String owner, String startDate, String endDate) {
         return activityService.getActivities(pageNum, pageSize, name, owner, startDate, endDate);
     }
 
@@ -144,7 +144,7 @@ public class ActivityController {
     public Map<String, Object> updateRemark(HttpSession session, ActivityRemark remark) {
         remark.setEditBy(((User) session.getAttribute("user")).getName());
         remark.setEditTime(DateTimeUtil.getSysTime());
-        
+
         Map<String, Object> data = new HashMap<>();
         data.put("success", activityService.updateRemark(remark));
         data.put("remark", remark);
@@ -152,4 +152,12 @@ public class ActivityController {
         return data;
     }
 
+    @RequestMapping(value = "/deleteRemark.do", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> deleteRemark(String id) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", activityService.deleteRemark(id));
+
+        return data;
+    }
 }
