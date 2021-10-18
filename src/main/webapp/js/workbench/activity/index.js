@@ -201,18 +201,6 @@ $(function () {
         })
     })
 
-    // 点击市场活动名字时发出请求
-    //$("#activityBody").on("click", "a", function () {
-    //    var id = $(this).prop("id").substring(2);
-//
-    //    $.ajax({
-    //        url: "workbench/activity/showDetails.do",
-    //        data: {
-    //            id
-    //        },
-    //    })
-    //})
-
 })
 
 
@@ -227,8 +215,8 @@ function getActivities(pageNum, pageSize, isCreatePagination = true) {
     // 取消全选状态
     $("#qx").prop("checked", false)
 
-    var name = $("#hidden-name").val()
-    var owner = $("#hidden-owner").val()
+    var name = $("#hidden-name").val().trim()
+    var owner = $("#hidden-owner").val().trim()
     var startDate = $("#hidden-startDate").val()
     var endDate = $("#hidden-endDate").val()
 

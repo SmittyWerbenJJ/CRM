@@ -39,4 +39,10 @@ public class UserController {
         data.put("msg", "登录成功");
         return data;
     }
+
+    @RequestMapping("/logout.do")
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
+        return "redirect:/login.html";
+    }
 }

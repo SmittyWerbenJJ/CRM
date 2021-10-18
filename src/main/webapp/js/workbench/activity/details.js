@@ -1,4 +1,13 @@
 $(function () {
+    // 添加日历
+    $(".time").datetimepicker({
+        minView: "month",
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayBtn: true,
+        pickerPosition: "bottom-left"
+    });
 
     // 发送获取评论列表的请求
     $.ajax({
@@ -117,6 +126,47 @@ $(function () {
 
     })
 
+
+    // 点击编辑按钮弹出对话框
+    $("#editActivityBtn").on("click", function () {
+        $("editActivityModal").modal("show");
+
+        // 发出获取用户列表的请求
+        $.ajax({
+            url: "workbench/activity/getUserList.do",
+            dataType: "json"
+        }).done(function (data) {
+            let html = '<option></option>'
+            for (const user of data) {
+                html += `<option value="${user.id}">${user.name}</option>`
+            }
+            $("#edit-owner").html(html);
+        })
+
+    });
+
+    // 删除市场活动
+    $("#deleteActivityBtn").on("click", function () {
+        if (!confirm("确定删除这条市场活动信息吗？")) {
+            return
+        }
+
+        $.ajax({
+            url: "workbench/activity/deleteActivities.do",
+            dataType: "json",
+            type: "post",
+            data: {
+                ids: [$("#hidden-activity-id").val()]
+            }
+        }).done(function (data) {
+            if (data.success) {
+                location.href = "workbench/activity/index.jsp"
+                alert("删除市场活动信息成功！")
+            } else {
+                alert("市场市场活动信息失败！")
+            }
+        })
+    });
 })
 
 

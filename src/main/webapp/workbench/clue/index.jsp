@@ -26,7 +26,7 @@
 <body>
     <div class="px-8 pt-9">
         <div class="d-flex">
-            <h2>线索列表</h2>
+            <h2>线索</h2>
 
             <!-- 提示信息 -->
             <div class="toast align-items-center text-white bg-success bottom-0 end-0 border-0 ms-auto" role="alert"
@@ -41,119 +41,145 @@
             </div>
         </div>
 
-        <hr>
-
-
-        <!-- 查询条件输入框组 -->
-        <h3 class="mb-4">筛选条件</h3>
-
-        <form class="row gx-3 gy-2 align-items-center">
-            <div class="col-sm-4 col-lg-3">
-                <div class="input-group">
-                    <label class="input-group-text" for="search-fullname">名称</label>
-                    <input type="text" class="form-control" id="search-fullname">
-                </div>
+        <!-- 筛选 -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h4>筛选条件</h4>
             </div>
 
-            <div class="col-sm-4 col-lg-3">
-                <div class="input-group">
-                    <label class="input-group-text" for="search-company">公司</label>
-                    <input type="text" class="form-control" id="search-company">
-                </div>
+            <div class="card-body">
+                <p class="fs-4 fw-bold mb-5">前辈可以在这里输入你想要的条件哦 😆</p>
+                <form class="form-horizontal">
+                    <div class="row mb-5">
+                        <label class="col-md-3 form-label" for="search-fullname">名称</label>
+                        <div class="col-md-8">
+                            <input class="form-control" id="search-fullname" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <label class="col-sm-3 form-label" for="search-company">公司</label>
+                        <div class="col-md-8">
+                            <input class="form-control" id="search-company" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <label class="col-sm-3 form-label" for="search-phone">公司座机</label>
+                        <div class="col-md-8">
+                            <input class="form-control" id="search-phone" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <label class="col-sm-3 form-label" for="search-owner">所有者</label>
+                        <div class="col-md-8">
+                            <input class="form-control" id="search-owner" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <label class="col-sm-3 form-label" for="search-mphone">手机</label>
+                        <div class="col-md-8">
+                            <input class="form-control time" id="search-mphone" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <label class="col-sm-3 form-label" for="search-source">线索来源</label>
+                        <div class="col-md-8">
+                            <select name="search-source" class="form-select" id="search-source">
+                                <option></option>
+                                <option>广告</option>
+                                <option>推销电话</option>
+                                <option>员工介绍</option>
+                                <option>外部介绍</option>
+                                <option>在线商场</option>
+                                <option>合作伙伴</option>
+                                <option>公开媒介</option>
+                                <option>销售邮件</option>
+                                <option>合作伙伴研讨会</option>
+                                <option>内部研讨会</option>
+                                <option>交易会</option>
+                                <option>web下载</option>
+                                <option>web调研</option>
+                                <option>聊天</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <label class="col-sm-3 form-label" for="search-state">线索状态</label>
+                        <div class="col-md-8">
+                            <select name="search-state" class="form-select" id="search-state">
+                                <option value=""></option>
+                                <option value="试图联系">试图联系</option>
+                                <option value="将来联系">将来联系</option>
+                                <option value="已联系">已联系</option>
+                                <option value="虚假线索">虚假线索</option>
+                                <option value="丢失线索">丢失线索</option>
+                                <option value="未联系">未联系</option>
+                                <option value="需要条件">需要条件</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-0">
+                        <div class="col-md-9 ms-auto">
+                            <button class="btn btn-primary" type="button" id="searchBtn">查询</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-
-            <div class="col-sm-4 col-lg-3">
-                <div class="input-group">
-                    <label class="input-group-text" for="search-phone">公司座机</label>
-                    <input type="text" class="form-control" id="search-phone">
-                </div>
-            </div>
-
-            <div class="col-sm-4 col-lg-3">
-                <div class="input-group">
-                    <label class="input-group-text" for="search-source">线索来源</label>
-                    <select name="search-source" class="form-select" id="search-source">
-
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-sm-4 col-lg-3">
-                <div class="input-group">
-                    <label class="input-group-text" for="search-owner">所有者</label>
-                    <input type="text" class="form-control" id="search-owner">
-                </div>
-            </div>
-
-            <div class="col-sm-4 col-lg-3">
-                <div class="input-group">
-                    <label class="input-group-text" for="search-phone">手机</label>
-                    <input type="text" class="form-control" id="search-mphone">
-                </div>
-            </div>
-
-            <div class="col-sm-4 col-lg-3">
-                <div class="input-group">
-                    <label class="input-group-text" for="search-state">线索状态</label>
-                    <select name="search-state" class="form-select" id="search-state">
-                        <option value=""></option>
-                        <option value="试图联系">试图联系</option>
-                        <option value="将来联系">将来联系</option>
-                        <option value="已联系">已联系</option>
-                        <option value="虚假线索">虚假线索</option>
-                        <option value="丢失线索">丢失线索</option>
-                        <option value="未联系">未联系</option>
-                        <option value="需要条件">需要条件</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col">
-                <button type="button" class="btn btn-outline-primary" id="searchBtn">查询</button>
-            </div>
-        </form>
-
-
-        <!-- 增删改操作按钮组 -->
-        <h3 class="mt-7 mb-4">数据管理</h3>
-        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-primary" id="addBtn"><i class="bi bi-plus-lg me-1"></i>增加
-            </button>
-            <button type="button" class="btn btn-light" id="editBtn"><i class="bi bi-pencil me-1"></i>修改</button>
-            <button type="button" class="btn btn-danger" id="deleteBtn"><i class="bi bi-dash-lg me-1"></i>删除</button>
         </div>
 
         <!-- 查询结果 -->
-        <div class="mt-3">
-            <table class="table table-hover table-striped" id="clueTable">
-                <thead>
-                    <tr>
-                        <td><input class="form-check-input" type="checkbox" id="qx" /></td>
-                        <td>名称</td>
-                        <td>公司</td>
-                        <td>公司座机</td>
-                        <td>手机</td>
-                        <td>线索来源</td>
-                        <td>所有者</td>
-                        <td>线索状态</td>
-                    </tr>
-                </thead>
+        <div class="card mt-7">
+            <input type="hidden" id="hidden-clue-id" value="${clue.id}">
+            <div class="card-header">
+                <h4>查询结果</h4>
+            </div>
 
-                <tbody id="clueBody">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td><input class="form-check-input" type="checkbox" id="qx" /></td>
+                            <td>名称</td>
+                            <td>公司</td>
+                            <td>公司座机</td>
+                            <td>手机</td>
+                            <td>线索来源</td>
+                            <td>所有者</td>
+                            <td>线索状态</td>
+                        </tr>
+                    </thead>
 
-                </tbody>
-            </table>
-        </div>
+                    <tbody id="clueBody">
 
-        <div class="text-center mt-5" id="cluePage">
-            <ul class="pagination"></ul>
+                    </tbody>
+                </table>
+
+                <div class="text-center" id="cluePage">
+                    <ul class="pagination mb-0 mt-6 fs-8"></ul>
+                </div>
+            </div>
+
+            <div class="card-footer d-flex justify-content-end">
+                <button class="btn btn-primary me-2" id="addBtn">创建</button>
+                <button class="btn btn-outline-dark me-2" id="editBtn">编辑</button>
+                <button class="btn btn-danger" id="deleteBtn">删除</button>
+            </div>
         </div>
 
         <!-- 隐藏域 -->
-        <input type="hidden" id="hidden-name">
+        <input type="hidden" id="hidden-fullname">
+        <input type="hidden" id="hidden-company">
+        <input type="hidden" id="hidden-phone">
+        <input type="hidden" id="hidden-source">
         <input type="hidden" id="hidden-owner">
-        <input type="hidden" id="hidden-startDate">
-        <input type="hidden" id="hidden-endDate">
+        <input type="hidden" id="hidden-mphone">
+        <input type="hidden" id="hidden-state">
 
     </div>
 </body>

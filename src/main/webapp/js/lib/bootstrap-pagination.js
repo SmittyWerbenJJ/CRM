@@ -9,12 +9,12 @@
 	        $this.empty();
 	        var $preTag = '<li class="page-item"><a class="page-link" href="javascript:void(0)" tabindex="-1"';
 	        var $endTag = '</a></li>';
-			$this.append($preTag + 'id="page-prev" data-index="0">上一个' + $endTag);
+			$this.append($preTag + 'id="page-prev" data-index="0">上一页' + $endTag);
 			var $index = 0;
 			for (var i = settings.from; i <= settings.to; i++) {
 				$this.append($preTag + 'data-index="'+(++$index)+'">'+ i + $endTag);
 			}
-			$this.append($preTag + 'id="page-next" data-index="'+(++$index)+'">下一个' + $endTag);
+			$this.append($preTag + 'id="page-next" data-index="'+(++$index)+'">下一页' + $endTag);
         });
  	}
 	 $.fn.pageChanging = function( options, callback ) {
@@ -54,7 +54,7 @@
 							return true;
 						}
 						break;
-					case '上一个':
+					case '上一页':
 						if ($page > 1) {
 							$page = $page - 1;
 							$drawMain = true;
@@ -63,7 +63,7 @@
 							return true;
 						}
 						break;
-					case '下一个':
+					case '下一页':
 						if ($page < $totalPage) {
 							$page = $page + 1;
 							$drawMain = true;

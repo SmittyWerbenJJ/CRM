@@ -2,6 +2,9 @@ package com.zhiyiyo.crm.workbench.dao;
 
 import com.zhiyiyo.crm.workbench.entity.Clue;
 
+import java.util.List;
+import java.util.Map;
+
 public interface ClueDao {
     /**
      * 添加一条线索
@@ -9,4 +12,25 @@ public interface ClueDao {
      * @return 受影响的行数
      */
     Integer insertClue(Clue clue);
+
+    /**
+     * 根据条件查询线索
+     * @param condition 条件字典
+     * @return 线索列表
+     */
+    List<Clue> queryCluesByCondition(Map<String, Object> condition);
+
+    /**
+     * 根据条件查询线索
+     * @param condition 条件字典
+     * @return 线索列表
+     */
+    Integer queryClueCountByCondition(Map<String, Object> condition);
+
+    /**
+     * 根据线索的 id 查找线索
+     * @param id 线索的 id
+     * @return 找到的线索
+     */
+    Clue queryClueById(String id);
 }

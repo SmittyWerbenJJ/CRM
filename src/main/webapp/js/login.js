@@ -22,7 +22,7 @@ function login() {
             dataType: "json",
             data: {
                 "loginAct": $("#userName").val(),
-                "loginPwd": md5Encryption($("#password"))
+                "loginPwd": md5Encryption($("#password").val())
             }
         }).done(function (data) {
             if (data.success) {

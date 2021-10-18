@@ -36,7 +36,7 @@
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-left me-2"></i>退出</a></li>
+                    <li><a class="dropdown-item" href="settings/user/logout.do"><i class="bi bi-box-arrow-left me-2"></i>退出</a></li>
                 </ul>
             </div>
         </div>
@@ -50,18 +50,6 @@
                     <a href="javascript:void(0)" class="nav-link active" aria-current="page" target="workareaFrame">
                         <i class="bi bi-house-door me-2 mb-1"></i>
                         工作台
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="javascript:void(0)" class="nav-link link-dark" target="workareaFrame">
-                        <i class="bi bi-tags me-2 mb-1"></i>
-                        动态
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="javascript:void(0)" class="nav-link link-dark">
-                        <i class="bi bi-hourglass-split me-2 mb-1"></i>
-                        审批
                     </a>
                 </li>
                 <li class="nav-item">
@@ -152,12 +140,6 @@
                     <a href="javascript:void(0)" class="nav-link link-dark" target="workareaFrame">
                         <i class="bi bi-card-list me-2 mb-1"></i>
                         发货单
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="javascript:void(0)" class="nav-link link-dark" target="workareaFrame">
-                        <i class="bi bi-headset me-2 mb-1"></i>
-                        跟进
                     </a>
                 </li>
                 <li class="nav-item">

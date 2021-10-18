@@ -28,7 +28,7 @@
 <body>
     <div class="px-8 pt-9">
         <div class="d-flex">
-            <h2>市场活动列表</h2>
+            <h2>市场活动</h2>
 
             <!-- 提示信息 -->
             <div class="toast align-items-center text-white bg-success bottom-0 end-0 border-0 ms-auto" role="alert"
@@ -43,77 +43,86 @@
             </div>
         </div>
 
-        <hr>
-
-
-        <!-- 查询条件输入框组 -->
-        <h3 class="mb-4">筛选条件</h3>
-
-        <form class="row gx-3 gy-2 align-items-center">
-            <div class="col-sm-4 col-lg-3">
-                <div class="input-group">
-                    <label class="input-group-text" for="search-name">名称</label>
-                    <input type="text" class="form-control" id="search-name">
-                </div>
+        <!-- 筛选 -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h4>筛选条件</h4>
             </div>
 
-            <div class="col-sm-4 col-lg-3">
-                <div class="input-group">
-                    <label class="input-group-text" for="search-owner">所有者</label>
-                    <input type="text" class="form-control" id="search-owner">
-                </div>
+            <div class="card-body">
+                <p class="fs-4 fw-bold mb-5">前辈可以在这里输入你想要的条件哦 😆</p>
+                <form class="form-horizontal">
+                    <div class="row mb-5">
+                        <label class="col-md-3 form-label" for="search-name">名称</label>
+                        <div class="col-md-8">
+                            <input class="form-control" id="search-name" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <label class="col-sm-3 form-label" for="search-owner">所有者</label>
+                        <div class="col-md-8">
+                            <input class="form-control" id="search-owner" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <label class="col-sm-3 form-label" for="search-start-date">开始日期</label>
+                        <div class="col-md-8">
+                            <input class="form-control time" id="search-start-date" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <label class="col-sm-3 form-label" for="search-end-date">结束日期</label>
+                        <div class="col-md-8">
+                            <input class="form-control time" id="search-end-date" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row mb-0">
+                        <div class="col-md-9 ms-auto">
+                            <button class="btn btn-primary" type="button" id="searchBtn">查询</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-
-            <div class="col-sm-4 col-lg-3">
-                <div class="input-group">
-                    <label class="input-group-text" for="search-start-date">开始日期</label>
-                    <input type="text" class="form-control time bg-white" id="search-start-date" autocomplete="off">
-                </div>
-            </div>
-
-            <div class="col-sm-4 col-lg-3">
-                <div class="input-group">
-                    <label class="input-group-text" for="search-end-date">结束日期</label>
-                    <input type="text" class="form-control time bg-white" id="search-end-date" autocomplete="off">
-                </div>
-            </div>
-
-            <div class="col">
-                <button type="button" class="btn btn-outline-primary" id="searchBtn">查询</button>
-            </div>
-        </form>
-
-
-        <!-- 增删改操作按钮组 -->
-        <h3 class="mt-7 mb-4">数据管理</h3>
-        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-primary" id="addBtn"><i class="bi bi-plus-lg me-1"></i>增加
-            </button>
-            <button type="button" class="btn btn-light" id="editBtn"><i class="bi bi-pencil me-1"></i>修改</button>
-            <button type="button" class="btn btn-danger" id="deleteBtn"><i class="bi bi-dash-lg me-1"></i>删除</button>
         </div>
 
         <!-- 查询结果 -->
-        <div class="mt-3">
-            <table class="table table-hover table-striped" id="activityTable">
-                <thead>
-                    <tr>
-                        <td><input class="form-check-input" type="checkbox" id="qx" /></td>
-                        <td>名称</td>
-                        <td>所有者</td>
-                        <td>开始日期</td>
-                        <td>结束日期</td>
-                    </tr>
-                </thead>
+        <div class="card mt-7">
+            <input type="hidden" id="hidden-activity-id" value="${activity.id}">
+            <div class="card-header">
+                <h4>查询结果</h4>
+            </div>
 
-                <tbody id="activityBody">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <td><input class="form-check-input" type="checkbox" id="qx" /></td>
+                            <td>名称</td>
+                            <td>所有者</td>
+                            <td>开始日期</td>
+                            <td>结束日期</td>
+                        </tr>
+                    </thead>
 
-                </tbody>
-            </table>
-        </div>
+                    <tbody id="activityBody">
 
-        <div class="text-center mt-5" id="activityPage">
-            <ul class="pagination"></ul>
+                    </tbody>
+                </table>
+
+                <div class="text-center" id="activityPage">
+                    <ul class="pagination mb-0 mt-6 fs-8"></ul>
+                </div>
+            </div>
+
+            <div class="card-footer d-flex justify-content-end">
+                <button class="btn btn-primary me-2" id="addBtn">创建</button>
+                <button class="btn btn-outline-dark me-2" id="editBtn">编辑</button>
+                <button class="btn btn-danger" id="deleteBtn">删除</button>
+            </div>
         </div>
 
         <!-- 隐藏域 -->

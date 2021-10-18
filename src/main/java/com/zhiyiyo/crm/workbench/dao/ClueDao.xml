@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!--FIXME: change the namespace、id and resultType-->
 <mapper namespace="com.zhiyiyo.crm.workbench.dao.ClueDao">
     <insert id="insertClue">
         insert into tbl_clue
@@ -29,4 +28,92 @@
             )
     </insert>
 
+    <select id="queryCluesByCondition" resultType="Clue">
+        select
+        c.id, u.name as owner, c.company,c.appellation,
+        c.phone, c.mphone, c.createTime, c.source, c.state, c.fullname
+        from tbl_clue c
+        join tbl_user u
+        on c.owner = u.id
+        <where>
+            <if test="fullname!=null and fullname!=''">
+                c.fullname like '%' #{fullname} '%'
+            </if>
+            <if test="company!=null and company!=''">
+                and c.company like '%' #{company} '%'
+            </if>
+            <if test="phone!=null and phone!=''">
+                and c.phone like '%' #{phone} '%'
+            </if>
+            <if test="mphone!=null and mphone!=''">
+                and c.mphone like '%' #{mphone} '%'
+            </if>
+            <if test="source!=null and source!=''">
+                and c.source like '%' #{source} '%'
+            </if>
+            <if test="state!=null and state!=''">
+                and c.state like '%' #{state} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and c.owner like '%' #{owner} '%'
+            </if>
+        </where>
+        order by c.createTime desc
+        limit #{start}, #{pageSize}
+    </select>
+
+    <select id="queryClueCountByCondition" resultType="int">
+        select
+        count(*)
+        from tbl_clue c
+        <where>
+            <if test="fullname!=null and fullname!=''">
+                c.fullname like '%' #{fullname} '%'
+            </if>
+            <if test="company!=null and company!=''">
+                and c.company like '%' #{company} '%'
+            </if>
+            <if test="phone!=null and phone!=''">
+                and c.phone like '%' #{phone} '%'
+            </if>
+            <if test="mphone!=null and mphone!=''">
+                and c.mphone like '%' #{mphone} '%'
+            </if>
+            <if test="source!=null and source!=''">User
+                and c.source like '%' #{source} '%'
+            </if>
+            <if test="state!=null and state!=''">
+                and c.state like '%' #{state} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and c.owner like '%' #{owner} '%'
+            </if>
+        </where>
+    </select>
+
+    <select id="queryClueById" resultType="Clue">
+        select c.id,
+               c.fullname,
+               c.appellation,
+               u.name as owner,
+               c.company,
+               c.job,
+               c.email,
+               c.phone,
+               c.website,
+               c.mphone,
+               c.state,
+               c.source,
+               c.createBy,
+               c.createTime,
+               c.editTime,
+               c.editBy,
+               c.description,
+               c.contactSummary,
+               c.nextContactTime,
+               c.address
+        from tbl_clue c
+                 join tbl_user u on c.owner = u.id
+        where c.id = #{id}
+    </select>
 </mapper>

@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="css/workbench.css" />
     <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
     <script src="js/lib/jquery.js"></script>
+    <script src="js/lib/bootstrap-datetimepicker.js"></script>
+    <script src="js/lib/bootstrap-datetimepicker.zh-CN.js"></script>
     <script src="js/workbench/activity/details.js"></script>
-
     <title>市场活动详细信息 - CRM</title>
 </head>
 
@@ -35,7 +36,7 @@
             </div>
         </div>
 
-        <div class="card overflow-hidden mt-5">
+        <div class="card mt-5">
             <input type="hidden" id="hidden-activity-id" value="${activity.id}">
             <div class="card-header">
                 <h4>详细信息</h4>
@@ -114,12 +115,13 @@
                 </div>
             </div>
             <div class="text-end card-footer">
-                <button type="submit" class="btn btn-primary">编辑信息</button>
+                <button class="btn btn-outline-dark" id="editActivityBtn">编辑</button>
+                <button class="btn btn-danger" id="deleteActivityBtn">删除</button>
             </div>
         </div>
 
         <!-- 评论 -->
-        <div class="card overflow-hidden mt-7">
+        <div class="card mt-7">
             <div class="card-header">
                 <h4>评论列表</h4>
             </div>
@@ -159,6 +161,76 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-primary" id="update-comment-btn">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改市场活动模态框 -->
+    <div class="modal fade" id="editActivityModal" tabindex="-1" aria-labelledby="editActivityModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editActivityModalLabel">修改市场活动</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="need-validation" id="edit-form">
+                        <input type="hidden" name="edit-id">
+                        <div class="row gx-7 gy-4 p-3">
+                            <div class="col-sm-6">
+                                <label for="edit-owner" class="form-label">所有者</label>
+                                <select class="form-select" name="owner" id="edit-owner" required>
+
+                                </select>
+                                <div class="invalid-feedback">
+                                    请选择所有者
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="edit-name" class="form-label">名称</label>
+                                <input type="text" class="form-control" id="edit-name" value="${activity.name}"
+                                    required>
+                                <div class="invalid-feedback">
+                                    请填入市场活动名称
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="edit-start-date" class="form-label">开始日期</label>
+                                <input type="text" class="form-control time" id="edit-start-date"
+                                    value="${activity.startDate}" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    请选择开始日期
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="edit-end-date" class="form-label">结束日期</label>
+                                <input type="text" class="form-control time" id="edit-end-date"
+                                    value="${activity.endDate}" required autocomplete="off">
+                                <div class="invalid-feedback">
+                                    请选择结束日期
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="edit-cost" class="form-label">成本</label>
+                                <input type="text" class="form-control" id="edit-cost" value="${activity.cost}"
+                                    required>
+                                <div class="invalid-feedback">
+                                    请填写成本
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="edit-description" class="form-label">详细信息（选填）</label>
+                                <textarea class="form-control" id="edit-description"
+                                    value="${activity.description}"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="update-activity-Btn">更新</button>
                 </div>
             </div>
         </div>

@@ -24,8 +24,19 @@
 
 <body>
     <div class="px-8 pt-9">
-        <div class="card overflow-hidden">
-            <form class="">
+        <!-- 导航面包屑 -->
+        <div class="page-breadcrumb mb-6">
+            <ul class="breadcrumb fs-5">
+                <li class="breadcrumb-item">
+                    <a href="workbench/clue/index.jsp" class="text-decoration-none">线索</a>
+                </li>
+                <li class="breadcrumb-item active">创建</li>
+            </ul>
+        </div>
+
+        <!-- 表单 -->
+        <div class="card">
+            <form>
                 <div class="card-header">
                     <h4>创建线索</h4>
                 </div>
@@ -34,7 +45,7 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-6">
                             <div class="mb-4">
-                                <label class="form-label" for="add-owner">所有者</label>
+                                <label class="form-label" for="add-owner">所有者<span class="text-danger">*</span></label>
                                 <select id="add-owner" class="form-select"></select>
                             </div>
                         </div>
@@ -43,7 +54,7 @@
                     <div class="row">
                         <div class="col-md-4 col-sm-6">
                             <div class="mb-4">
-                                <label class="form-label" for="add-company">公司</label>
+                                <label class="form-label" for="add-company">公司<span class="text-danger">*</span></label>
                                 <input id="add-company" type="text" class="form-control">
                             </div>
                         </div>
@@ -55,15 +66,16 @@
                         </div>
                         <div class="col-md-5 col-sm-6">
                             <div class="mb-4">
-                                <label class="form-label" for="add-webstite">公司网站</label>
-                                <input id="add-webstite" type="text" class="form-control" placeholder="www.company.com">
+                                <label class="form-label" for="add-website">公司网站</label>
+                                <input id="add-website" type="text" class="form-control" placeholder="www.company.com">
                             </div>
                         </div>
 
                         <div class="col-md-4 col-sm-6">
                             <div class="mb-4">
-                                <label class="form-label" for="add-contact">姓名</label>
-                                <input id="add-contact" type="text" class="form-control">
+                                <label class="form-label" for="add-fullname">姓名<span
+                                        class="text-danger">*</span></label>
+                                <input id="add-fullname" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6">
@@ -179,7 +191,7 @@
             </form>
 
             <div class="text-end card-footer">
-                <button type="submit" class="btn btn-primary">保存</button>
+                <button class="btn btn-primary" id="addBtn">保存</button>
             </div>
         </div>
     </div>
