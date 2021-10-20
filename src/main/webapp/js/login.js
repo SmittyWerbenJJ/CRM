@@ -29,7 +29,7 @@ function login() {
                 location.href = "workbench/index.jsp"
             } else {
                 $("#msg").text(data.msg)
-                $("#tip").css("display", "block")
+                $("#tip").show()
             }
         })
     }
@@ -64,10 +64,10 @@ function verifyParams() {
     // 显示提示信息
     if (msg.length > 0) {
         $("#msg").text(msg.join(" & "))
-        $("#tip").css("display", "block")
+        $("#tip").show()
         return false
     } else {
-        $("#tip").css("display", "none")
+        $("#tip").hide()
         return true
     }
 
@@ -81,6 +81,5 @@ function verifyParams() {
  */
 function md5Encryption(password) {
     var encryptPwd = md5(password + "zhiyiyo")
-    console.log(encryptPwd)
     return encryptPwd
 }

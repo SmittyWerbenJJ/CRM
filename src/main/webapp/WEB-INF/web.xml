@@ -25,7 +25,7 @@
         <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
     <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+        <listener-class>com.zhiyiyo.crm.listener.SysInitListener</listener-class>
     </listener>
 
     <!--配置编码过滤器-->

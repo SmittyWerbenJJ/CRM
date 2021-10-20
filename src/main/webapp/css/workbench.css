@@ -115,6 +115,10 @@
     margin-top: 60px;
 }
 
+#comment-list{
+    margin-top: 0.25rem !important;
+}
+
 .breadcrumb-item a {
     text-decoration: none;
 }

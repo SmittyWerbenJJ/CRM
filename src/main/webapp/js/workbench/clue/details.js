@@ -9,11 +9,40 @@ $(function () {
         pickerPosition: "bottom-left"
     });
 
+    // 点击提交按钮时增加一个评论
+    $("#addCommentBtn").on("click", function () {
+        var comment = $("#commentInput").val().trim()
+        if (!comment) {
+            alert("请填写有效评论之后再提交")
+            return
+        }
+
+        $.ajax({
+            url: "workbench/clue/addRemark.do",
+            dataType: "json",
+            type: "post",
+            data: {
+                "noteContent": comment,
+                "clueId": $("#hidden-clue-id").val()
+            }
+        }).done(function (data) {
+            // 在所有评论前面插入评论
+            if (data.success) {
+                $("#comment-list").prepend(createRemarkHTML("image/avatar.png", data.remark))
+                $("#commentInput").val("")
+            } else {
+                alert("吐槽失败，前辈请重新尝试~")
+            }
+
+        })
+    })
+
+
     // 发送获取评论列表的请求
     $.ajax({
-        url: "workbench/activity/getRemarksByAId.do",
+        url: "workbench/clue/getRemarksByCId.do",
         data: {
-            "id": $("#hidden-activity-id").val()
+            "id": $("#hidden-clue-id").val()
         }
     }).done(function (data) {
         let html = ''
@@ -24,35 +53,6 @@ $(function () {
 
         $("#comment-list").html(html)
     })
-
-
-    // 点击提交按钮时增加一个评论
-    $("#addCommentBtn").on("click", function () {
-        var comment = $("#commentInput").val().trim()
-        if (!comment) {
-            alert("请填写有效评论之后再提交")
-            return
-        }
-
-        $.ajax({
-            url: "workbench/activity/addRemark.do",
-            dataType: "json",
-            type: "post",
-            data: {
-                "noteContent": comment,
-                "activityId": $("#hidden-activity-id").val()
-            }
-        }).done(function (data) {
-            showToast(data.success, "添加评论")
-
-            // 在所有评论前面插入评论
-            if (data.success) {
-                $("#comment-list").prepend(createRemarkHTML("image/avatar.png", data.remark))
-                $("#commentInput").val("")
-            }
-        })
-    })
-
 
     // 点击弹出菜单的编辑项
     var remarkId;
@@ -76,7 +76,7 @@ $(function () {
         }
 
         $.ajax({
-            url: "workbench/activity/updateRemark.do",
+            url: "workbench/clue/updateRemark.do",
             dataType: "json",
             type: "post",
             data: {
@@ -84,12 +84,12 @@ $(function () {
                 noteContent: noteContent
             }
         }).done(function (data) {
-            showToast(data.success, "更新评论")
-
             // 更新评论和评论时间
             if (data.success) {
                 $(`#noteContent-${remarkId}`).text(data.remark.noteContent)
                 $(`#post-time-${remarkId}`).text(data.remark.editTime)
+            } else {
+                alert("更新吐槽失败啦，前辈可以再次尝试哦~")
             }
 
             // 关闭模态窗口
@@ -110,85 +110,22 @@ $(function () {
         // 发出删除评论的请求
         $.ajax({
             type: "post",
-            url: "workbench/activity/deleteRemark.do",
+            url: "workbench/clue/deleteRemark.do",
             data: {
                 id: remarkId
             },
             dataType: "json",
         }).done(function (data) {
-            showToast(data.success, "删除评论")
-
             // 移除评论
             if (data.success) {
                 $("#" + remarkId).remove();
+            } else {
+                alert("哎呀，删除失败了，前辈请稍后再试~")
             }
         });
 
     })
-
-
-    // 点击编辑按钮弹出对话框
-    $("#editActivityBtn").on("click", function () {
-        $("#editActivityModal").modal("show");
-
-        // 发出获取用户列表的请求
-        $.ajax({
-            url: "workbench/activity/getUserList.do",
-            dataType: "json"
-        }).done(function (data) {
-            let html = '<option></option>'
-            for (const user of data) {
-                html += `<option value="${user.id}">${user.name}</option>`
-            }
-            $("#edit-owner").html(html);
-        })
-
-    });
-
-    // 删除市场活动
-    $("#deleteActivityBtn").on("click", function () {
-        if (!confirm("确定删除这条市场活动信息吗？")) {
-            return
-        }
-
-        $.ajax({
-            url: "workbench/activity/deleteActivities.do",
-            dataType: "json",
-            type: "post",
-            data: {
-                ids: [$("#hidden-activity-id").val()]
-            }
-        }).done(function (data) {
-            if (data.success) {
-                location.href = "workbench/activity/index.jsp"
-                alert("删除市场活动信息成功！")
-            } else {
-                alert("市场市场活动信息失败！")
-            }
-        })
-    });
 })
-
-
-
-/**
- * 显示提示气泡
- * @param {boolean} isSuccess 是否成功
- * @param {string} action 执行的操作名称
- */
-function showToast(isSuccess, action) {
-    if (isSuccess) {
-        $("#toast").removeClass("bg-danger")
-        $("#toast-body").text(action + "成功")
-    } else {
-        $("#toast").addClass("bg-danger")
-        $("#toast-body").text(action + "失败")
-    }
-
-
-    var toast = new bootstrap.Toast($("#toast")[0])
-    toast.show()
-}
 
 
 /**

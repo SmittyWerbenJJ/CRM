@@ -8,7 +8,7 @@ $(function () {
         todayBtn: true,
         pickerPosition: "bottom-left"
     });
-    
+
     // 重置表单
     $("form")[0].reset()
 
@@ -52,13 +52,13 @@ $(function () {
         var address = $("#add-address").val().trim();
 
         // 重要数据不能为空
-        if (owner.length == 0) {
+        if (!owner) {
             $("#add-owner").addClass("is-invalid")
         }
-        if (fullname.length == 0) {
+        if (!fullname) {
             $("#add-fullname").addClass("is-invalid")
         }
-        if (company.length == 0) {
+        if (!company) {
             $("#add-company").addClass("is-invalid")
         }
         if (![owner, company, fullname].every(i => i.length > 0)) {
@@ -67,14 +67,14 @@ $(function () {
         }
 
         // 验证电话号码
-        if (phone.length > 0 && !/^0\d{2,3}-?\d{7,8}$/.test(phone)) {
+        if (phone && !/^0\d{2,3}-?\d{7,8}$/.test(phone)) {
             $("#add-phone").addClass("is-invalid")
             alert("公司电话号码格式错误")
             return
         }
 
         // 验证手机号码
-        if (mphone.length > 0 && !/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(mphone)) {
+        if (mphone && !/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(mphone)) {
             $("#add-mphone").addClass("is-invalid")
             alert("手机号码格式错误")
             return
@@ -82,7 +82,7 @@ $(function () {
 
         // 验证网站
         var webRegex = /^((https|http|ftp|rtsp|mms){0,1}(:\/\/){0,1})www\.(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/
-        if (website.length > 0 && !webRegex.test(website)) {
+        if (website && !webRegex.test(website)) {
             $("#add-website").addClass("is-invalid")
             alert("公司网站格式错误")
             return
@@ -90,7 +90,7 @@ $(function () {
 
         // 验证邮箱
         var emailRegex = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/
-        if (email.length > 0 && !emailRegex.test(email)) {
+        if (email && !emailRegex.test(email)) {
             $("#add-email").addClass("is-invalid")
             alert("邮箱格式错误")
             return
@@ -118,10 +118,5 @@ $(function () {
  * 清除表单的非法状态
  */
 function cleanInValidState() {
-    $("#add-owner").removeClass("is-invalid")
-    $("#add-company").removeClass("is-invalid")
-    $("#add-fullname").removeClass("is-invalid")
-    $("#add-phone").removeClass("is-invalid")
-    $("#add-mphone").removeClass("is-invalid")
-    $("#add-website").removeClass("is-invalid")
+    $("[id^='add-']").removeClass("is-invalid")
 }

@@ -42,20 +42,11 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public PaginationVo<Activity> getActivities(Integer pageNum, Integer pageSize, String name, String owner,
-            String startDate, String endDate) {
-        int start = (pageNum - 1) * pageSize;
-        Map<String, Object> map = new HashMap<>();
-        map.put("start", start);
-        map.put("pageSize", pageSize);
-        map.put("name", name);
-        map.put("owner", owner);
-        map.put("startDate", startDate);
-        map.put("endDate", endDate);
+    public PaginationVo<Activity> getActivities(Map<String, Object> condition) {
 
         PaginationVo<Activity> vo = new PaginationVo<>();
-        vo.setCount(activityDao.queryActivityCount(map));
-        vo.setDataList(activityDao.queryActivities(map));
+        vo.setCount(activityDao.queryActivityCount(condition));
+        vo.setDataList(activityDao.queryActivities(condition));
 
         return vo;
     }

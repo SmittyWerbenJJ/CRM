@@ -5,6 +5,7 @@ import com.zhiyiyo.crm.workbench.entity.Activity;
 import com.zhiyiyo.crm.workbench.entity.ActivityRemark;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ActivityService {
     /**
@@ -32,16 +33,10 @@ public interface ActivityService {
     /**
      * 根据条件查询市场活动
      *
-     * @param pageNum   第几页
-     * @param pageSize  每页显示的条目
-     * @param name      市场活动名称
-     * @param owner     所有者
-     * @param startDate 开始日期
-     * @param endDate   结束日期
+     * @param condition 查询条件字典
      * @return 分页结果
      */
-    PaginationVo<Activity> getActivities(Integer pageNum, Integer pageSize, String name, String owner, String startDate,
-            String endDate);
+    PaginationVo<Activity> getActivities(Map<String, Object> condition);
 
 
     /**

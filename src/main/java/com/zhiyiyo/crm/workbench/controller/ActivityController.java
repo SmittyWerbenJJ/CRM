@@ -62,9 +62,16 @@ public class ActivityController {
 
     @RequestMapping("/getActivities.do")
     @ResponseBody
-    public PaginationVo<Activity> getActivities(HttpSession session, Integer pageNum, Integer pageSize, String name,
+    public PaginationVo<Activity> getActivities(Integer pageNum, Integer pageSize, String name,
                                                 String owner, String startDate, String endDate) {
-        return activityService.getActivities(pageNum, pageSize, name, owner, startDate, endDate);
+        Map<String, Object> condition = new HashMap<>();
+        condition.put("start", (pageNum - 1) * pageNum);
+        condition.put("pageSize", pageSize);
+        condition.put("name", name);
+        condition.put("owner", owner);
+        condition.put("startDate", startDate);
+        condition.put("endDate", endDate);
+        return activityService.getActivities(condition);
     }
 
     @RequestMapping(value = "/deleteActivities.do", method = RequestMethod.POST)
