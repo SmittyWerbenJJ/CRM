@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!--FIXME: change the namespace、id and resultType-->
 <mapper namespace="com.zhiyiyo.crm.workbench.dao.ActivityDao">
     <insert id="insert">
         insert into tbl_activity
@@ -60,7 +59,7 @@
         </where>
     </select>
 
-    <select id="queryActivities" resultType="Activity">
+    <select id="queryActivities" resultType="com.zhiyiyo.crm.workbench.entity.Activity">
         select
         a.id,u.name as owner, a.name, a.startDate, a.endDate, a.cost, a.description, a.createTime, a.createBy,
         a.editTime
@@ -84,7 +83,7 @@
         limit #{start},#{pageSize}
     </select>
 
-    <select id="queryActivity" resultType="Activity">
+    <select id="queryActivity" resultType="com.zhiyiyo.crm.workbench.entity.Activity">
         select id,
                owner,
                name,
@@ -100,7 +99,7 @@
         where id = #{id}
     </select>
 
-    <select id="queryActivityById" resultType="Activity">
+    <select id="queryActivityById" resultType="com.zhiyiyo.crm.workbench.entity.Activity">
         select a.id,
                u.name as owner,
                a.name,

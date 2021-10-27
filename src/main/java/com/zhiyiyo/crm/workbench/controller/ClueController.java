@@ -9,8 +9,8 @@ import com.zhiyiyo.crm.workbench.entity.Clue;
 import com.zhiyiyo.crm.workbench.entity.ClueRemark;
 import com.zhiyiyo.crm.workbench.service.ClueService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,13 +29,13 @@ public class ClueController {
     @Resource
     private UserService userService;
 
-    @RequestMapping("getUserList.do")
+    @RequestMapping("getUserList")
     @ResponseBody
     public List<User> getUserList() {
         return userService.getUserList();
     }
 
-    @RequestMapping(value = "/addClue.do", method = RequestMethod.POST)
+    @PostMapping("/addClue")
     @ResponseBody
     public Map<String, Object> addClue(HttpSession session, Clue clue) {
         clue.setId(UUIDUtil.getUUID());
@@ -48,10 +48,10 @@ public class ClueController {
         return data;
     }
 
-    @RequestMapping("getCluesByCondition.do")
+    @RequestMapping("getCluesByCondition")
     @ResponseBody
     public PaginationVo<Clue> getCluesByCondition(Integer pageNum, Integer pageSize, String fullname, String company,
-                                                  String phone, String source, String owner, String mphone, String state) {
+            String phone, String source, String owner, String mphone, String state) {
 
         Map<String, Object> condition = new HashMap<>();
         condition.put("start", (pageNum - 1) * pageSize);
@@ -71,16 +71,16 @@ public class ClueController {
         return data;
     }
 
-    @RequestMapping("/showDetails.do")
+    @RequestMapping("/showDetails")
     public ModelAndView showDetails(String id) {
-        ModelAndView mv = new ModelAndView("/workbench/clue/details.jsp");
+        ModelAndView mv = new ModelAndView("/workbench/clue/details");
         mv.addObject("clue", clueService.getClueById(id));
         return mv;
     }
 
-    @RequestMapping(value = "/addRemark.do", method = RequestMethod.POST)
+    @PostMapping("/addRemark")
     @ResponseBody
-    public Map<String, Object> addRemark(HttpSession session, ClueRemark remark){
+    public Map<String, Object> addRemark(HttpSession session, ClueRemark remark) {
         remark.setId(UUIDUtil.getUUID());
         remark.setCreateTime(DateTimeUtil.getSysTime());
         remark.setCreateBy(((User) session.getAttribute("user")).getName());
@@ -98,14 +98,13 @@ public class ClueController {
      * @param id 线索的 id
      * @return 评论列表
      */
-    @RequestMapping("/getRemarksByCId.do")
+    @RequestMapping("/getRemarksByCId")
     @ResponseBody
     public List<ClueRemark> getRemarksByCId(String id) {
         return clueService.getRemarksByCId(id);
     }
 
-
-    @RequestMapping(value = "/updateRemark.do", method = RequestMethod.POST)
+    @PostMapping("/updateRemark")
     @ResponseBody
     public Map<String, Object> updateRemark(HttpSession session, ClueRemark remark) {
         remark.setEditBy(((User) session.getAttribute("user")).getName());
@@ -118,8 +117,7 @@ public class ClueController {
         return data;
     }
 
-
-    @RequestMapping(value = "/deleteRemark.do", method = RequestMethod.POST)
+    @PostMapping("/deleteRemark")
     @ResponseBody
     public Map<String, Object> deleteRemark(String id) {
         Map<String, Object> data = new HashMap<>();

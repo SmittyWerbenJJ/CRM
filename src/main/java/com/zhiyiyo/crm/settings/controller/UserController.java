@@ -4,14 +4,12 @@ import com.zhiyiyo.crm.settings.entity.User;
 import com.zhiyiyo.crm.settings.exception.LoginException;
 import com.zhiyiyo.crm.settings.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
+
 
 @Controller
 @RequestMapping("/settings/user")
@@ -24,25 +22,20 @@ public class UserController {
      *
      * @param loginAct 用户名
      * @param loginPwd 加密一次的密码
-     * @return 登陆状态消息
+     * @return 登陆异常消息
      * @throws LoginException 登录失败异常
      */
-    @RequestMapping(value = "/login.do", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> login(HttpSession session, String loginAct, String loginPwd) throws LoginException {
+    @PostMapping("/login")
+    public String login(HttpSession session, String loginAct, String loginPwd) throws LoginException {
         User user = userService.login(loginAct, loginPwd);
         session.setAttribute("user", user);
-
-        // 返回 json 数据
-        Map<String, Object> data = new HashMap<>();
-        data.put("success", true);
-        data.put("msg", "登录成功");
-        return data;
+        // 必须写一个处理器来处理这个请求，因为放在 templates 里面的资源不能被浏览器直接访问
+        return "redirect:/workbench/index.html";
     }
 
-    @RequestMapping("/logout.do")
+    @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("user");
-        return "redirect:/login.html";
+        return "redirect:/login";
     }
 }

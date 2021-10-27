@@ -1,6 +1,5 @@
 package com.zhiyiyo.crm.settings.dao;
 
-import com.zhiyiyo.crm.settings.entity.DicType;
 
 import java.util.List;
 

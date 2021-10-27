@@ -2,29 +2,30 @@ package com.zhiyiyo.crm.listener;
 
 import com.zhiyiyo.crm.settings.entity.DicValue;
 import com.zhiyiyo.crm.workbench.service.DicService;
-import org.springframework.web.context.ContextLoaderListener;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationStartedEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SysInitListener extends ContextLoaderListener {
+@Component
+public class SysInitListener implements ApplicationListener<ApplicationStartedEvent> {
+    @Autowired
+    private DicService dicService;
 
     @Override
-    public WebApplicationContext initWebApplicationContext(ServletContext servletContext) {
-        WebApplicationContext applicationContext = super.initWebApplicationContext(servletContext);
+    public void onApplicationEvent(ApplicationStartedEvent event) {
+        WebApplicationContext webApplicationContext = (WebApplicationContext) event.getApplicationContext();
+        ServletContext servletContext = webApplicationContext.getServletContext();
 
-        // 设置数据字典
-        DicService service = (DicService) applicationContext.getBean("dicServiceImpl");
-        Map<String, List<DicValue>> map = service.getDict();
+        Map<String, List<DicValue>> map = dicService.getDict();
         for (Map.Entry<String, List<DicValue>> entry : map.entrySet()) {
             servletContext.setAttribute(entry.getKey(), entry.getValue());
         }
-
-        return applicationContext;
     }
 }

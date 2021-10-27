@@ -20,7 +20,7 @@
         </foreach>
     </delete>
 
-    <select id="queryRemarksByAId" resultType="ActivityRemark">
+    <select id="queryRemarksByAId" resultType="com.zhiyiyo.crm.workbench.entity.ActivityRemark">
         select id,
                noteContent,
                createTime,

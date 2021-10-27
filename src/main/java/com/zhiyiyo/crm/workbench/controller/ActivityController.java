@@ -9,8 +9,9 @@ import com.zhiyiyo.crm.workbench.entity.Activity;
 import com.zhiyiyo.crm.workbench.entity.ActivityRemark;
 import com.zhiyiyo.crm.workbench.service.ActivityService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,7 +39,7 @@ public class ActivityController {
      * @param activity 市场活动
      * @return 插入是否成功 json 数据
      */
-    @RequestMapping(value = "/addActivity.do", method = RequestMethod.POST)
+    @PostMapping("/addActivity")
     @ResponseBody
     public Map<String, Object> addActivity(HttpSession session, Activity activity) {
         // 更新市场活动的值
@@ -54,16 +55,16 @@ public class ActivityController {
         return data;
     }
 
-    @RequestMapping("/getUserList.do")
+    @GetMapping("/getUserList")
     @ResponseBody
     public List<User> getUserList() {
         return userService.getUserList();
     }
 
-    @RequestMapping("/getActivities.do")
+    @GetMapping("/getActivities")
     @ResponseBody
-    public PaginationVo<Activity> getActivities(Integer pageNum, Integer pageSize, String name,
-                                                String owner, String startDate, String endDate) {
+    public PaginationVo<Activity> getActivities(Integer pageNum, Integer pageSize, String name, String owner,
+            String startDate, String endDate) {
         Map<String, Object> condition = new HashMap<>();
         condition.put("start", (pageNum - 1) * pageNum);
         condition.put("pageSize", pageSize);
@@ -74,7 +75,7 @@ public class ActivityController {
         return activityService.getActivities(condition);
     }
 
-    @RequestMapping(value = "/deleteActivities.do", method = RequestMethod.POST)
+    @PostMapping("/deleteActivities")
     @ResponseBody
     public Map<String, Object> deleteActivities(@RequestParam("ids[]") String[] ids) {
         boolean success = activityService.deleteActivity(ids);
@@ -85,7 +86,7 @@ public class ActivityController {
         return data;
     }
 
-    @RequestMapping("/getUserListAndActivity.do")
+    @GetMapping("/getUserListAndActivity")
     @ResponseBody
     public Map<String, Object> getUserListAndActivity(String id) {
         List<User> userList = userService.getUserList();
@@ -98,7 +99,7 @@ public class ActivityController {
         return data;
     }
 
-    @RequestMapping(value = "/updateActivity.do", method = RequestMethod.POST)
+    @PostMapping("/updateActivity")
     @ResponseBody
     public Map<String, Object> updateActivity(HttpSession session, Activity activity) {
         activity.setEditTime(DateTimeUtil.getSysTime());
@@ -112,11 +113,10 @@ public class ActivityController {
         return data;
     }
 
-    @RequestMapping("/showDetails.do")
+    @GetMapping("/showDetails")
     public ModelAndView showDetails(String id) {
-        ModelAndView mv = new ModelAndView("/workbench/activity/details.jsp");
+        ModelAndView mv = new ModelAndView("/workbench/activity/details");
         mv.addObject("activity", activityService.getActivityById(id));
-
         return mv;
     }
 
@@ -126,13 +126,13 @@ public class ActivityController {
      * @param id 市场活动的 id
      * @return 评论列表
      */
-    @RequestMapping("/getRemarksByAId.do")
+    @GetMapping("/getRemarksByAId")
     @ResponseBody
     public List<ActivityRemark> getRemarksByAId(String id) {
         return activityService.getRemarksByAId(id);
     }
 
-    @RequestMapping(value = "/addRemark.do", method = RequestMethod.POST)
+    @PostMapping("/addRemark")
     @ResponseBody
     public Map<String, Object> addRemark(HttpSession session, ActivityRemark remark) {
         remark.setId(UUIDUtil.getUUID());
@@ -146,7 +146,7 @@ public class ActivityController {
         return data;
     }
 
-    @RequestMapping(value = "/updateRemark.do", method = RequestMethod.POST)
+    @PostMapping("/updateRemark")
     @ResponseBody
     public Map<String, Object> updateRemark(HttpSession session, ActivityRemark remark) {
         remark.setEditBy(((User) session.getAttribute("user")).getName());
@@ -159,7 +159,7 @@ public class ActivityController {
         return data;
     }
 
-    @RequestMapping(value = "/deleteRemark.do", method = RequestMethod.POST)
+    @PostMapping("/deleteRemark")
     @ResponseBody
     public Map<String, Object> deleteRemark(String id) {
         Map<String, Object> data = new HashMap<>();

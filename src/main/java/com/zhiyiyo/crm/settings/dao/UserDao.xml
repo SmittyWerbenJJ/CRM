@@ -2,42 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.zhiyiyo.crm.settings.dao.UserDao">
-    <select id="login" resultType="User">
-        select id,
-               loginAct,
-               name,
-               loginPwd,
-               email,
-               expireTime,
-               lockState,
-               deptno,
-               allowIps,
-               createTime,
-               createBy,
-               editTime,
-               editBy
+    <sql id="allFields">
+        id, loginAct, name, loginPwd, email, expireTime, lockState,
+        deptno, allowIps, createTime, createBy, editTime, editBy
+</sql>
+    <select id="login" resultType="com.zhiyiyo.crm.settings.entity.User">
+        select
+        <include refid="allFields"/>
         from tbl_user
         where loginAct = #{loginAct}
           and loginPwd = #{loginPwd};
-    </select>
+</select>
 
     <insert id="insertUser">
         insert into tbl_user value (#{id}, #{loginAct}, #{name}, #{loginPwd}, #{email}, #{expireTime}, #{lockState}, #{deptno}, #{allowIps}, #{createTime}, #{createBy}, #{editTime}, #{editBy})
-    </insert>
+</insert>
 
-    <select id="findAllUsers" resultType="User">
-        select id,
-               loginAct,
-               name,
-               email,
-               expireTime,
-               lockState,
-               deptno,
-               allowIps,
-               createTime,
-               createBy,
-               editTime,
-               editBy
+    <select id="findAllUsers" resultType="com.zhiyiyo.crm.settings.entity.User">
+        select
+        <include refid="allFields" />
         from tbl_user
-    </select>
+</select>
 </mapper>

@@ -15,7 +15,7 @@
             )
     </insert>
 
-    <select id="queryRemarksByCId" resultType="ClueRemark">
+    <select id="queryRemarksByCId" resultType="com.zhiyiyo.crm.workbench.entity.ClueRemark">
         select id,
                noteContent,
                createTime,

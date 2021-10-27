@@ -28,7 +28,7 @@
             )
     </insert>
 
-    <select id="queryCluesByCondition" resultType="Clue">
+    <select id="queryCluesByCondition" resultType="com.zhiyiyo.crm.workbench.entity.Clue">
         select
         c.id, u.name as owner, c.company,c.appellation,
         c.phone, c.mphone, c.createTime, c.source, c.state, c.fullname
@@ -79,7 +79,7 @@
             <if test="mphone!=null and mphone!=''">
                 and c.mphone like '%' #{mphone} '%'
             </if>
-            <if test="source!=null and source!=''">User
+            <if test="source!=null and source!=''">
                 and c.source like '%' #{source} '%'
             </if>
             <if test="state!=null and state!=''">
@@ -91,7 +91,7 @@
         </where>
     </select>
 
-    <select id="queryClueById" resultType="Clue">
+    <select id="queryClueById" resultType="com.zhiyiyo.crm.workbench.entity.Clue">
         select c.id,
                c.fullname,
                c.appellation,
