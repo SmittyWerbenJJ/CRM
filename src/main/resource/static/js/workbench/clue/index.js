@@ -141,15 +141,13 @@ function createPagination(count, pageSize, pageNum = 1) {
  * @param {string} action 执行的操作名称
  */
 function showToast(isSuccess, action) {
+    result = isSuccess ? "成功" : "失败"
+
     if (isSuccess) {
-        $("#toast").removeClass("bg-danger")
-        $("#toast-body").text(action + "成功")
-    } else {
-        $("#toast").addClass("bg-danger")
-        $("#toast-body").text(action + "失败")
+        $.message({
+            type: isSuccess ? "success" : "error",
+            text: action + result,
+            duration: 1500
+        });
     }
-
-
-    var toast = new bootstrap.Toast($("#toast")[0])
-    toast.show()
 }

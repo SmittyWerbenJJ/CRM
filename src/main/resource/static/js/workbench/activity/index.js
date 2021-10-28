@@ -49,6 +49,11 @@ $(function () {
 
         // 如果开始日期小于结束日期则返回
         if (startDate > endDate) {
+            $.message({
+                type: "warning",
+                text: "开始日期不能在结束日期之后",
+                duration: 1500
+            });
             return
         }
 
@@ -136,6 +141,8 @@ $(function () {
 
     // 修改按钮点击事件
     $("#editBtn").on("click", function () {
+        $("#edit-form").removeClass("was-validated")
+
         var dx = $("input.dx:checked")
 
         if (dx.length == 0) {
@@ -176,31 +183,47 @@ $(function () {
 
     // 更新按钮点击事件
     $("#update-modalBtn").on("click", function () {
-        $.ajax({
-            url: "/workbench/activity/updateActivity",
-            dataType: "json",
-            type: "post",
-            data: {
-                id: $("input.dx:checked").val(),
-                owner: $("#edit-owner").val(),
-                name: $("#edit-name").val(),
-                startDate: $("#edit-start-date").val(),
-                endDate: $("#edit-end-date").val(),
-                cost: $("#edit-cost").val(),
-                description: $("#edit-description").val()
-            }
-        }).done(function (data) {
-            $("#editActivityModal").modal("hide")
-            showToast(data.success, "修改市场活动信息")
+        // 验证表单
+        $("#edit-form").addClass("was-validated")
 
-            if (data.success) {
-                // 获取当前页码
-                var pageNum = parseInt($("li.active > a").text())
-                console.log(pageNum);
-                getActivities(pageNum, pageSize, false)
+        var id = $("input.dx:checked").val()
+        var owner = $("#edit-owner").val().trim();
+        var name = $("#edit-name").val().trim();
+        var startDate = $("#edit-start-date").val();
+        var endDate = $("#edit-end-date").val();
+        var cost = $("#edit-cost").val();
+        var description = $("#edit-description").val();
 
-            }
-        })
+        // 如果开始日期小于结束日期则返回
+        if (startDate > endDate) {
+            $.message({
+                type: "warning",
+                text: "开始日期不能在结束日期之后",
+                duration: 1500
+            });
+            return
+        }
+
+        if ([owner, name, startDate, endDate, cost].every(v => v.length > 0)) {
+            $.ajax({
+                url: "/workbench/activity/updateActivity",
+                dataType: "json",
+                type: "post",
+                data: {
+                    id, owner, name, startDate, endDate, cost, description
+                }
+            }).done(function (data) {
+                $("#editActivityModal").modal("hide")
+
+                showToast(data.success, "修改市场活动信息")
+
+                if (data.success) {
+                    // 获取当前页码
+                    var pageNum = parseInt($("li.active > a").text())
+                    getActivities(pageNum, pageSize, false)
+                }
+            })
+        }
     })
 
 })
@@ -295,15 +318,13 @@ function createPagination(count, pageSize, pageNum = 1) {
  * @param {string} action 执行的操作名称
  */
 function showToast(isSuccess, action) {
+    result = isSuccess ? "成功" : "失败"
+
     if (isSuccess) {
-        $("#toast").removeClass("bg-danger")
-        $("#toast-body").text(action + "成功")
-    } else {
-        $("#toast").addClass("bg-danger")
-        $("#toast-body").text(action + "失败")
+        $.message({
+            type: isSuccess ? "success" : "error",
+            text: action + result,
+            duration: 2000
+        });
     }
-
-
-    var toast = new bootstrap.Toast($("#toast")[0])
-    toast.show()
 }

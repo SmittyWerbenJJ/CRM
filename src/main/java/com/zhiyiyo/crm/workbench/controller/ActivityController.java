@@ -66,7 +66,7 @@ public class ActivityController {
     public PaginationVo<Activity> getActivities(Integer pageNum, Integer pageSize, String name, String owner,
             String startDate, String endDate) {
         Map<String, Object> condition = new HashMap<>();
-        condition.put("start", (pageNum - 1) * pageNum);
+        condition.put("start", (pageNum - 1) * pageSize);
         condition.put("pageSize", pageSize);
         condition.put("name", name);
         condition.put("owner", owner);
@@ -109,7 +109,7 @@ public class ActivityController {
 
         Map<String, Object> data = new HashMap<>();
         data.put("success", success);
-
+        data.put("activity", activity);
         return data;
     }
 

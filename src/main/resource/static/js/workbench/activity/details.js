@@ -1,6 +1,6 @@
 $(function () {
     $(".nav-item>a:eq(2)").addClass("active")
-    
+
     // 添加日历
     $(".time").datetimepicker({
         minView: "month",
@@ -21,7 +21,7 @@ $(function () {
         let html = ''
 
         $.each(data, function (i, remark) {
-            html += createRemarkHTML(`https://avatars.githubusercontent.com/u/683682${i%100}?s=100&v=4`, remark)
+            html += createRemarkHTML(`https://avatars.githubusercontent.com/u/683682${i % 100}?s=100&v=4`, remark)
         })
 
         $("#comment-list").html(html)
@@ -122,7 +122,7 @@ $(function () {
 
             // 移除评论
             if (data.success) {
-                $("#" + remarkId).remove();
+                $("#" + remarkId).remove()
             }
         });
 
@@ -131,6 +131,8 @@ $(function () {
 
     // 点击编辑按钮弹出对话框
     $("#editActivityBtn").on("click", function () {
+        $("#edit-form").removeClass("was-validated")
+
         $("#editActivityModal").modal("show");
 
         // 发出获取用户列表的请求
@@ -142,10 +144,62 @@ $(function () {
             for (const user of data) {
                 html += `<option value="${user.id}">${user.name}</option>`
             }
-            $("#edit-owner").html(html);
+            $("#edit-owner").html(html)
         })
 
     });
+
+    // 更新按钮点击事件
+    $("#update-activity-btn").on("click", function () {
+        // 验证表单
+        $("#edit-form").addClass("was-validated")
+
+        var id = $("#hidden-activity-id").val()
+        var owner = $("#edit-owner").val().trim()
+        var name = $("#edit-name").val().trim()
+        var startDate = $("#edit-start-date").val()
+        var endDate = $("#edit-end-date").val()
+        var cost = $("#edit-cost").val()
+        var description = $("#edit-description").val()
+
+        // 如果开始日期小于结束日期则返回
+        if (startDate > endDate) {
+            $.message({
+                type: "warning",
+                text: "开始日期不能在结束日期之后",
+                duration: 1500
+            });
+            return
+        }
+
+        if ([owner, name, startDate, endDate, cost].every(v => v.length > 0)) {
+            $.ajax({
+                url: "/workbench/activity/updateActivity",
+                dataType: "json",
+                type: "post",
+                data: {
+                    id, owner, name, startDate, endDate, cost, description
+                }
+            }).done(function (data) {
+                $("#editActivityModal").modal("hide")
+                showToast(data.success, "修改市场活动信息")
+
+                // 更新页面信息
+                if (data.success) {
+                    let activity = data.activity
+                    $("#owner").text($("#edit-owner option:selected").text())
+                    $("#name").text(activity.name)
+                    $("#startDate").text(activity.startDate)
+                    $("#endDate").text(activity.endDate)
+                    $("#cost").text(activity.cost)
+                    $("#editBy").text(activity.editBy)
+                    $("#editBy").append("<small class='fs-8 text-secondary ms-2' id='editTime'></small>")
+                    $("#editTime").text(activity.editTime)
+                    $("#description").text(activity.description)
+                }
+            })
+        }
+    })
 
     // 删除市场活动
     $("#deleteActivityBtn").on("click", function () {
@@ -161,11 +215,10 @@ $(function () {
                 ids: [$("#hidden-activity-id").val()]
             }
         }).done(function (data) {
+            showToast(data.success, "删除市场活动信息")
+
             if (data.success) {
-                location.href = "/workbench/activity/index.html"
-                alert("删除市场活动信息成功！")
-            } else {
-                alert("市场市场活动信息失败！")
+                setTimeout(() => { location.href = "/workbench/activity/index.html" }, 1500)
             }
         })
     });
@@ -179,19 +232,16 @@ $(function () {
  * @param {string} action 执行的操作名称
  */
 function showToast(isSuccess, action) {
+    result = isSuccess ? "成功" : "失败"
+
     if (isSuccess) {
-        $("#toast").removeClass("bg-danger")
-        $("#toast-body").text(action + "成功")
-    } else {
-        $("#toast").addClass("bg-danger")
-        $("#toast-body").text(action + "失败")
+        $.message({
+            type: isSuccess ? "success" : "error",
+            text: action + result,
+            duration: 1500
+        });
     }
-
-
-    var toast = new bootstrap.Toast($("#toast")[0])
-    toast.show()
 }
-
 
 /**
  * 创建用户评论 HTML 标签

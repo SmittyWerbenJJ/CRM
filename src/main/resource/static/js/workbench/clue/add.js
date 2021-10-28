@@ -109,10 +109,9 @@ $(function () {
                 source, description, contactSummary, nextContactTime, address
             }
         }).done(function (data) {
-            if (!data.success) {
-                alert("添加失败啦，前辈可以再次尝试哦~")
-            } else {
-                location.href = "/workbench/clue/index.html"
+            showToast(data.success, "添加线索")
+            if (data.success) {
+                setTimeout(() => { location.href = "/workbench/clue/index.html" }, 1500)
             }
         })
     });
@@ -123,4 +122,23 @@ $(function () {
  */
 function cleanInValidState() {
     $("[id^='add-']").removeClass("is-invalid")
+}
+
+
+
+/**
+ * 显示提示气泡
+ * @param {boolean} isSuccess 是否成功
+ * @param {string} action 执行的操作名称
+ */
+function showToast(isSuccess, action) {
+    result = isSuccess ? "成功" : "失败"
+
+    if (isSuccess) {
+        $.message({
+            type: isSuccess ? "success" : "error",
+            text: action + result,
+            duration: 1500
+        });
+    }
 }

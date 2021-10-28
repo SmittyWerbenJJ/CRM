@@ -28,6 +28,13 @@ function login() {
             if (!data.success) {
                 $("#msg").text(data.msg)
                 $("#tip").show()
+            } else {
+                $.message({
+                    type: "success",
+                    text: "登陆成功",
+                    duration: 500
+                });
+                setTimeout(() => { location.href = "/workbench/index.html" }, 500)
             }
         })
     }

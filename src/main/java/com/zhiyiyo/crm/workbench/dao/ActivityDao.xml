@@ -79,8 +79,7 @@
                 and a.endDate &lt; #{endDate}
             </if>
         </where>
-        order by a.createTime desc
-        limit #{start},#{pageSize}
+        order by a.createTime DESC limit #{start},#{pageSize}
     </select>
 
     <select id="queryActivity" resultType="com.zhiyiyo.crm.workbench.entity.Activity">

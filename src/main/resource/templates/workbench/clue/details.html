@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="../../../static/css/workbench.css" th:href="@{/css/workbench.css}" />
     <link rel="stylesheet" href="../../../static/css/bootstrap-datetimepicker.min.css"
         th:href="@{/css/bootstrap-datetimepicker.min.css}" />
+    <link rel="stylesheet" href="../static/css/td-msessage.css" th:href="@{/css/td-msessage.css}">
     <script src="../../../static/js/lib/jquery.js" th:src="@{/js/lib/jquery.js}"></script>
+    <script src="../static/js/lib/td-message.js" th:src="@{/js/lib/td-message.js}"></script>
     <script src="../../../static/js/lib/bootstrap-datetimepicker.js" th:src="@{/js/lib/bootstrap-datetimepicker.js}">
     </script>
     <script src="../../../static/js/lib/bootstrap-datetimepicker.zh-CN.js"
@@ -31,21 +33,7 @@
         <!-- 工作区 -->
         <div class="page-holder">
             <div class="container-fluid px-xl-7">
-                <div class="d-flex">
-                    <h2>线索详细信息</h2>
-
-                    <!-- 提示信息 -->
-                    <div class="toast align-items-center text-white bg-success bottom-0 end-0 border-0 ms-auto"
-                        role="alert" aria-live="assertive" aria-atomic="true" id="toast">
-                        <div class="d-flex">
-                            <div class="toast-body" id="toast-body">
-
-                            </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                                aria-label="Close"></button>
-                        </div>
-                    </div>
-                </div>
+                <h2>线索详细信息</h2>
 
                 <div class="card mt-5">
                     <input type="hidden" id="hidden-clue-id" th:value="${clue.id}">

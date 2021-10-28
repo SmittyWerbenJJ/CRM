@@ -28,14 +28,13 @@ $(function () {
                 "clueId": $("#hidden-clue-id").val()
             }
         }).done(function (data) {
+            showToast(data.success, "吐槽")
+
             // 在所有评论前面插入评论
             if (data.success) {
                 $("#comment-list").prepend(createRemarkHTML("/image/avatar.png", data.remark))
                 $("#commentInput").val("")
-            } else {
-                alert("吐槽失败，前辈请重新尝试~")
             }
-
         })
     })
 
@@ -50,7 +49,7 @@ $(function () {
         let html = ''
 
         $.each(data, function (i, remark) {
-            html += createRemarkHTML(`https://avatars.githubusercontent.com/u/683682${i%100}?s=100&v=4`, remark)
+            html += createRemarkHTML(`https://avatars.githubusercontent.com/u/683682${i % 100}?s=100&v=4`, remark)
         })
 
         $("#comment-list").html(html)
@@ -86,12 +85,12 @@ $(function () {
                 noteContent: noteContent
             }
         }).done(function (data) {
+            showToast(data.success, "更新评论")
+
             // 更新评论和评论时间
             if (data.success) {
                 $(`#noteContent-${remarkId}`).text(data.remark.noteContent)
                 $(`#post-time-${remarkId}`).text(data.remark.editTime)
-            } else {
-                alert("更新吐槽失败啦，前辈可以再次尝试哦~")
             }
 
             // 关闭模态窗口
@@ -118,11 +117,10 @@ $(function () {
             },
             dataType: "json",
         }).done(function (data) {
+            showToast(data.success, "删除评论")
             // 移除评论
             if (data.success) {
                 $("#" + remarkId).remove();
-            } else {
-                alert("哎呀，删除失败了，前辈请稍后再试~")
             }
         });
 
@@ -181,4 +179,22 @@ function createRemarkHTML(imagePath, remark) {
             </div>
         </div>
         `
+}
+
+
+/**
+ * 显示提示气泡
+ * @param {boolean} isSuccess 是否成功
+ * @param {string} action 执行的操作名称
+ */
+function showToast(isSuccess, action) {
+    result = isSuccess ? "成功" : "失败"
+
+    if (isSuccess) {
+        $.message({
+            type: isSuccess ? "success" : "error",
+            text: action + result,
+            duration: 1500
+        });
+    }
 }
