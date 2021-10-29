@@ -1,8 +1,13 @@
 package com.zhiyiyo.crm.workbench.service.impl;
 
+import com.zhiyiyo.crm.utils.UUIDUtil;
+import com.zhiyiyo.crm.workbench.dao.ActivityDao;
+import com.zhiyiyo.crm.workbench.dao.ClueActivityRelationDao;
 import com.zhiyiyo.crm.workbench.dao.ClueDao;
 import com.zhiyiyo.crm.workbench.dao.ClueRemarkDao;
+import com.zhiyiyo.crm.workbench.entity.Activity;
 import com.zhiyiyo.crm.workbench.entity.Clue;
+import com.zhiyiyo.crm.workbench.entity.ClueActivityRelation;
 import com.zhiyiyo.crm.workbench.entity.ClueRemark;
 import com.zhiyiyo.crm.workbench.service.ClueService;
 import org.springframework.stereotype.Service;
@@ -17,7 +22,13 @@ public class ClueServiceImpl implements ClueService {
     private ClueDao clueDao;
 
     @Resource
+    private ActivityDao activityDao;
+
+    @Resource
     private ClueRemarkDao clueRemarkDao;
+
+    @Resource
+    public ClueActivityRelationDao clueActivityRelationDao;
 
     @Override
     public boolean addClue(Clue clue) {
@@ -57,5 +68,39 @@ public class ClueServiceImpl implements ClueService {
     @Override
     public boolean deleteRemark(String id) {
         return clueRemarkDao.deleteRemark(id).equals(1);
+    }
+
+    @Override
+    public List<Activity> getBoundActivities(String id) {
+        return activityDao.queryActivitiesByClueId(id);
+    }
+
+    @Override
+    public boolean unbindActivities(String[] ids) {
+        boolean success = true;
+        for (String id : ids) {
+            success &= clueActivityRelationDao.deleteById(id).equals(1);
+        }
+        return success;
+    }
+
+    @Override
+    public List<Activity> getUnboundActivities(Map<String, String> map) {
+        return activityDao.queryUnboundClueActivities(map);
+    }
+
+    @Override
+    public boolean bindActivities(String clueId, String[] activityIds) {
+        boolean success = true;
+
+        for (String activityId : activityIds) {
+            ClueActivityRelation relation = new ClueActivityRelation();
+            relation.setId(UUIDUtil.getUUID());
+            relation.setClueId(clueId);
+            relation.setActivityId(activityId);
+            success &= clueActivityRelationDao.insertRelation(relation).equals(1);
+        }
+
+        return success;
     }
 }

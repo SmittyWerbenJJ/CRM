@@ -2,7 +2,7 @@ use crm;
 DROP TABLE IF EXISTS `tbl_user`;
 CREATE TABLE `tbl_user` (
   `id` char(32) NOT NULL COMMENT 'uuid',
-  `loginAct` varchar(255) DEFAULT NULL COMMENT '用户的账号名',
+  `loginAct` varchar(255) UNIQUE COMMENT '用户的账号名',
   `name` varchar(255) DEFAULT NULL COMMENT '用户真实名字',
   `loginPwd` varchar(255) DEFAULT NULL COMMENT '不能明文存储密码，采用MD5加密',
   `email` varchar(255) DEFAULT NULL COMMENT '用户邮箱',
@@ -68,8 +68,9 @@ values
     "40f6cdea0bd34aceb77492a1656d9fb4",
     "zhiyiYo",
     "之一Yo",
-    "7e1d774ea263041a26945672cb9b63c2", /* 123456 */
+    "0ebb84d6da26e749277b41782f18097d", /* 123456 */
     "1319158137@qq.com",
+    NULL,
     NULL,
     NULL,
     NULL,

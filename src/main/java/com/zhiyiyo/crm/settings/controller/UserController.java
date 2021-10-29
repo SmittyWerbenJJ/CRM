@@ -2,6 +2,7 @@ package com.zhiyiyo.crm.settings.controller;
 
 import com.zhiyiyo.crm.settings.entity.User;
 import com.zhiyiyo.crm.settings.exception.LoginException;
+import com.zhiyiyo.crm.settings.exception.SignupException;
 import com.zhiyiyo.crm.settings.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,20 @@ public class UserController {
         // 前端使用 ajax 发送请求，不能直接重定向，因为 ajax 只会拿到 HTML 的数据
         Map<String, Object> data = new HashMap<>();
         data.put("msg", "登陆成功");
+        data.put("success", true);
+        return data;
+    }
+
+    @PostMapping("/signup")
+    @ResponseBody
+    public Map<String, Object> signup(HttpSession session, String loginAct, String loginPwd, String name) throws SignupException {
+        Map<String, Object> data = new HashMap<>();
+
+        // 注册用户
+        User user = userService.signup(loginAct, loginPwd, name);
+        session.setAttribute("user", user);
+
+        data.put("msg", "注册成功");
         data.put("success", true);
         return data;
     }

@@ -1,43 +1,52 @@
 $(function () {
+    // 创建提示气泡
+    $(".tt").each(function () {
+        new bootstrap.Tooltip(this)
+    })
 
-    // 点击登录按钮进行登录验证
-    $("#loginBtn").on("click", login)
+
+    // 点击注册按钮
+    $("#signupBtn").on("click", signup)
 
     // 按下回车进行登录验证
     $(window).on("keydown", function (event) {
         if (event.keyCode == 13) {
-            login()
+            signup()
         }
     })
 })
 
 
-/* 登录 */
-function login() {
-    if (verifyParams()) {
-        //发送请求
-        $.ajax({
-            url: "/settings/user/login",
-            type: "post",
-            dataType: "json",
-            data: {
-                "loginAct": $("#userName").val(),
-                "loginPwd": md5Encryption($("#password").val())
-            }
-        }).done(function (data) {
-            if (!data.success) {
-                $("#msg").text(data.msg)
-                $("#tip").show()
-            } else {
-                $.message({
-                    type: "success",
-                    text: "登陆成功",
-                    duration: 500
-                });
-                setTimeout(() => { location.href = "/workbench/index.html" }, 500)
-            }
-        })
+/* 注册 */
+function signup() {
+    if (!verifyParams()) {
+        return
     }
+
+    //发送请求
+    $.ajax({
+        url: "/settings/user/signup",
+        type: "post",
+        dataType: "json",
+        data: {
+            "loginAct": $("#userName").val().trim(),
+            "name": $("#name").val().trim(),
+            "loginPwd": md5Encryption($("#password").val())
+        }
+    }).done(function (data) {
+        if (!data.success) {
+            $("#msg").text(data.msg)
+            $("#tip").show()
+        } else {
+            $.message({
+                type: "success",
+                text: "注册成功",
+                duration: 1000
+            })
+
+            setTimeout(() => { location.href = "/workbench/index.html" }, 1000)
+        }
+    })
 }
 
 
@@ -51,10 +60,19 @@ function verifyParams() {
     // 验证用户名
     var userName = $("#userName").val()
     if (!/^\S+$/.test(userName)) {
-        msg.push("用户名非法");
+        msg.push("用户名不能为空");
         $("#userName").addClass("is-invalid")
     } else {
         $("#userName").removeClass("is-invalid")
+    }
+
+    // 验证真实姓名
+    var name = $("#name").val()
+    if (!/^\S+$/.test(name)) {
+        msg.push("真实姓名不能为空");
+        $("#name").addClass("is-invalid")
+    } else {
+        $("#name").removeClass("is-invalid")
     }
 
     // 验证密码，密码 6 到 20 位，其中可以包含数字、字母和下划线

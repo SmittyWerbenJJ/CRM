@@ -13,6 +13,11 @@ public class WelcomeController {
 
     @GetMapping("/login")
     public String login(){
-        return "login";
+        return "settings/user/login";
+    }
+
+    @GetMapping("/signup")
+    public String signup(){
+        return "settings/user/signup";
     }
 }

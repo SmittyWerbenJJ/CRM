@@ -5,6 +5,7 @@ import java.util.List;
 import com.zhiyiyo.crm.settings.entity.User;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.dao.DuplicateKeyException;
 
 public interface UserDao {
     /**
@@ -21,7 +22,7 @@ public interface UserDao {
      * @param user 用户
      * @return 受影响的行数
      */
-    int insertUser(User user);
+    Integer insertUser(User user) throws DuplicateKeyException;
 
     /**
      * 查询所有用户

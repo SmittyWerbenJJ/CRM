@@ -5,6 +5,7 @@ import java.util.List;
 import com.zhiyiyo.crm.settings.entity.User;
 
 import com.zhiyiyo.crm.settings.exception.LoginException;
+import com.zhiyiyo.crm.settings.exception.SignupException;
 
 public interface UserService {
     /**
@@ -22,4 +23,13 @@ public interface UserService {
      * @return 用户列表
      */
     List<User> getUserList();
+
+    /**
+     * 注册用户
+     * @param loginAct 用户名
+     * @param loginPwd 由前端传过来的第一次 MD5 加密后的密码
+     * @param name 用户真实姓名
+     * @return 注册后的用户信息
+     */
+    User signup(String loginAct, String loginPwd, String name) throws SignupException;
 }

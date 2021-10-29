@@ -55,4 +55,45 @@ public interface ActivityDao {
      * @return 受影响的行数
      */
     Integer update(Activity activity);
+
+    /**
+     * 查询所有和指定线索 id 相关联的市场活动
+     * @param id 线索 id
+     * @return 市场活动列表
+     */
+    List<Activity> queryActivitiesByClueId(String id);
+
+
+    /**
+     * 获取还没和线索绑定的市场活动
+     * @param map 市场活动名称和线索 id 组成的字典
+     * @return 匹配名字的市场活动列表
+     */
+    List<Activity> queryUnboundClueActivities(Map<String, String> map);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

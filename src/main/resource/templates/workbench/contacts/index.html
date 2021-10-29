@@ -21,8 +21,8 @@
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
     <script src="../../../static/js/lib/bootstrap-pagination.js" th:src="@{/js/lib/bootstrap-pagination.js}"></script>
-    <script src="../../../static/js/workbench/clue/index.js" th:src="@{/js/workbench/clue/index.js}"></script>
-    <title>工作台 - CRM</title>
+    <script src="../../../static/js/workbench/contacts/index.js" th:src="@{/js/workbench/contacts/index.js}"></script>
+    <title>联系人 - CRM</title>
 </head>
 
 <body>
@@ -36,7 +36,7 @@
         <!-- 工作区 -->
         <div class="page-holder">
             <div class="container-fluid px-xl-7">
-                <h2>线索</h2>
+                <h2>联系人</h2>
 
                 <!-- 筛选 -->
                 <div class="card mt-4">
@@ -48,27 +48,6 @@
                         <p class="fs-4 fw-bold mb-5">前辈可以在这里输入你想要的条件哦 😆</p>
                         <form class="form-horizontal">
                             <div class="row mb-5">
-                                <label class="col-md-3 form-label" for="search-fullname">名称</label>
-                                <div class="col-md-8">
-                                    <input class="form-control" id="search-fullname" type="text">
-                                </div>
-                            </div>
-
-                            <div class="row mb-5">
-                                <label class="col-sm-3 form-label" for="search-company">公司</label>
-                                <div class="col-md-8">
-                                    <input class="form-control" id="search-company" type="text">
-                                </div>
-                            </div>
-
-                            <div class="row mb-5">
-                                <label class="col-sm-3 form-label" for="search-phone">公司座机</label>
-                                <div class="col-md-8">
-                                    <input class="form-control" id="search-phone" type="text">
-                                </div>
-                            </div>
-
-                            <div class="row mb-5">
                                 <label class="col-sm-3 form-label" for="search-owner">所有者</label>
                                 <div class="col-md-8">
                                     <input class="form-control" id="search-owner" type="text">
@@ -76,14 +55,21 @@
                             </div>
 
                             <div class="row mb-5">
-                                <label class="col-sm-3 form-label" for="search-mphone">手机</label>
+                                <label class="col-sm-3 form-label" for="search-fullname">姓名</label>
                                 <div class="col-md-8">
-                                    <input class="form-control time" id="search-mphone" type="text">
+                                    <input class="form-control" id="search-fullname" type="text">
                                 </div>
                             </div>
 
                             <div class="row mb-5">
-                                <label class="col-sm-3 form-label" for="search-source">线索来源</label>
+                                <label class="col-sm-3 form-label" for="search-customerName">客户名称</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" id="search-customerName" type="text">
+                                </div>
+                            </div>
+
+                            <div class="row mb-5">
+                                <label class="col-sm-3 form-label" for="search-source">来源</label>
                                 <div class="col-md-8">
                                     <select name="search-source" class="form-select" id="search-source">
                                         <option></option>
@@ -95,14 +81,9 @@
                             </div>
 
                             <div class="row mb-5">
-                                <label class="col-sm-3 form-label" for="search-state">线索状态</label>
+                                <label class="col-sm-3 form-label" for="search-birth">生日</label>
                                 <div class="col-md-8">
-                                    <select name="search-state" class="form-select" id="search-state">
-                                        <option value=""></option>
-                                        <option th:each="i:${application.clueState}" th:value="${i.value}">
-                                            [[${i.text}]]
-                                        </option>
-                                    </select>
+                                    <input class="form-control" id="search-birth" type="text">
                                 </div>
                             </div>
 
@@ -117,7 +98,6 @@
 
                 <!-- 查询结果 -->
                 <div class="card mt-7">
-                    <!-- <input type="hidden" id="hidden-clue-id" th:value="${clue.id}"> -->
                     <div class="card-header">
                         <h4>查询结果</h4>
                     </div>
@@ -127,22 +107,20 @@
                             <thead>
                                 <tr>
                                     <td><input class="form-check-input" type="checkbox" id="qx" /></td>
-                                    <td>名称</td>
-                                    <td>公司</td>
-                                    <td>公司座机</td>
-                                    <td>手机</td>
-                                    <td>线索来源</td>
+                                    <td>姓名</td>
+                                    <td>客户名称</td>
                                     <td>所有者</td>
-                                    <td>线索状态</td>
+                                    <td>来源</td>
+                                    <td>生日</td>
                                 </tr>
                             </thead>
 
-                            <tbody id="clueBody">
+                            <tbody id="contactsBody">
 
                             </tbody>
                         </table>
 
-                        <div class="text-center" id="cluePage">
+                        <div class="text-center" id="contactsPage">
                             <ul class="pagination mb-0 mt-6 fs-8"></ul>
                         </div>
                     </div>
@@ -156,12 +134,10 @@
 
                 <!-- 隐藏域 -->
                 <input type="hidden" id="hidden-fullname">
-                <input type="hidden" id="hidden-company">
-                <input type="hidden" id="hidden-phone">
                 <input type="hidden" id="hidden-source">
                 <input type="hidden" id="hidden-owner">
-                <input type="hidden" id="hidden-mphone">
-                <input type="hidden" id="hidden-state">
+                <input type="hidden" id="hidden-birth">
+                <input type="hidden" id="hidden-customerName">
 
             </div>
         </div>

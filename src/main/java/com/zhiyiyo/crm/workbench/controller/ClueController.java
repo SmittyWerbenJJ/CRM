@@ -5,13 +5,12 @@ import com.zhiyiyo.crm.settings.service.UserService;
 import com.zhiyiyo.crm.utils.DateTimeUtil;
 import com.zhiyiyo.crm.utils.UUIDUtil;
 import com.zhiyiyo.crm.vo.PaginationVo;
+import com.zhiyiyo.crm.workbench.entity.Activity;
 import com.zhiyiyo.crm.workbench.entity.Clue;
 import com.zhiyiyo.crm.workbench.entity.ClueRemark;
 import com.zhiyiyo.crm.workbench.service.ClueService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -51,7 +50,7 @@ public class ClueController {
     @RequestMapping("getCluesByCondition")
     @ResponseBody
     public PaginationVo<Clue> getCluesByCondition(Integer pageNum, Integer pageSize, String fullname, String company,
-            String phone, String source, String owner, String mphone, String state) {
+                                                  String phone, String source, String owner, String mphone, String state) {
 
         Map<String, Object> condition = new HashMap<>();
         condition.put("start", (pageNum - 1) * pageSize);
@@ -125,4 +124,66 @@ public class ClueController {
 
         return data;
     }
+
+    @GetMapping("/getBoundActivities")
+    @ResponseBody
+    public List<Activity> getBoundActivities(String clueId) {
+        return clueService.getBoundActivities(clueId);
+    }
+
+    @PostMapping("/unbindActivities")
+    @ResponseBody
+    public Map<String, Object> unbindActivities(@RequestParam("ids[]") String[] ids) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", clueService.unbindActivities(ids));
+        return data;
+    }
+
+    @GetMapping("/getUnboundActivities")
+    @ResponseBody
+    public List<Activity> getUnboundActivities(String name, String clueId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("name", name);
+        map.put("clueId", clueId);
+        return clueService.getUnboundActivities(map);
+    }
+
+    @PostMapping("/bindActivities")
+    @ResponseBody
+    public Map<String, Object> bindActivities(String clueId, @RequestParam("activityIds[]") String[] activityIds) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", clueService.bindActivities(clueId, activityIds));
+        return map;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

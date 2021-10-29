@@ -1,7 +1,7 @@
 package com.zhiyiyo.crm.listener;
 
 import com.zhiyiyo.crm.settings.entity.DicValue;
-import com.zhiyiyo.crm.workbench.service.DicService;
+import com.zhiyiyo.crm.settings.service.DicService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationStartedEvent;

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhiyiyo.crm.workbench.dao.ContactsDao">
+    <select id="queryContactsByCondition" resultType="com.zhiyiyo.crm.workbench.entity.Contacts">
+        select
+        con.fullname,
+        con.birth,
+        con.source,
+        u.name as owner,
+        cus.name as custmerId
+        from tbl_contacts con
+        join tbl_customer cus on con.customerId=cus.id
+        join tbl_user u on con.owner=u.id
+        <where>
+            <if test="name!=null and name!=''">
+                con.fullname like '%' #{fullname} '%'
+            </if>
+            <if test="birth!=null and birth!=''">
+                con.birth like '%' #{birth} '%'
+            </if>
+            <if test="source!=null and source!=''">
+                con.source like '%' #{source} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="customerName!=null and customerName!=''">
+                and cus.name like '%' #{customerName} '%'
+            </if>
+        </where>
+        order by con.createTime DESC limit #{start},#{pageSize}
+    </select>
+    <select id="queryContactsCountByCondition" resultType="int">
+        select
+        count(*)
+        from tbl_contacts con
+        join tbl_customer cus on con.customerId=cus.id
+        join tbl_user u on con.owner=u.id
+        <where>
+            <if test="name!=null and name!=''">
+                con.fullname like '%' #{fullname} '%'
+            </if>
+            <if test="birth!=null and birth!=''">
+                con.birth like '%' #{birth} '%'
+            </if>
+            <if test="source!=null and source!=''">
+                con.source like '%' #{source} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="customerName!=null and customerName!=''">
+                and cus.name like '%' #{customerName} '%'
+            </if>
+        </where>
+        order by con.createTime DESC limit #{start},#{pageSize}
+    </select>
+</mapper>

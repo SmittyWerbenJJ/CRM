@@ -26,4 +26,9 @@ public class WorkbenchController {
     public String clueAdd() {
         return "workbench/clue/add";
     }
+
+    @RequestMapping("/contacts/index.html")
+    public String contactsIndex() {
+        return "workbench/contacts/index";
+    }
 }

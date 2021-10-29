@@ -10,6 +10,7 @@
                typeCode
         from tbl_dic_value
         where typeCode = #{code}
+        order by orderNo
     </select>
 
 </mapper>

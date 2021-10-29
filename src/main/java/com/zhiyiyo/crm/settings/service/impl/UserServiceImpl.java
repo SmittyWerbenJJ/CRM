@@ -3,8 +3,11 @@ package com.zhiyiyo.crm.settings.service.impl;
 import com.zhiyiyo.crm.settings.dao.UserDao;
 import com.zhiyiyo.crm.settings.entity.User;
 import com.zhiyiyo.crm.settings.exception.LoginException;
+import com.zhiyiyo.crm.settings.exception.SignupException;
 import com.zhiyiyo.crm.settings.service.UserService;
 import com.zhiyiyo.crm.utils.DateTimeUtil;
+import com.zhiyiyo.crm.utils.UUIDUtil;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -48,5 +51,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getUserList() {
         return userDao.findAllUsers();
+    }
+
+    @Override
+    public User signup(String loginAct, String loginPwd, String name) throws SignupException {
+        User user = new User();
+        user.setId(UUIDUtil.getUUID());
+        user.setName(name);
+        user.setLoginAct(loginAct);
+        user.setLoginPwd(DigestUtils.md5DigestAsHex((loginPwd + "zhiyiYo").getBytes()));
+        user.setCreateTime(DateTimeUtil.getSysTime());
+
+        // 注册用户
+        boolean success = false;
+        try {
+            success = userDao.insertUser(user).equals(1);
+        } catch (DuplicateKeyException e) {
+            throw new SignupException("用户名已存在，请前辈更换用户名后再重新尝试");
+        }
+
+        if (!success) {
+            throw new SignupException("遇到未知错误，请前辈稍后再试");
+        }
+
+        return user;
     }
 }

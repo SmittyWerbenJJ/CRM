@@ -1,9 +1,9 @@
-package com.zhiyiyo.crm.workbench.service.impl;
+package com.zhiyiyo.crm.settings.service.impl;
 
 import com.zhiyiyo.crm.settings.dao.DicTypeDao;
 import com.zhiyiyo.crm.settings.dao.DicValueDao;
 import com.zhiyiyo.crm.settings.entity.DicValue;
-import com.zhiyiyo.crm.workbench.service.DicService;
+import com.zhiyiyo.crm.settings.service.DicService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
