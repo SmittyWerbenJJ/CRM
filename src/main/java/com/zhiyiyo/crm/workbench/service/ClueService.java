@@ -102,4 +102,18 @@ public interface ClueService {
      * @return 关联是否成功
      */
     boolean bindActivities(String clueId, String[] activityIds);
+
+    /**
+     * 更新线索
+     * @param clue 线索
+     * @return 更新是否成功
+     */
+    boolean updateClue(Clue clue);
+
+    /**
+     * 删除多条线索
+     * @param ids 线索 id 列表
+     * @return 删除是否成功
+     */
+    boolean deleteClues(String[] ids);
 }

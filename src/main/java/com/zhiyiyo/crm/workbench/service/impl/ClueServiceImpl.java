@@ -103,4 +103,22 @@ public class ClueServiceImpl implements ClueService {
 
         return success;
     }
+
+    @Override
+    public boolean updateClue(Clue clue) {
+        return clueDao.updateClue(clue).equals(1);
+    }
+
+    @Override
+    public boolean deleteClues(String[] ids) {
+        Integer remarkCount = clueRemarkDao.queryRemarkCountByCIds(ids);
+        Integer deletedRemarkCount = clueRemarkDao.deleteRemarkByCIds(ids);
+        Integer relationCount = clueActivityRelationDao.queryCountByClueIds(ids);
+        Integer deletedRelationCount = clueActivityRelationDao.deleteByClueIds(ids);
+        Integer deletedClueCount = clueDao.deleteClues(ids);
+
+        return remarkCount.equals(deletedRemarkCount)
+                && relationCount.equals(deletedRelationCount)
+                && deletedClueCount.equals(ids.length);
+    }
 }

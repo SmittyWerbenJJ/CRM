@@ -33,4 +33,18 @@ public interface ClueDao {
      * @return 找到的线索
      */
     Clue queryClueById(String id);
+
+    /**
+     * 更新线索
+     * @param clue 线索
+     * @return 受影响的行数
+     */
+    Integer updateClue(Clue clue);
+
+    /**
+     * 删除多条线索
+     * @param ids 线索 id 列表
+     * @return 受影响的行数
+     */
+    Integer deleteClues(String[] ids);
 }

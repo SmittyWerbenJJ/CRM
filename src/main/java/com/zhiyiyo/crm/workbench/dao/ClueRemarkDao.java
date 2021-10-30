@@ -33,4 +33,18 @@ public interface ClueRemarkDao {
      * @return 受影响的行数
      */
     Integer deleteRemark(String id);
+
+    /**
+     * 通过线索的 id 来删除评论
+     * @param ids 线索 id 列表
+     * @return 受影响的行数
+     */
+    Integer deleteRemarkByCIds(String[] ids);
+
+    /**
+     * 通过线索的 id 统计相关联的评论数量
+     * @param ids 线索 id 列表
+     * @return 评论总数
+     */
+    Integer queryRemarkCountByCIds(String[] ids);
 }

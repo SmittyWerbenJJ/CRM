@@ -28,7 +28,7 @@ public class ClueController {
     @Resource
     private UserService userService;
 
-    @RequestMapping("getUserList")
+    @RequestMapping("/getUserList")
     @ResponseBody
     public List<User> getUserList() {
         return userService.getUserList();
@@ -47,7 +47,7 @@ public class ClueController {
         return data;
     }
 
-    @RequestMapping("getCluesByCondition")
+    @RequestMapping("/getCluesByCondition")
     @ResponseBody
     public PaginationVo<Clue> getCluesByCondition(Integer pageNum, Integer pageSize, String fullname, String company,
                                                   String phone, String source, String owner, String mphone, String state) {
@@ -154,6 +154,35 @@ public class ClueController {
         Map<String, Object> map = new HashMap<>();
         map.put("success", clueService.bindActivities(clueId, activityIds));
         return map;
+    }
+
+    @GetMapping("/editClue")
+    public ModelAndView editClue(String id) {
+        ModelAndView mv = new ModelAndView("workbench/clue/edit");
+        mv.addObject("clue", clueService.getClueById(id));
+        return mv;
+    }
+
+    @PostMapping("/updateClue")
+    @ResponseBody
+    public Map<String, Object> updateClue(HttpSession session, Clue clue) {
+        clue.setEditTime(DateTimeUtil.getSysTime());
+        clue.setEditBy(((User) session.getAttribute("user")).getName());
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", clueService.updateClue(clue));
+        data.put("clue", clue);
+
+        return data;
+    }
+
+
+    @PostMapping("/deleteClues")
+    @ResponseBody
+    public Map<String, Object> deleteClues(@RequestParam("ids[]") String[] ids) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", clueService.deleteClues(ids));
+        return data;
     }
 }
 

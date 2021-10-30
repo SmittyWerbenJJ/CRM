@@ -28,6 +28,13 @@
         order by createTime desc
     </select>
 
+    <select id="queryRemarkCountByCIds" resultType="java.lang.Integer">
+        select count(*) from tbl_clue_remark where clueId in
+        <foreach collection="array" open="(" close=")" separator="," item="clueId">
+            #{clueId}
+        </foreach>
+    </select>
+
     <update id="updateRemark">
         update tbl_clue_remark
         set noteContent=#{noteContent},
@@ -41,4 +48,13 @@
         from tbl_clue_remark
         where id = #{id}
     </delete>
+
+    <delete id="deleteRemarkByCIds">
+        delete from tbl_clue_remark where clueId in
+        <foreach collection="array" open="(" close=")" separator="," item="clueId">
+            #{clueId}
+        </foreach>
+    </delete>
+
+
 </mapper>

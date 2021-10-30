@@ -28,6 +28,35 @@
             )
     </insert>
 
+    <update id="updateClue">
+        update tbl_clue
+        set fullname= #{fullname},
+            appellation=#{appellation},
+            owner=#{owner},
+            company= #{company},
+            job=#{job},
+            email=#{email},
+            phone=#{phone},
+            website=#{website},
+            mphone= #{mphone},
+            state= #{state},
+            source=#{source},
+            editTime=#{editTime},
+            editBy= #{editBy},
+            description= #{description},
+            contactSummary=#{contactSummary},
+            nextContactTime= #{nextContactTime},
+            address= #{address}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteClues">
+        delete from tbl_clue where id in
+        <foreach collection="array" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
     <select id="queryCluesByCondition" resultType="com.zhiyiyo.crm.workbench.entity.Clue">
         select
         c.id, u.name as owner, c.company,c.appellation,
@@ -55,7 +84,7 @@
                 and c.state like '%' #{state} '%'
             </if>
             <if test="owner!=null and owner!=''">
-                and c.owner like '%' #{owner} '%'
+                and u.name like '%' #{owner} '%'
             </if>
         </where>
         order by c.createTime desc
@@ -66,6 +95,7 @@
         select
         count(*)
         from tbl_clue c
+        join tbl_user u on c.owner=u.id
         <where>
             <if test="fullname!=null and fullname!=''">
                 c.fullname like '%' #{fullname} '%'
@@ -86,7 +116,7 @@
                 and c.state like '%' #{state} '%'
             </if>
             <if test="owner!=null and owner!=''">
-                and c.owner like '%' #{owner} '%'
+                and u.name like '%' #{owner} '%'
             </if>
         </where>
     </select>

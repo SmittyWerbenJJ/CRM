@@ -225,6 +225,30 @@ $(function () {
             $("#bind-modal").modal("hide")
         })
     });
+
+    // 点击编辑按钮
+    $("#editClueBtn").on("click", function () {
+        location.href = "/workbench/clue/editClue?id=" + clueId
+    });
+
+    // 点击删除按钮
+    $("#deleteClueBtn").on("click", function () {
+        if (!confirm("前辈确定删除这条线索吗？")) {
+            return
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/workbench/clue/deleteClues",
+            dataType: "json",
+            data: {
+                ids: [clueId]
+            }
+        }).done(function (data) {
+            showToast(data.success, "删除线索")
+            setTimeout(() => { location.href = "/workbench/clue/index.html" }, 1500)
+        })
+    });
 })
 
 

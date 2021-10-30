@@ -37,7 +37,51 @@ $(function () {
         $("#qx").prop("checked", $("input.dx:checked").length == $("input.dx").length)
     })
 
+    // 编辑信息
+    $("#editBtn").on("click", function () {
+        var checkedInputs = $(".dx:checked")
 
+        if (checkedInputs.length == 0) {
+            alert("必须选中一个线索才能编辑哦~")
+            return
+        } else if (checkedInputs.length > 1) {
+            alert("一次编辑一个线索哦~")
+            return
+        }
+
+        location.href = "/workbench/clue/editClue?id=" + checkedInputs.val()
+    })
+
+    // 删除线索
+    $("#deleteBtn").on("click", function () {
+        var checkedInputs = $(".dx:checked")
+
+        if (checkedInputs.length == 0) {
+            alert("至少一个线索才能删除哦~")
+            return
+        }
+
+        if (!confirm("确定删除这些线索吗？")) {
+            return
+        }
+
+        var ids = []
+        for (const checkedInput of checkedInputs) {
+            ids.push(checkedInput.value)
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/workbench/clue/deleteClues",
+            dataType: "json",
+            data: {
+                ids
+            }
+        }).done(function (data) {
+            showToast(data.success, "删除线索")
+            getClues(1, pageSize)
+        })
+    });
 })
 
 

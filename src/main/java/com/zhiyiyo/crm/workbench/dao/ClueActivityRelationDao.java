@@ -20,4 +20,18 @@ public interface ClueActivityRelationDao {
      * @return 受影响的行数
      */
     Integer insertRelation(ClueActivityRelation relation);
+
+    /**
+     * 根据线索 id 删除行
+     * @param ids 线索 id 列表
+     * @return 受影响的行数
+     */
+    Integer deleteByClueIds(String[] ids);
+
+    /**
+     * 根据线索 id 统计记录数量
+     * @param ids 线索 id 列表
+     * @return 总记录数
+     */
+    Integer queryCountByClueIds(String[] ids);
 }
