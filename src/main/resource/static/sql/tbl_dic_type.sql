@@ -1,3 +1,5 @@
+use crm;
+
 DROP TABLE IF EXISTS `tbl_dic_type`;
 
 CREATE TABLE `tbl_dic_type` (

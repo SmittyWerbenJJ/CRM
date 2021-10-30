@@ -42,11 +42,11 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public PaginationVo<Activity> getActivities(Map<String, Object> condition) {
+    public PaginationVo<Activity> getActivitiesByCondition(Map<String, Object> condition) {
 
         PaginationVo<Activity> vo = new PaginationVo<>();
-        vo.setCount(activityDao.queryActivityCount(condition));
-        vo.setDataList(activityDao.queryActivities(condition));
+        vo.setCount(activityDao.queryActivityCountByCondition(condition));
+        vo.setDataList(activityDao.queryActivitiesByCondition(condition));
 
         return vo;
     }

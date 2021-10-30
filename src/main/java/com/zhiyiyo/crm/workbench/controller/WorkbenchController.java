@@ -31,4 +31,14 @@ public class WorkbenchController {
     public String contactsIndex() {
         return "workbench/contacts/index";
     }
+
+    @RequestMapping("/customer/index.html")
+    public String customerIndex(){
+        return "workbench/customer/index";
+    }
+
+    @RequestMapping("/transaction/index.html")
+    public String transactionIndex(){
+        return "workbench/transaction/index";
+    }
 }

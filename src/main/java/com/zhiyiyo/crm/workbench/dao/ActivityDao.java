@@ -26,14 +26,14 @@ public interface ActivityDao {
      *
      * @return 总条数
      */
-    Integer queryActivityCount(Map<String,Object> map);
+    Integer queryActivityCountByCondition(Map<String,Object> condition);
 
     /**
      * 查询符合匹配条件的市场活动
      *
      * @return 符合匹配条件的分页查询结果
      */
-    List<Activity> queryActivities(Map<String, Object> map);
+    List<Activity> queryActivitiesByCondition(Map<String, Object> condition);
 
     /**
      * 根据 id 获取一条市场活动信息，此时返回的 owner 是 UUID 序号而不是名字

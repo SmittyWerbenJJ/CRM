@@ -1,3 +1,4 @@
+use crm;
 DROP TABLE IF EXISTS `tbl_clue_activity_relation`;
 CREATE TABLE `tbl_clue_activity_relation` (
   `id` char(32) NOT NULL,

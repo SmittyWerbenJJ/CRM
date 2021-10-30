@@ -61,9 +61,9 @@ public class ActivityController {
         return userService.getUserList();
     }
 
-    @GetMapping("/getActivities")
+    @GetMapping("/getActivitiesByCondition")
     @ResponseBody
-    public PaginationVo<Activity> getActivities(Integer pageNum, Integer pageSize, String name, String owner,
+    public PaginationVo<Activity> getActivitiesByCondition(Integer pageNum, Integer pageSize, String name, String owner,
             String startDate, String endDate) {
         Map<String, Object> condition = new HashMap<>();
         condition.put("start", (pageNum - 1) * pageSize);
@@ -72,7 +72,7 @@ public class ActivityController {
         condition.put("owner", owner);
         condition.put("startDate", startDate);
         condition.put("endDate", endDate);
-        return activityService.getActivities(condition);
+        return activityService.getActivitiesByCondition(condition);
     }
 
     @PostMapping("/deleteActivities")

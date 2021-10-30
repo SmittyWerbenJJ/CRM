@@ -14,14 +14,15 @@
     <link rel="stylesheet" href="../../../static/css/td-msessage.css" th:href="@{/css/td-msessage.css}">
     <script src="../../../static/js/lib/jquery.js" th:src="@{/js/lib/jquery.js}"></script>
     <script src="../static/js/lib/td-message.js" th:src="@{/js/lib/td-message.js}"></script>
-    <script src="../../../static/js/lib/bootstrap.bundle.min.js" th:src="@{/js/lib/bootstrap.bundle.min.js}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
     <script src="../../../static/js/lib/bootstrap-pagination.js" th:src="@{/js/lib/bootstrap-pagination.js}"></script>
-    <script src="../../../static/js/workbench/contacts/index.js" th:src="@{/js/workbench/contacts/index.js}"></script>
-    <title>联系人 - CRM</title>
+    <script src="../../../static/js/workbench/customer/index.js" th:src="@{/js/workbench/customer/index.js}"></script>
+    <title>客户 - CRM</title>
 </head>
 
 <body>
@@ -35,7 +36,7 @@
         <!-- 工作区 -->
         <div class="page-holder">
             <div class="container-fluid px-xl-7">
-                <h2>联系人</h2>
+                <h2>客户</h2>
 
                 <!-- 筛选 -->
                 <div class="card mt-4">
@@ -47,6 +48,13 @@
                         <p class="fs-4 fw-bold mb-5">前辈可以在这里输入你想要的条件哦 😆</p>
                         <form class="form-horizontal">
                             <div class="row mb-5">
+                                <label class="col-sm-3 form-label" for="search-name">名称</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" id="search-name" type="text">
+                                </div>
+                            </div>
+
+                            <div class="row mb-5">
                                 <label class="col-sm-3 form-label" for="search-owner">所有者</label>
                                 <div class="col-md-8">
                                     <input class="form-control" id="search-owner" type="text">
@@ -54,35 +62,16 @@
                             </div>
 
                             <div class="row mb-5">
-                                <label class="col-sm-3 form-label" for="search-fullname">姓名</label>
+                                <label class="col-sm-3 form-label" for="search-phone">公司座机</label>
                                 <div class="col-md-8">
-                                    <input class="form-control" id="search-fullname" type="text">
+                                    <input class="form-control" id="search-phone" type="text">
                                 </div>
                             </div>
 
                             <div class="row mb-5">
-                                <label class="col-sm-3 form-label" for="search-customerName">客户名称</label>
+                                <label class="col-sm-3 form-label" for="search-website">公司网站</label>
                                 <div class="col-md-8">
-                                    <input class="form-control" id="search-customerName" type="text">
-                                </div>
-                            </div>
-
-                            <div class="row mb-5">
-                                <label class="col-sm-3 form-label" for="search-source">来源</label>
-                                <div class="col-md-8">
-                                    <select name="search-source" class="form-select" id="search-source">
-                                        <option></option>
-                                        <option th:each="i:${application.source}" th:value="${i.value}">
-                                            [[${i.text}]]
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row mb-5">
-                                <label class="col-sm-3 form-label" for="search-birth">生日</label>
-                                <div class="col-md-8">
-                                    <input class="form-control" id="search-birth" type="text">
+                                    <input class="form-control" id="search-website" type="text">
                                 </div>
                             </div>
 
@@ -106,20 +95,19 @@
                             <thead>
                                 <tr>
                                     <td><input class="form-check-input" type="checkbox" id="qx" /></td>
-                                    <td>姓名</td>
-                                    <td>客户名称</td>
+                                    <td>名称</td>
                                     <td>所有者</td>
-                                    <td>来源</td>
-                                    <td>生日</td>
+                                    <td>公司座机</td>
+                                    <td>公司网站</td>
                                 </tr>
                             </thead>
 
-                            <tbody id="contactsBody">
+                            <tbody id="customerBody">
 
                             </tbody>
                         </table>
 
-                        <div class="text-center" id="contactsPage">
+                        <div class="text-center" id="customerPage">
                             <ul class="pagination mb-0 mt-6 fs-8"></ul>
                         </div>
                     </div>
@@ -132,11 +120,10 @@
                 </div>
 
                 <!-- 隐藏域 -->
-                <input type="hidden" id="hidden-fullname">
-                <input type="hidden" id="hidden-source">
+                <input type="hidden" id="hidden-name">
                 <input type="hidden" id="hidden-owner">
-                <input type="hidden" id="hidden-birth">
-                <input type="hidden" id="hidden-customerName">
+                <input type="hidden" id="hidden-phone">
+                <input type="hidden" id="hidden-website">
 
             </div>
         </div>

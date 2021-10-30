@@ -247,7 +247,7 @@ function getActivities(pageNum, pageSize, isCreatePagination = true) {
 
 
     $.ajax({
-        url: "/workbench/activity/getActivities",
+        url: "/workbench/activity/getActivitiesByCondition",
         dataType: "json",
         data: {
             name, owner, startDate, endDate, pageNum, pageSize

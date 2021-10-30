@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhiyiyo.crm.workbench.dao.CustomerDao">
+    <select id="queryCustomerByCondition" resultType="com.zhiyiyo.crm.workbench.entity.Customer">
+        select
+        cus.id,
+        cus.name,
+        cus.website,
+        cus.phone,
+        u.name as owner
+        from tbl_customer cus
+        join tbl_user u on cus.owner=u.id
+        <where>
+            <if test="name!=null and name!=''">
+                cus.name like '%' #{name} '%'
+            </if>
+            <if test="website!=null and website!=''">
+                cus.website like '%' #{website} '%'
+            </if>
+            <if test="phone!=null and phone!=''">
+                cus.phone like '%' #{phone} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+        </where>
+        order by cus.createTime DESC limit #{start},#{pageSize}
+    </select>
+
+    <select id="queryCustomerCountByCondition" resultType="java.lang.Integer">
+        select
+        count(*)
+        from tbl_customer cus
+        join tbl_user u on cus.owner=u.id
+        <where>
+            <if test="name!=null and name!=''">
+                cus.name like '%' #{name} '%'
+            </if>
+            <if test="website!=null and website!=''">
+                cus.website like '%' #{website} '%'
+            </if>
+            <if test="phone!=null and phone!=''">
+                cus.phone like '%' #{phone} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+        </where>
+    </select>
+</mapper>

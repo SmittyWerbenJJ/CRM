@@ -1,6 +1,6 @@
 use crm;
-DROP TABLE IF EXISTS `tbl_contacts_remark`;
-CREATE TABLE `tbl_contacts_remark` (
+DROP TABLE IF EXISTS `tbl_customer_remark`;
+CREATE TABLE `tbl_customer_remark` (
   `id` char(32) NOT NULL,
   `noteContent` varchar(255) DEFAULT NULL,
   `createBy` varchar(255) DEFAULT NULL,
@@ -8,12 +8,12 @@ CREATE TABLE `tbl_contacts_remark` (
   `editBy` varchar(255) DEFAULT NULL,
   `editTime` char(19) DEFAULT NULL,
   `editFlag` char(1) DEFAULT NULL,
-  `contactsId` char(32) DEFAULT NULL,
+  `customerId` char(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
-/*Data for the table `tbl_contacts_remark` */
+/*Data for the table `tbl_customer_remark` */
 insert into
-  `tbl_contacts_remark`(
+  `tbl_customer_remark`(
     `id`,
     `noteContent`,
     `createBy`,
@@ -21,46 +21,46 @@ insert into
     `editBy`,
     `editTime`,
     `editFlag`,
-    `contactsId`
+    `customerId`
   )
 values
   (
-    '2507e63b387042a6a35b9c4828aaad30',
+    '179a37c58a964d0dbbf0981a9dd8c42e',
     '备注3（属于马云）',
     '张三',
     '2021-01-28 02:00:02',
     NULL,
     NULL,
     '0',
-    'f813162a9a6445de8ceb2b6115c8a27b'
+    '9cb43d197d5a4df8ae58f27e0a216bf7'
   ),
   (
-    '3b5e195c99c6405e905f426926a7c2df',
-    '备注4（属于王健林）',
-    '张三',
-    '2021-01-28 02:13:40',
-    NULL,
-    NULL,
-    '0',
-    'fadbec6aa3774bf2b8782e5a2d3af153'
-  ),
-  (
-    'b1cee005a89d40f08d9db2ea39b88845',
-    '备注1（属于马云）',
-    '张三',
-    '2021-01-28 02:00:02',
-    NULL,
-    NULL,
-    '0',
-    'f813162a9a6445de8ceb2b6115c8a27b'
-  ),
-  (
-    'b312051776414312805614602f9df80c',
+    '1c7412d9bd9e4b44889337aa18b2af79',
     '备注2（属于马云）',
     '张三',
     '2021-01-28 02:00:02',
     NULL,
     NULL,
     '0',
-    'f813162a9a6445de8ceb2b6115c8a27b'
+    '9cb43d197d5a4df8ae58f27e0a216bf7'
+  ),
+  (
+    '251c2ed3e33e4e9b9a43ef0e039799b2',
+    '备注4（属于王健林）',
+    '张三',
+    '2021-01-28 02:13:40',
+    NULL,
+    NULL,
+    '0',
+    '995e231cce32456d9cf3d1c2e6f287c0'
+  ),
+  (
+    'ebeda91a851f4b3cbc55c5b002f3378b',
+    '备注1（属于马云）',
+    '张三',
+    '2021-01-28 02:00:02',
+    NULL,
+    NULL,
+    '0',
+    '9cb43d197d5a4df8ae58f27e0a216bf7'
   );

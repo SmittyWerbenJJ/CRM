@@ -20,8 +20,9 @@
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
     </script>
     <script src="../../../static/js/lib/bootstrap-pagination.js" th:src="@{/js/lib/bootstrap-pagination.js}"></script>
-    <script src="../../../static/js/workbench/contacts/index.js" th:src="@{/js/workbench/contacts/index.js}"></script>
-    <title>联系人 - CRM</title>
+    <script src="../../../static/js/workbench/transaction/index.js" th:src="@{/js/workbench/transaction/index.js}">
+    </script>
+    <title>交易 - CRM</title>
 </head>
 
 <body>
@@ -35,7 +36,7 @@
         <!-- 工作区 -->
         <div class="page-holder">
             <div class="container-fluid px-xl-7">
-                <h2>联系人</h2>
+                <h2>交易</h2>
 
                 <!-- 筛选 -->
                 <div class="card mt-4">
@@ -47,6 +48,13 @@
                         <p class="fs-4 fw-bold mb-5">前辈可以在这里输入你想要的条件哦 😆</p>
                         <form class="form-horizontal">
                             <div class="row mb-5">
+                                <label class="col-md-3 form-label" for="search-name">名称</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" id="search-name" type="text">
+                                </div>
+                            </div>
+
+                            <div class="row mb-5">
                                 <label class="col-sm-3 form-label" for="search-owner">所有者</label>
                                 <div class="col-md-8">
                                     <input class="form-control" id="search-owner" type="text">
@@ -54,16 +62,40 @@
                             </div>
 
                             <div class="row mb-5">
-                                <label class="col-sm-3 form-label" for="search-fullname">姓名</label>
+                                <label class="col-sm-3 form-label" for="search-customerName">客户名称</label>
                                 <div class="col-md-8">
-                                    <input class="form-control" id="search-fullname" type="text">
+                                    <input class="form-control" id="search-customerName" type="text">
                                 </div>
                             </div>
 
                             <div class="row mb-5">
-                                <label class="col-sm-3 form-label" for="search-customerName">客户名称</label>
+                                <label class="col-sm-3 form-label" for="search-contactsName">联系人名称</label>
                                 <div class="col-md-8">
-                                    <input class="form-control" id="search-customerName" type="text">
+                                    <input class="form-control" id="search-contactsName" type="text">
+                                </div>
+                            </div>
+
+                            <div class="row mb-5">
+                                <label class="col-sm-3 form-label" for="search-stage">阶段</label>
+                                <div class="col-md-8">
+                                    <select name="search-stage" class="form-select" id="search-stage">
+                                        <option></option>
+                                        <option th:each="i:${application.stage}" th:value="${i.value}">
+                                            [[${i.text}]]
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mb-5">
+                                <label class="col-sm-3 form-label" for="search-type">类型</label>
+                                <div class="col-md-8">
+                                    <select name="search-type" class="form-select" id="search-type">
+                                        <option></option>
+                                        <option th:each="i:${application.transactionType}" th:value="${i.value}">
+                                            [[${i.text}]]
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -76,13 +108,6 @@
                                             [[${i.text}]]
                                         </option>
                                     </select>
-                                </div>
-                            </div>
-
-                            <div class="row mb-5">
-                                <label class="col-sm-3 form-label" for="search-birth">生日</label>
-                                <div class="col-md-8">
-                                    <input class="form-control" id="search-birth" type="text">
                                 </div>
                             </div>
 
@@ -106,20 +131,22 @@
                             <thead>
                                 <tr>
                                     <td><input class="form-check-input" type="checkbox" id="qx" /></td>
-                                    <td>姓名</td>
-                                    <td>客户名称</td>
+                                    <td>名称</td>
                                     <td>所有者</td>
+                                    <td>客户名称</td>
+                                    <td>联系人名称</td>
+                                    <td>阶段</td>
+                                    <td>类型</td>
                                     <td>来源</td>
-                                    <td>生日</td>
                                 </tr>
                             </thead>
 
-                            <tbody id="contactsBody">
+                            <tbody id="transactionBody">
 
                             </tbody>
                         </table>
 
-                        <div class="text-center" id="contactsPage">
+                        <div class="text-center" id="transactionPage">
                             <ul class="pagination mb-0 mt-6 fs-8"></ul>
                         </div>
                     </div>
@@ -132,11 +159,13 @@
                 </div>
 
                 <!-- 隐藏域 -->
-                <input type="hidden" id="hidden-fullname">
-                <input type="hidden" id="hidden-source">
+                <input type="hidden" id="hidden-name">
                 <input type="hidden" id="hidden-owner">
-                <input type="hidden" id="hidden-birth">
                 <input type="hidden" id="hidden-customerName">
+                <input type="hidden" id="hidden-contactsName">
+                <input type="hidden" id="hidden-stage">
+                <input type="hidden" id="hidden-type">
+                <input type="hidden" id="hidden-source">
 
             </div>
         </div>

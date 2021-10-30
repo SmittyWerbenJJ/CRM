@@ -39,7 +39,7 @@
         </foreach>
     </delete>
 
-    <select id="queryActivityCount" resultType="int">
+    <select id="queryActivityCountByCondition" resultType="int">
         select count(*)
         from tbl_activity a
         join tbl_user u on a.owner = u.id
@@ -59,7 +59,7 @@
         </where>
     </select>
 
-    <select id="queryActivities" resultType="com.zhiyiyo.crm.workbench.entity.Activity">
+    <select id="queryActivitiesByCondition" resultType="com.zhiyiyo.crm.workbench.entity.Activity">
         select
         a.id,u.name as owner, a.name, a.startDate, a.endDate, a.cost, a.description, a.createTime, a.createBy,
         a.editTime

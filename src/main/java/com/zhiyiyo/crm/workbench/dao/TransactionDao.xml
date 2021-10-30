@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhiyiyo.crm.workbench.dao.TransactionDao">
+    <select id="queryTransactionsByCondition" resultType="com.zhiyiyo.crm.workbench.entity.Transaction">
+        select
+        tran.id,
+        tran.name,
+        tran.stage,
+        tran.source,
+        tran.type,
+        u.name as owner,
+        cus.name as customerId,
+        con.fullname as contactsId
+        from tbl_transaction tran
+        join tbl_user u on tran.owner=u.id
+        join tbl_customer cus on cus.id=tran.customerId
+        join tbl_contacts con on con.id=tran.contactsId
+        <where>
+            <if test="name!=null and name!=''">
+                tran.name like '%' #{name} '%'
+            </if>
+            <if test="source!=null and source!=''">
+                tran.source like '%' #{source} '%'
+            </if>
+            <if test="stage!=null and stage!=''">
+                tran.stage like '%' #{stage} '%'
+            </if>
+            <if test="type!=null and type!=''">
+                tran.type like '%' #{type} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="customerName!=null and customerName!=''">
+                and cus.name like '%' #{customerName} '%'
+            </if>
+            <if test="contactsName!=null and contactsName!=''">
+                and con.name like '%' #{contactsName} '%'
+            </if>
+        </where>
+        order by tran.createTime DESC limit #{start},#{pageSize}
+    </select>
+
+    <select id="queryTransactionCountByCondition" resultType="java.lang.Integer">
+        select
+        count(*)
+        from tbl_transaction tran
+        join tbl_user u on tran.owner=u.id
+        join tbl_customer cus on cus.id=tran.customerId
+        join tbl_contacts con on con.id=tran.contactsId
+        <where>
+            <if test="name!=null and name!=''">
+                tran.name like '%' #{name} '%'
+            </if>
+            <if test="source!=null and source!=''">
+                tran.source like '%' #{source} '%'
+            </if>
+            <if test="stage!=null and stage!=''">
+                tran.stage like '%' #{stage} '%'
+            </if>
+            <if test="type!=null and type!=''">
+                tran.type like '%' #{type} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="customerName!=null and customerName!=''">
+                and cus.name like '%' #{customerName} '%'
+            </if>
+            <if test="contactsName!=null and contactsName!=''">
+                and con.name like '%' #{contactsName} '%'
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -36,7 +36,7 @@ public interface ActivityService {
      * @param condition 查询条件字典
      * @return 分页结果
      */
-    PaginationVo<Activity> getActivities(Map<String, Object> condition);
+    PaginationVo<Activity> getActivitiesByCondition(Map<String, Object> condition);
 
 
     /**

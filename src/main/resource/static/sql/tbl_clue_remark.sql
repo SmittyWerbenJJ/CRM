@@ -1,3 +1,4 @@
+use crm;
 DROP TABLE IF EXISTS `tbl_clue_remark`;
 CREATE TABLE `tbl_clue_remark` (
   `id` char(32) NOT NULL,

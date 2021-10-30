@@ -3,16 +3,17 @@
 <mapper namespace="com.zhiyiyo.crm.workbench.dao.ContactsDao">
     <select id="queryContactsByCondition" resultType="com.zhiyiyo.crm.workbench.entity.Contacts">
         select
+        con.id,
         con.fullname,
         con.birth,
         con.source,
         u.name as owner,
-        cus.name as custmerId
+        cus.name as customerId
         from tbl_contacts con
         join tbl_customer cus on con.customerId=cus.id
         join tbl_user u on con.owner=u.id
         <where>
-            <if test="name!=null and name!=''">
+            <if test="fullname!=null and fullname!=''">
                 con.fullname like '%' #{fullname} '%'
             </if>
             <if test="birth!=null and birth!=''">
@@ -30,6 +31,7 @@
         </where>
         order by con.createTime DESC limit #{start},#{pageSize}
     </select>
+
     <select id="queryContactsCountByCondition" resultType="int">
         select
         count(*)
@@ -37,7 +39,7 @@
         join tbl_customer cus on con.customerId=cus.id
         join tbl_user u on con.owner=u.id
         <where>
-            <if test="name!=null and name!=''">
+            <if test="fullname!=null and fullname!=''">
                 con.fullname like '%' #{fullname} '%'
             </if>
             <if test="birth!=null and birth!=''">

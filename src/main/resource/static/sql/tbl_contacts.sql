@@ -1,3 +1,4 @@
+use crm;
 DROP TABLE IF EXISTS `tbl_contacts`;
 CREATE TABLE `tbl_contacts` (
   `id` char(32) NOT NULL,

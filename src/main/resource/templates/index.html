@@ -2,9 +2,9 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" />
     <link rel="shortcut icon" href="../static/image/logo.svg" th:href="@{/image/logo.svg}">
     <title>CRM</title>
     <style>
@@ -62,7 +62,8 @@
                     </p>
                     <a class="btn btn-lg btn-light mt-1" href="login.html" th:href="@{/login}">开始 CRM 之旅</a>
                 </div>
-                <img src="../static/image/团队合作.svg" th:src="@{/image/团队合作.svg}" alt="showcase" class="w-50 d-none d-md-block" />
+                <img src="../static/image/团队合作.svg" th:src="@{/image/团队合作.svg}" alt="showcase"
+                    class="w-50 d-none d-md-block" />
             </div>
         </div>
 
@@ -260,8 +261,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    <script src="../static/js/lib/bootstrap.bundle.min.js" th:src="@{/js/lib/bootstrap.bundle.min.js}">
     </script>
 </body>
 
