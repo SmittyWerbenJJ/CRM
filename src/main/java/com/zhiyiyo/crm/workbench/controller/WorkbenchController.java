@@ -1,6 +1,7 @@
 package com.zhiyiyo.crm.workbench.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -25,6 +26,11 @@ public class WorkbenchController {
     @RequestMapping("/clue/add.html")
     public String clueAdd() {
         return "workbench/clue/add";
+    }
+
+    @RequestMapping("/clue/convert.html")
+    public String clueConvert() {
+        return "workbench/clue/convert";
     }
 
     @RequestMapping("/contacts/index.html")

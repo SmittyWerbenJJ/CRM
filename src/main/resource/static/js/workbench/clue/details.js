@@ -231,6 +231,15 @@ $(function () {
         location.href = "/workbench/clue/editClue?id=" + clueId
     });
 
+    // 点击转换按钮
+    $("#convertClueBtn").on("click", function () {
+        var owner = $("#owner").text()
+        var customer = $("#company").text()
+        var contacts = $("#hidden-clue-fullname").val()
+        var appellation = $("#hidden-clue-appellation").val()
+        location.href = `/workbench/clue/convert.html?id=${clueId}&customer=${customer}&contacts=${contacts}&appellation=${appellation}&owner=${owner}`
+    });
+
     // 点击删除按钮
     $("#deleteClueBtn").on("click", function () {
         if (!confirm("前辈确定删除这条线索吗？")) {

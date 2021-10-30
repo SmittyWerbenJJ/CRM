@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../../static/image/logo.svg" th:href="@{/image/logo.svg}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" />
+    <link rel="stylesheet" href="../../../static/css/workbench.css" th:href="@{/css/workbench.css}" />
+    <link rel="stylesheet" href="../../../static/css/bootstrap-datetimepicker.min.css"
+        th:href="@{/css/bootstrap-datetimepicker.min.css}" />
+    <link rel="stylesheet" href="../../../static/css/td-msessage.css" th:href="@{/css/td-msessage.css}">
+    <script src="../../../static/js/lib/jquery.js" th:src="@{/js/lib/jquery.js}"></script>
+    <script src="../../../static/js/lib/td-message.js" th:src="@{/js/lib/td-message.js}"></script>
+    <script src="../../../static/js/lib/bootstrap-datetimepicker.js" th:src="@{/js/lib/bootstrap-datetimepicker.js}">
+    </script>
+    <script src="../../../static/js/lib/bootstrap-datetimepicker.zh-CN.js"
+        th:src="@{/js/lib/bootstrap-datetimepicker.zh-CN.js}"></script>
+    <script src="../../../static/js/lib/bootstrap.bundle.min.js" th:src="@{/js/lib/bootstrap.bundle.min.js}">
+    </script>
+    <script src="../../../static/js/workbench/clue/convert.js" th:src="@{/js/workbench/clue/convert.js}"></script>
+    <title>线索详细信息 - CRM</title>
+</head>
+
+
+<body>
+    <!-- 导航栏 -->
+    <nav th:replace="workbench/common::navbar"></nav>
+
+    <!-- 侧边栏 -->
+    <div th:replace="workbench/common::sidebar"></div>
+
+    <!-- 工作区 -->
+    <div class="page-holder">
+        <div class="container-fluid px-xl-7">
+            <!-- 导航面包屑 -->
+            <div class="page-breadcrumb mb-6">
+                <ul class="breadcrumb fs-5">
+                    <li class="breadcrumb-item">
+                        <a href="index.html" th:href="@{/workbench/clue/index.html}" class="text-decoration-none">线索</a>
+                    </li>
+                    <li class="breadcrumb-item active">创建</li>
+                </ul>
+            </div>
+
+            <!-- 新建信息 -->
+            <div class="card">
+                <input type="hidden" id="hidden-clue-id" th:value=${id}>
+                <div class="card-header">
+                    <h4>转换线索</h4>
+                </div>
+
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-sm-4"><strong>新建客户</strong></div>
+                                <div class="col-sm-5" id="customer">
+                                    [[${param.customer}]]
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-sm-4"><strong>新建联系人</strong></div>
+                                <div class="col-sm-5" id="contacts">
+                                    [[${param.contacts}]][[${param.appellation}]]
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row align-items-center">
+                                <div class="col-sm-4"><strong>所有者</strong></div>
+                                <div class="col-sm-5" id="owner">
+                                    [[${param.owner}]]
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="create-transaction-checkbox">
+                                <label class="form-check-label" for="create-transaction-checkbox">
+                                    为客户创建交易
+                                </label>
+                            </div>
+
+                            <form class="collapse pt-4" id="transactionForm">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-6">
+                                        <div class="mb-4">
+                                            <label class="form-label" for="transaction-name">交易名称</label>
+                                            <input id="transaction-name" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="mb-4">
+                                            <label class="form-label" for="transaction-money">交易金额</label>
+                                            <input id="transaction-money" type="text" class="form-control">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="mb-4">
+                                            <label class="form-label" for="transaction-time">预计成交日期</label>
+                                            <input id="transaction-time" type="text" class="form-control time">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-6">
+                                        <div class="mb-4">
+                                            <label class="form-label" for="transaction-stage">阶段</label>
+                                            <select id="transaction-stage" class="form-select">
+                                                <option></option>
+                                                <option th:each="i:${application.stage}" th:value="${i.value}">
+                                                    [[${i.text}]]
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="mb-4">
+                                            <label class="form-label" for="transaction-source">市场活动源</label>
+                                            <input id="transaction-source" type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </li>
+                    </ul>
+
+
+                </div>
+
+                <div class="text-end card-footer">
+                    <button class="btn btn-primary" id="convertBtn">转换</button>
+                    <button class="btn btn-outline-dark" id="cancelBtn">取消</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>
