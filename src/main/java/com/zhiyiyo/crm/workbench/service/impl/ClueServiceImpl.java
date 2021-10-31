@@ -153,27 +153,28 @@ public class ClueServiceImpl implements ClueService {
         // 创建时间
         String createTime = DateTimeUtil.getSysTime();
 
-        // 创建联系人
-        Customer customer = new Customer();
-        BeanUtils.copyProperties(clue, customer, "editBy", "editTime");
-        customer.setId(UUIDUtil.getUUID());
-        customer.setCreateTime(createTime);
-        customer.setCreateBy(createBy);
-        customer.setName(clue.getFullname());
-        success &= customerDao.insert(customer).equals(1);
-
         // 查询出客户，如果客户不存在就新建一个
-        Contacts contacts = contactsDao.queryContactsByName(clue.getCompany());
-        if (contacts == null) {
-            contacts = new Contacts();
-            BeanUtils.copyProperties(clue, contacts, "editBy", "editTime", "fullname");
-            contacts.setId(UUIDUtil.getUUID());
-            contacts.setFullname(clue.getCompany());
-            contacts.setCreateTime(createTime);
-            contacts.setCreateBy(createBy);
-            contacts.setCustomerId(customer.getId());
-            success &= contactsDao.insert(contacts).equals(1);
+        Customer customer = customerDao.queryCustomerByName(clue.getCompany());
+        if (customer == null) {
+            customer = new Customer();
+            BeanUtils.copyProperties(clue, customer, "editBy", "editTime");
+            customer.setId(UUIDUtil.getUUID());
+            customer.setCreateTime(createTime);
+            customer.setCreateBy(createBy);
+            customer.setName(clue.getCompany());
+            success &= customerDao.insert(customer).equals(1);
         }
+
+
+        // 新建一个联系人
+        Contacts contacts = new Contacts();
+        BeanUtils.copyProperties(clue, contacts, "editBy", "editTime", "fullname");
+        contacts.setId(UUIDUtil.getUUID());
+        contacts.setFullname(clue.getFullname());
+        contacts.setCreateTime(createTime);
+        contacts.setCreateBy(createBy);
+        contacts.setCustomerId(customer.getId());
+        success &= contactsDao.insert(contacts).equals(1);
 
         // 获取线索的备注
         List<ClueRemark> clueRemarks = clueRemarkDao.queryRemarksByCId(clueId);
@@ -196,8 +197,10 @@ public class ClueServiceImpl implements ClueService {
             customerRemarks.add(customerRemark);
         }
 
-        success &= contactsRemarkDao.insertRemarks(contactsRemarks).equals(remarkCount);
-        success &= customerRemarkDao.insertRemarks(customerRemarks).equals(remarkCount);
+        if (remarkCount > 0) {
+            success &= contactsRemarkDao.insertRemarks(contactsRemarks).equals(remarkCount);
+            success &= customerRemarkDao.insertRemarks(customerRemarks).equals(remarkCount);
+        }
 
         // 将线索和市场活动的关系转换为联系人和市场活动的关系
         List<ClueActivityRelation> clueActivityRelations = clueActivityRelationDao.queryRelationsByClueId(clueId);
@@ -212,7 +215,9 @@ public class ClueServiceImpl implements ClueService {
             contactsActivityRelations.add(contactsActivityRelation);
         }
 
-        success &= contactsActivityRelationDao.insertRelations(contactsActivityRelations).equals(relationCount);
+        if (relationCount > 0) {
+            success &= contactsActivityRelationDao.insertRelations(contactsActivityRelations).equals(relationCount);
+        }
 
         // 创建交易和交易历史
         if (tran != null) {

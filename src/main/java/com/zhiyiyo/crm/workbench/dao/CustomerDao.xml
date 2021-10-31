@@ -54,4 +54,22 @@
             </if>
         </where>
     </select>
+
+    <select id="queryCustomerByName" resultType="com.zhiyiyo.crm.workbench.entity.Customer">
+        select id,
+               owner,
+               name,
+               website,
+               phone,
+               createBy,
+               createTime,
+               editBy,
+               editTime,
+               contactSummary,
+               nextContactTime,
+               description,
+               address
+        from tbl_customer
+        where name = #{name}
+    </select>
 </mapper>

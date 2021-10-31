@@ -20,8 +20,8 @@
     </script>
     <script src="../../../static/js/lib/bootstrap-datetimepicker.zh-CN.js"
         th:src="@{/js/lib/bootstrap-datetimepicker.zh-CN.js}"></script>
-    <script src="../../../static/js/workbench/clue/add.js" th:src="@{/js/workbench/clue/add.js}"></script>
-    <title>创建线索 - CRM</title>
+    <script src="../../../static/js/workbench/contacts/add.js" th:src="@{/js/workbench/contacts/add.js}"></script>
+    <title>创建联系人 - CRM</title>
 </head>
 
 <body>
@@ -38,7 +38,8 @@
             <div class="page-breadcrumb mb-6">
                 <ul class="breadcrumb fs-5">
                     <li class="breadcrumb-item">
-                        <a href="index.html" th:href="@{/workbench/clue/index.html}" class="text-decoration-none">线索</a>
+                        <a href="index.html" th:href="@{/workbench/contacts/index.html}"
+                            class="text-decoration-none">联系人</a>
                     </li>
                     <li class="breadcrumb-item active">创建</li>
                 </ul>
@@ -48,7 +49,7 @@
             <div class="card">
                 <form>
                     <div class="card-header">
-                        <h4>创建线索</h4>
+                        <h4>创建联系人</h4>
                     </div>
 
                     <div class="card-body">
@@ -65,25 +66,26 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
-                                    <label class="form-label" for="add-company">公司<span
+                                    <label class="form-label" for="add-customer">客户名称<span
                                             class="text-danger">*</span></label>
-                                    <input id="add-company" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <div class="mb-4">
-                                    <label class="form-label" for="add-phone">公司座机</label>
-                                    <input id="add-phone" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-5 col-sm-6">
-                                <div class="mb-4">
-                                    <label class="form-label" for="add-website">公司网站</label>
-                                    <input id="add-website" type="text" class="form-control"
-                                        placeholder="www.company.com">
+                                    <input id="add-customer" type="text" class="form-control">
                                 </div>
                             </div>
 
+                            <div class="col-md-3 col-sm-6">
+                                <div class="mb-4">
+                                    <label class="form-label" for="add-source">来源</label>
+                                    <select id="add-source" class="form-select">
+                                        <option></option>
+                                        <option th:each="i:${application.source}" th:value="${i.value}">
+                                            [[${i.text}]]
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
                                     <label class="form-label" for="add-fullname">姓名<span
@@ -102,7 +104,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-5 col-sm-6">
+                            <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
                                     <label class="form-label" for="add-email">邮箱</label>
                                     <input placeholder="example@qq.com" type="email" class="form-control"
@@ -121,34 +123,20 @@
                                     <input id="add-job" type="text" class="form-control">
                                 </div>
                             </div>
+                            <div class="col-md-4 col-sm-6">
+                                <div class="mb-4">
+                                    <label class="form-label" for="add-birth">生日</label>
+                                    <input id="add-birth" type="text" class="form-control time">
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-4 col-sm-6">
-                                <div class="mb-4">
-                                    <label class="form-label" for="add-source">线索来源</label>
-                                    <select id="add-source" class="form-select">
-                                        <option></option>
-                                        <option th:each="i:${application.source}" th:value="${i.value}">
-                                            [[${i.text}]]
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <div class="mb-4">
-                                    <label class="form-label" for="add-state">线索状态</label>
-                                    <select id="add-state" class="form-select">
-                                        <option></option>
-                                        <option th:each="i:${application.clueState}" th:value="${i.value}">
-                                            [[${i.text}]]
-                                    </select>
-                                </div>
-                            </div>
 
                             <div class="col-md-12">
                                 <div>
-                                    <label class="form-label" for="add-description">线索描述</label>
-                                    <textarea rows="5" placeholder="来详细介绍一下线索吧" class="form-control"
+                                    <label class="form-label" for="add-description">描述</label>
+                                    <textarea rows="5" placeholder="来详细介绍一下联系人吧~" class="form-control"
                                         id="add-description"></textarea>
                                 </div>
                             </div>
@@ -164,7 +152,8 @@
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
                                     <label class="form-label" for="add-nextContactTime">下次联系时间</label>
-                                    <input id="add-nextContactTime" type="text" class="form-control time" autocomplete="off">
+                                    <input id="add-nextContactTime" type="text" class="form-control time"
+                                        autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-8 col-sm-12">

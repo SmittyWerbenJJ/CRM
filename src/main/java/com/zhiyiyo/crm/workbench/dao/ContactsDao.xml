@@ -64,27 +64,4 @@
         </where>
         order by con.createTime DESC limit #{start},#{pageSize}
     </select>
-
-    <select id="queryContactsByName" resultType="com.zhiyiyo.crm.workbench.entity.Contacts">
-        select id,
-               owner,
-               source,
-               customerId,
-               fullname,
-               appellation,
-               email,
-               mphone,
-               job,
-               birth,
-               createBy,
-               createTime,
-               editBy,
-               editTime,
-               description,
-               contactSummary,
-               nextContactTime,
-               address
-        from tbl_contacts
-        where fullname = #{name};
-    </select>
 </mapper>

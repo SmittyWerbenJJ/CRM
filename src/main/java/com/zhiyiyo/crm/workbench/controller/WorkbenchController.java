@@ -1,7 +1,6 @@
 package com.zhiyiyo.crm.workbench.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -36,6 +35,11 @@ public class WorkbenchController {
     @RequestMapping("/contacts/index.html")
     public String contactsIndex() {
         return "workbench/contacts/index";
+    }
+
+    @RequestMapping("/contacts/add.html")
+    public String contactsAdd(){
+        return "workbench/contacts/add";
     }
 
     @RequestMapping("/customer/index.html")

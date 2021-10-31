@@ -11,6 +11,13 @@ public interface CustomerDao {
     Integer queryCustomerCountByCondition(Map<String, Object> condition);
 
     /**
+     * 通过客户名称精确查找客户
+     * @param name 客户名称
+     * @return 客户
+     */
+    Customer queryCustomerByName(String name);
+
+    /**
      * 插入一个客户
      * @param customer 客户
      * @return 受影响的行数

@@ -9,4 +9,6 @@ public interface ContactsService {
     List<Contacts> getContactsByCondition(Map<String, Object> condition);
 
     Integer getContactsCountByCondition(Map<String, Object> condition);
+
+    boolean addContacts(Contacts contacts);
 }

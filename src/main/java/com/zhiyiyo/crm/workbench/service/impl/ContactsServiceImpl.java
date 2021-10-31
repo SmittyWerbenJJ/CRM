@@ -23,4 +23,9 @@ public class ContactsServiceImpl implements ContactsService {
     public Integer getContactsCountByCondition(Map<String, Object> condition) {
         return contactsDao.queryContactsCountByCondition(condition);
     }
+
+    @Override
+    public boolean addContacts(Contacts contacts) {
+        return contactsDao.insert(contacts).equals(1);
+    }
 }
