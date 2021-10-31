@@ -8,6 +8,9 @@ import com.zhiyiyo.crm.vo.PaginationVo;
 import com.zhiyiyo.crm.workbench.entity.Activity;
 import com.zhiyiyo.crm.workbench.entity.Clue;
 import com.zhiyiyo.crm.workbench.entity.ClueRemark;
+import com.zhiyiyo.crm.workbench.entity.Transaction;
+import com.zhiyiyo.crm.workbench.exception.ConvertException;
+import com.zhiyiyo.crm.workbench.service.ActivityService;
 import com.zhiyiyo.crm.workbench.service.ClueService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +30,10 @@ public class ClueController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private ActivityService activityService;
+
 
     @RequestMapping("/getUserList")
     @ResponseBody
@@ -182,6 +189,27 @@ public class ClueController {
     public Map<String, Object> deleteClues(@RequestParam("ids[]") String[] ids) {
         Map<String, Object> data = new HashMap<>();
         data.put("success", clueService.deleteClues(ids));
+        return data;
+    }
+
+    @GetMapping("/getActivities")
+    @ResponseBody
+    public List<Activity> getActivities(String name) {
+        return activityService.getActivitiesByName(name);
+    }
+
+    @PostMapping("/convert")
+    @ResponseBody
+    public Map<String, Object> convert(HttpSession session, String clueId, Boolean createTransaction, Transaction tran) throws ConvertException {
+        tran = createTransaction ? tran : null;
+        String createBy = ((User) session.getAttribute("user")).getName();
+
+        // 转换线索
+        clueService.convert(clueId, createBy, tran);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", true);
+        data.put("msg", "线索转换成功");
         return data;
     }
 }

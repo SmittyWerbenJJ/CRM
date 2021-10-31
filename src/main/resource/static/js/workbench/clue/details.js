@@ -185,6 +185,7 @@ $(function () {
 
     // 弹出关联市场活动对话框
     $("#show-bind-model-btn").on("click", function () {
+        $("#search-activity-input").val("")
         $("#bind-modal").modal("show")
 
         // 显示所有还没关联的市场活动

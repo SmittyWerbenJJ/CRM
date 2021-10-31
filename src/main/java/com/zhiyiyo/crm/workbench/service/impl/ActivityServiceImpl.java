@@ -52,6 +52,11 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
+    public List<Activity> getActivitiesByName(String name) {
+        return activityDao.queryActivitiesByName(name);
+    }
+
+    @Override
     public Activity getActivity(String id) {
         return activityDao.queryActivity(id);
     }

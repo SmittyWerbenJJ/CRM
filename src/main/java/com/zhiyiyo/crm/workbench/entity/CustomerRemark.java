@@ -1,13 +1,16 @@
 package com.zhiyiyo.crm.workbench.entity;
 
-public class TransactionRemark {
+
+public class CustomerRemark {
+
     private String id;
     private String noteContent;
     private String createBy;
     private String createTime;
     private String editBy;
     private String editTime;
-    private String tranId;
+    private String customerId;
+
 
     public String getId() {
         return id;
@@ -17,6 +20,7 @@ public class TransactionRemark {
         this.id = id;
     }
 
+
     public String getNoteContent() {
         return noteContent;
     }
@@ -24,6 +28,7 @@ public class TransactionRemark {
     public void setNoteContent(String noteContent) {
         this.noteContent = noteContent;
     }
+
 
     public String getCreateBy() {
         return createBy;
@@ -33,6 +38,7 @@ public class TransactionRemark {
         this.createBy = createBy;
     }
 
+
     public String getCreateTime() {
         return createTime;
     }
@@ -40,6 +46,7 @@ public class TransactionRemark {
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
+
 
     public String getEditBy() {
         return editBy;
@@ -49,6 +56,7 @@ public class TransactionRemark {
         this.editBy = editBy;
     }
 
+
     public String getEditTime() {
         return editTime;
     }
@@ -57,11 +65,13 @@ public class TransactionRemark {
         this.editTime = editTime;
     }
 
-    public String getTranId() {
-        return tranId;
+
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setTranId(String tranId) {
-        this.tranId = tranId;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
+
 }

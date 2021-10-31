@@ -57,6 +57,12 @@
         </foreach>
     </delete>
 
+    <delete id="deleteClue">
+        delete
+        from tbl_clue
+        where id = #{id}
+    </delete>
+
     <select id="queryCluesByCondition" resultType="com.zhiyiyo.crm.workbench.entity.Clue">
         select
         c.id, u.name as owner, c.company,c.appellation,
@@ -145,5 +151,30 @@
         from tbl_clue c
                  join tbl_user u on c.owner = u.id
         where c.id = #{id}
+    </select>
+
+    <select id="queryClue" resultType="com.zhiyiyo.crm.workbench.entity.Clue">
+        select id,
+               fullname,
+               appellation,
+               owner,
+               company,
+               job,
+               email,
+               phone,
+               website,
+               mphone,
+               state,
+               source,
+               createBy,
+               createTime,
+               editBy,
+               editTime,
+               description,
+               contactSummary,
+               nextContactTime,
+               address
+        from tbl_clue
+        where id = #{id}
     </select>
 </mapper>

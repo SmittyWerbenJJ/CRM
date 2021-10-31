@@ -41,13 +41,14 @@
                     <li class="breadcrumb-item">
                         <a href="index.html" th:href="@{/workbench/clue/index.html}" class="text-decoration-none">线索</a>
                     </li>
-                    <li class="breadcrumb-item active">创建</li>
+                    <li class="breadcrumb-item active">转换</li>
                 </ul>
             </div>
 
             <!-- 新建信息 -->
             <div class="card">
-                <input type="hidden" id="hidden-clue-id" th:value=${id}>
+                <input type="hidden" id="hidden-clue-id" th:value="${param.id}">
+
                 <div class="card-header">
                     <h4>转换线索</h4>
                 </div>
@@ -88,55 +89,72 @@
 
                             <form class="collapse pt-4" id="transactionForm">
                                 <div class="row">
-                                    <div class="col-md-4 col-sm-6">
+                                    <div class="col-md-8 col-sm-6">
                                         <div class="mb-4">
-                                            <label class="form-label" for="transaction-name">交易名称</label>
-                                            <input id="transaction-name" type="text" class="form-control">
+                                            <label class="form-label" for="transaction-name">交易名称<span
+                                                    class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
+                                                <input id="transaction-name" type="text" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div class="col-md-3 col-sm-6">
+                                <div class="row">
+                                    <div class="col-md-4 col-md-offset-1 col-sm-6">
                                         <div class="mb-4">
                                             <label class="form-label" for="transaction-money">交易金额</label>
-                                            <input id="transaction-money" type="text" class="form-control">
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i
+                                                        class="bi bi-currency-dollar"></i></span>
+                                                <input id="transaction-money" type="text" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3 col-sm-6">
+                                    <div class="col-md-4 col-sm-6">
                                         <div class="mb-4">
                                             <label class="form-label" for="transaction-time">预计成交日期</label>
-                                            <input id="transaction-time" type="text" class="form-control time">
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i
+                                                        class="bi bi-calendar-date"></i></span>
+                                                <input id="transaction-time" type="text" class="form-control time">
+                                            </div>
                                         </div>
                                     </div>
-
-
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-4 col-sm-6">
                                         <div class="mb-4">
                                             <label class="form-label" for="transaction-stage">阶段</label>
-                                            <select id="transaction-stage" class="form-select">
-                                                <option></option>
-                                                <option th:each="i:${application.stage}" th:value="${i.value}">
-                                                    [[${i.text}]]
-                                                </option>
-                                            </select>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="bi bi-signpost-2"></i></span>
+                                                <select id="transaction-stage" class="form-select">
+                                                    <option></option>
+                                                    <option th:each="i:${application.stage}" th:value="${i.value}">
+                                                        [[${i.text}]]
+                                                    </option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 col-sm-6">
+                                    <div class="col-md-4 col-sm-6">
                                         <div class="mb-4">
-                                            <label class="form-label" for="transaction-source">市场活动源</label>
-                                            <input id="transaction-source" type="text" class="form-control">
+                                            <label class="form-label" for="transaction-activity">市场活动源</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="bi bi-shop"></i></span>
+                                                <input id="transaction-activity" type="text"
+                                                    class="form-control bg-white" readonly>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </form>
                         </li>
                     </ul>
-
 
                 </div>
 
@@ -149,6 +167,48 @@
         </div>
     </div>
 
+    <!-- 市场活动模态框 -->
+    <div class="modal fade" id="search-activity-modal" tabindex="-1" aria-labelledby="search-activity-label"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="search-activity-label">搜索市场活动</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-5">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="前辈可以在这里输入市场活动名称哦" aria-label=""
+                            aria-describedby="search-activity-btn" id="search-activity-input">
+                        <button class="btn btn-outline-success" type="button" id="search-activity-btn"><i
+                                class="bi bi-search"></i></button>
+                    </div>
+
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <td>名称</td>
+                                <td>开始时间</td>
+                                <td>结束时间</td>
+                                <td>所有者</td>
+                            </tr>
+                        </thead>
+
+                        <tbody id="activityBody">
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="select-activity-btn">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 

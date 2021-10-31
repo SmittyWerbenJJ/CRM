@@ -7,7 +7,6 @@ public class ContactsRemark {
     private String createBy;
     private String editTime;
     private String editBy;
-    private String editFlag;
     private String contactsId;
 
     public String getId() {
@@ -56,14 +55,6 @@ public class ContactsRemark {
 
     public void setEditBy(String editBy) {
         this.editBy = editBy;
-    }
-
-    public String getEditFlag() {
-        return editFlag;
-    }
-
-    public void setEditFlag(String editFlag) {
-        this.editFlag = editFlag;
     }
 
     public String getContactsId() {

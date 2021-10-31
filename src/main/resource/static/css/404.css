@@ -1,0 +1,53 @@
+.flex-root {
+    flex: 1;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-column-fluid {
+    flex: 1 0 auto;
+}
+
+@media (min-width: 992px) {
+    .h-lg-450px {
+        height: 450px !important;
+    }
+}
+
+.fw-bold {
+    font-weight: 500 !important;
+}
+
+.mb-10 {
+    margin-bottom: 2.5rem !important;
+}
+
+.h1,
+h1 {
+    font-size: 1.75rem;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    color: #181c32;
+}
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 13px !important;
+    font-weight: 400;
+    font-family: Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.p-10 {
+    padding: 2.5rem !important;
+}

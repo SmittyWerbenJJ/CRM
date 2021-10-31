@@ -38,6 +38,12 @@ public interface ActivityService {
      */
     PaginationVo<Activity> getActivitiesByCondition(Map<String, Object> condition);
 
+    /**
+     * 通过市场活动名称查询市场活动
+     * @param name 市场活动名称
+     * @return 市场活动列表
+     */
+    List<Activity> getActivitiesByName(String name);
 
     /**
      * 根据 id 获取一条市场活动信息

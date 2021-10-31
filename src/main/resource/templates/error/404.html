@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../static/image/logo.svg" th:href="@{/image/logo.svg}">
+    <link rel="stylesheet" href="../../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="../../static/css/404.css" th:href="@{/css/404.css}">
+    <title>404</title>
+</head>
+
+<body>
+    <div class="d-flex flex-column flex-root">
+        <div class="d-flex flex-column flex-center flex-column-fluid p-10">
+            <img src="../../static/image/404.png" th:src="@{/image/404.png}" alt="404" class="mw-100 mb-10 h-lg-450px">
+            <h1 class="fw-bold mb-10" style="color: #A3A3C7">抱歉呢前辈，这里空空如也</h1>
+            <a href="../workbench/index.html" th:href="@{/workbench/index.html}" class="btn btn-primary btn-lg">返回工作台</a>
+        </div>
+    </div>
+</body>
+
+</html>

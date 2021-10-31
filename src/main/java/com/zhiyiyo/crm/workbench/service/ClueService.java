@@ -1,8 +1,10 @@
 package com.zhiyiyo.crm.workbench.service;
 
+import com.zhiyiyo.crm.workbench.exception.ConvertException;
 import com.zhiyiyo.crm.workbench.entity.Activity;
 import com.zhiyiyo.crm.workbench.entity.Clue;
 import com.zhiyiyo.crm.workbench.entity.ClueRemark;
+import com.zhiyiyo.crm.workbench.entity.Transaction;
 
 import java.util.List;
 import java.util.Map;
@@ -116,4 +118,14 @@ public interface ClueService {
      * @return 删除是否成功
      */
     boolean deleteClues(String[] ids);
+
+    /**
+     * 转换线索
+     * @param clueId 线索 id
+     * @param createBy 创建者
+     * @param tran 交易
+     * @return 转换是否成功
+     */
+    boolean convert(String clueId, String createBy, Transaction tran) throws ConvertException;
+
 }

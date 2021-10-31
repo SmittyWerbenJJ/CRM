@@ -7,7 +7,6 @@ CREATE TABLE `tbl_customer_remark` (
   `createTime` char(19) DEFAULT NULL,
   `editBy` varchar(255) DEFAULT NULL,
   `editTime` char(19) DEFAULT NULL,
-  `editFlag` char(1) DEFAULT NULL,
   `customerId` char(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -20,7 +19,6 @@ insert into
     `createTime`,
     `editBy`,
     `editTime`,
-    `editFlag`,
     `customerId`
   )
 values
@@ -31,7 +29,6 @@ values
     '2021-01-28 02:00:02',
     NULL,
     NULL,
-    '0',
     '9cb43d197d5a4df8ae58f27e0a216bf7'
   ),
   (
@@ -41,7 +38,6 @@ values
     '2021-01-28 02:00:02',
     NULL,
     NULL,
-    '0',
     '9cb43d197d5a4df8ae58f27e0a216bf7'
   ),
   (
@@ -51,7 +47,6 @@ values
     '2021-01-28 02:13:40',
     NULL,
     NULL,
-    '0',
     '995e231cce32456d9cf3d1c2e6f287c0'
   ),
   (
@@ -61,6 +56,5 @@ values
     '2021-01-28 02:00:02',
     NULL,
     NULL,
-    '0',
     '9cb43d197d5a4df8ae58f27e0a216bf7'
   );

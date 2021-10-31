@@ -28,11 +28,18 @@ public interface ClueDao {
     Integer queryClueCountByCondition(Map<String, Object> condition);
 
     /**
-     * 根据线索的 id 查找线索
+     * 根据线索的 id 查找线索，线索的 owner 是所有者的用户名而不是 UUID
      * @param id 线索的 id
      * @return 找到的线索
      */
     Clue queryClueById(String id);
+
+    /**
+     * 根据线索的 id 查找线索，线索的 owner 是所有者的 UUID
+     * @param id 线索 id
+     * @return 线索
+     */
+    Clue queryClue(String id);
 
     /**
      * 更新线索
@@ -40,6 +47,13 @@ public interface ClueDao {
      * @return 受影响的行数
      */
     Integer updateClue(Clue clue);
+
+    /**
+     * 删除一条线索
+     * @param id 线索 id
+     * @return 受影响的行数
+     */
+    Integer deleteClue(String id);
 
     /**
      * 删除多条线索

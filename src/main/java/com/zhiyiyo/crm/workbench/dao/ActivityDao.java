@@ -36,6 +36,13 @@ public interface ActivityDao {
     List<Activity> queryActivitiesByCondition(Map<String, Object> condition);
 
     /**
+     * 通过名称查询市场活动
+     * @param name 市场活动名称
+     * @return 市场活动列表
+     */
+    List<Activity> queryActivitiesByName(String name);
+
+    /**
      * 根据 id 获取一条市场活动信息，此时返回的 owner 是 UUID 序号而不是名字
      *
      * @return 市场活动信息

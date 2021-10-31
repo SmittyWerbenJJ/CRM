@@ -7,7 +7,6 @@ CREATE TABLE `tbl_contacts_remark` (
   `createTime` char(19) DEFAULT NULL,
   `editBy` varchar(255) DEFAULT NULL,
   `editTime` char(19) DEFAULT NULL,
-  `editFlag` char(1) DEFAULT NULL,
   `contactsId` char(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -20,7 +19,6 @@ insert into
     `createTime`,
     `editBy`,
     `editTime`,
-    `editFlag`,
     `contactsId`
   )
 values
@@ -31,7 +29,6 @@ values
     '2021-01-28 02:00:02',
     NULL,
     NULL,
-    '0',
     'f813162a9a6445de8ceb2b6115c8a27b'
   ),
   (
@@ -41,7 +38,6 @@ values
     '2021-01-28 02:13:40',
     NULL,
     NULL,
-    '0',
     'fadbec6aa3774bf2b8782e5a2d3af153'
   ),
   (
@@ -51,7 +47,6 @@ values
     '2021-01-28 02:00:02',
     NULL,
     NULL,
-    '0',
     'f813162a9a6445de8ceb2b6115c8a27b'
   ),
   (
@@ -61,6 +56,5 @@ values
     '2021-01-28 02:00:02',
     NULL,
     NULL,
-    '0',
     'f813162a9a6445de8ceb2b6115c8a27b'
   );

@@ -44,8 +44,7 @@
     </update>
 
     <delete id="deleteRemark">
-        delete
-        from tbl_clue_remark
+        delete from tbl_clue_remark
         where id = #{id}
     </delete>
 
@@ -54,6 +53,10 @@
         <foreach collection="array" open="(" close=")" separator="," item="clueId">
             #{clueId}
         </foreach>
+    </delete>
+
+    <delete id="deleteRemarkByCId">
+        delete from tbl_clue_remark where clueId=#{id}
     </delete>
 
 

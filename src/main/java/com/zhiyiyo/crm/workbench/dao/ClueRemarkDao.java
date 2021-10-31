@@ -47,4 +47,11 @@ public interface ClueRemarkDao {
      * @return 评论总数
      */
     Integer queryRemarkCountByCIds(String[] ids);
+
+    /**
+     * 通过线索的 id 来删除评论
+     * @param id 线索 id
+     * @return 受影响的行数
+     */
+    Integer deleteRemarkByCId(String id);
 }
