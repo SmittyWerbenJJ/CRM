@@ -166,6 +166,7 @@ public class ClueController {
     @GetMapping("/editClue")
     public ModelAndView editClue(String id) {
         ModelAndView mv = new ModelAndView("workbench/clue/edit");
+        mv.addObject("userList", userService.getUserList());
         mv.addObject("clue", clueService.getClueById(id));
         return mv;
     }

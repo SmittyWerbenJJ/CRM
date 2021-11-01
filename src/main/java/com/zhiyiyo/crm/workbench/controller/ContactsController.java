@@ -106,7 +106,6 @@ public class ContactsController {
         return data;
     }
 
-
     @PostMapping("/deleteRemark")
     @ResponseBody
     public Map<String, Object> deleteRemark(String id) {

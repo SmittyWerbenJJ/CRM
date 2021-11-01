@@ -34,4 +34,6 @@ public interface ContactsService {
     boolean unbindActivities(String[] ids);
 
     List<Transaction> getBoundTransactions(String contactsId);
+
+    List<Contacts> getContactsByCustomerId(String customerId);
 }

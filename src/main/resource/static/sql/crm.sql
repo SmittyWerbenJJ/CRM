@@ -296,7 +296,7 @@ insert  into `tbl_dic_value`(`id`,`value`,`text`,`orderNo`,`typeCode`) values
 ('2876690b7e744333b7f1867102f91153','未启动','未启动','1','returnState'),
 ('29805c804dd94974b568cfc9017b2e4c','成交','成交','7','stage'),
 ('310e6a49bd8a4962b3f95a1d92eb76f4','试图联系','试图联系','1','clueState'),
-('31539e7ed8c848fc913e1c2c93d76fd1','博士123','博士123','4','appellation'),
+('31539e7ed8c848fc913e1c2c93d76fd1','博士','博士','4','appellation'),
 ('37ef211719134b009e10b7108194cf46','资质审查','资质审查','1','stage'),
 ('391807b5324d4f16bd58c882750ee632','丢失的线索','丢失的线索','8','stage'),
 ('3a39605d67da48f2a3ef52e19d243953','聊天','聊天','14','source'),

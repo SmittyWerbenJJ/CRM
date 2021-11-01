@@ -102,4 +102,9 @@ public class ContactsServiceImpl implements ContactsService {
     public List<Transaction> getBoundTransactions(String contactsId) {
         return transactionDao.queryTransactionsByContactsId(contactsId);
     }
+
+    @Override
+    public List<Contacts> getContactsByCustomerId(String customerId) {
+        return contactsDao.queryContactsByCustomerId(customerId);
+    }
 }

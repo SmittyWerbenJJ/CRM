@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../../static/image/logo.svg" th:href="@{/image/logo.svg}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}" />
+    <link rel="stylesheet" href="../../../static/css/workbench.css" th:href="@{/css/workbench.css}" />
+    <link rel="stylesheet" href="../../../static/css/bootstrap-datetimepicker.min.css"
+        th:href="@{/css/bootstrap-datetimepicker.min.css}" />
+    <link rel="stylesheet" href="../../../static/css/td-msessage.css" th:href="@{/css/td-msessage.css}">
+    <script src="../../../static/js/lib/jquery.js" th:src="@{/js/lib/jquery.js}"></script>
+    <script src="../../../static/js/lib/td-message.js" th:src="@{/js/lib/td-message.js}"></script>
+    <script src="../../../static/js/lib/bootstrap-datetimepicker.js" th:src="@{/js/lib/bootstrap-datetimepicker.js}">
+    </script>
+    <script src="../../../static/js/lib/bootstrap-datetimepicker.zh-CN.js"
+        th:src="@{/js/lib/bootstrap-datetimepicker.zh-CN.js}"></script>
+    <script src="../../../static/js/workbench/customer/details.js" th:src="@{/js/workbench/customer/details.js}">
+    </script>
+    <title>客户详细信息 - CRM</title>
+</head>
+
+
+<body>
+    <!-- 导航栏 -->
+    <nav th:replace="workbench/common::navbar"></nav>
+
+    <!-- 侧边栏 -->
+    <div th:replace="workbench/common::sidebar"></div>
+
+    <!-- 工作区 -->
+    <div class="page-holder">
+        <div class="container-fluid px-xl-7">
+            <h2>客户详细信息</h2>
+            <!-- 详细信息 -->
+            <div class="card mt-5">
+                <input type="hidden" id="hidden-customer-id" th:value="${customer.id}">
+                <div class="card-header">
+                    <h4>详细信息</h4>
+                </div>
+
+                <div class="card-body">
+                    <div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col-2"><strong>所有者</strong></div>
+                                    <div class="col-4" id="owner">
+                                        [[${customer.owner}]]
+                                    </div>
+                                    <div class="col-2"><strong>姓名</strong></div>
+                                    <div class="col-4" id="name">
+                                        [[${customer.name}]]
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col-2"><strong>公司网站</strong></div>
+                                    <div class="col-4" id="website">
+                                        [[${customer.website}]]
+                                    </div>
+                                    <div class="col-2"><strong>公司电话</strong></div>
+                                    <div class="col-4" id="phone">
+                                        [[${customer.phone}]]
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col-2"><strong>创建者</strong></div>
+                                    <div class="col-10">
+                                        [[${customer.createBy}]]
+                                        <small class="fs-8 text-secondary ms-2">[[${customer.createTime}]]</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col-2"><strong>修改者</strong></div>
+                                    <div class="col-10" id="editBy">
+                                        [[${customer.editBy}]]
+                                        <small class="fs-8 text-secondary ms-2"
+                                            id="editTime">[[${customer.editTime}]]</small>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-2"><strong>描述</strong></div>
+                                    <div class="col-10" id="description">
+                                        [[${customer.description}]]
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col-2"><strong>下次联系时间</strong></div>
+                                    <div class="col-4" id="nextContactTime">
+                                        [[${customer.nextContactTime}]]
+                                    </div>
+                                    <div class="col-2"><strong>详细地址</strong></div>
+                                    <div class="col-4" id="address">
+                                        [[${customer.address}]]
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-2"><strong>联系纪要</strong></div>
+                                    <div class="col-10" id="contactSummary">
+                                        [[${customer.contactSummary}]]
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="text-end card-footer">
+                    <button class="btn btn-outline-dark" id="editCustomerBtn">编辑</button>
+                    <button class="btn btn-danger" id="deleteCustomerBtn">删除</button>
+                </div>
+            </div>
+
+            <!-- 评论 -->
+            <div class="card mt-7">
+                <div class="card-header">
+                    <h4>评论列表</h4>
+                </div>
+
+                <!-- 用户评论列表 -->
+                <div class="list-group rounded-0" id="comment-list">
+
+                </div>
+
+                <!-- 发表评论 -->
+                <div class="list-group py-6 px-6">
+                    <div class="input-group">
+                        <input class="form-control" type="text" placeholder="快来吐槽一波吧~" id="commentInput">
+                        <button class="btn btn-primary" type="button" id="addCommentBtn">发送</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 关联的交易 -->
+            <div class="card mt-7">
+                <div class="card-header">
+                    <h4>交易</h4>
+                </div>
+
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <td><input class="form-check-input" type="checkbox" id="delete-transaction-qx" /></td>
+                                <td>名称</td>
+                                <td>金额</td>
+                                <td>阶段</td>
+                                <td>可能性</td>
+                                <td>预计成交日期</td>
+                                <td>类型</td>
+                            </tr>
+                        </thead>
+
+                        <tbody id="boundTransactionBody">
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer d-flex justify-content-end">
+                    <button class="btn btn-primary" id="addTransactionBtn">新建</button>
+                    <button class="btn btn-danger ms-2" id="deleteTransactionBtn">删除</button>
+                </div>
+            </div>
+
+            <!-- 联系人列表 -->
+            <div class="card mt-7">
+                <div class="card-header">
+                    <h4>联系人</h4>
+                </div>
+
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <td><input class="form-check-input" type="checkbox" id="unbind-qx" /></td>
+                                <td>名称</td>
+                                <td>邮箱</td>
+                                <td>手机</td>
+                            </tr>
+                        </thead>
+
+                        <tbody id="boundContactsBody">
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card-footer d-flex justify-content-end">
+                    <button class="btn btn-primary" id="show-delete-contacts-modal-btn">新建</button>
+                    <button class="btn btn-danger ms-2" id="deleteContactsBtn">删除</button>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!-- 编辑客户信息模态框 -->
+    <div class="modal fade" id="edit-customer-modal" tabindex="-1" aria-labelledby="editCustomerModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCustomerModalLabel">编辑客户信息</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-0">
+                    <form id="edit-form">
+                        <div class="row gx-6 gy-3 px-5 pt-4 pb-3">
+                            <div class="col-sm-6">
+                                <label for="edit-owner" class="form-label">所有者<span class="text-danger">*</span></label>
+                                <select class="form-select" name="owner" id="edit-owner"></select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="edit-name" class="form-label">名称<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="edit-name">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="edit-website" class="form-label">公司网站</label>
+                                <input type="text" class="form-control bg-white" id="edit-website" autocomplete="off">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="edit-phone" class="form-label">公司座机</label>
+                                <input type="text" class="form-control bg-white" id="edit-phone" autocomplete="off">
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="edit-description" class="form-label">描述</label>
+                                <textarea class="form-control" id="edit-description"
+                                    placeholder="来简要介绍一下客户吧~"></textarea>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row gx-6 gy-3 px-5 pb-5">
+                            <div class="col-sm-6">
+                                <label for="edit-nextContactTime" class="form-label">下次联系时间</label>
+                                <input type="text" class="form-control time bg-white" id="edit-nextContactTime"
+                                    autocomplete="off">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="edit-address" class="form-label">详细地址</label>
+                                <input type="text" class="form-control bg-white" id="edit-address" autocomplete="off">
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="edit-contactSummary" class="form-label">联系纪要</label>
+                                <textarea class="form-control" id="edit-contactSummary"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="update-customer-btn">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 编辑用户评论模态框 -->
+    <div class="modal fade" id="edit-comment-modal" tabindex="-1" aria-labelledby="editCommentModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCommentModalLabel">编辑用户评论</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="快来吐槽一波吧~" style="height: 150px;"
+                            id="edit-comment-textarea"></textarea>
+                        <label for="edit-comment-textarea">评论</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="update-comment-btn">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  添加联系人模态框  -->
+    <div class="modal fade" id="add-contacts-modal" tabindex="-1" aria-labelledby="addContactsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered w-75">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addContactsModalLabel">创建联系人</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body p-0">
+                    <form id="add-contacts-form">
+                        <div class="row gx-6 gy-3 px-6 pt-5 pb-3">
+                            <label for="add-contacts-owner" class="col-1 col-form-label text-end">所有者<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-sm-4">
+                                <select class="form-select" name="owner" id="add-contacts-owner"></select>
+                            </div>
+
+                            <div class="col-1"></div>
+
+                            <label for="add-contacts-source" class="col-1 col-form-label text-end">来源</label>
+                            <div class="col-sm-4">
+                                <select class="form-select" name="source" id="add-contacts-source">
+                                    <option></option>
+                                    <option th:each="i:${application.source}" th:value="${i.value}">[[${i.text}]]</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row gx-6 gy-3 px-6 pt-3 pb-3">
+
+                            <label for="add-contacts-fullname" class="col-1 col-form-label text-end">姓名<span
+                                    class="text-danger">*</span></label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" id="add-contacts-fullname">
+                            </div>
+                            <div class="col-1"></div>
+
+                            <label for="add-contacts-appellation" class="col-1 col-form-label text-end">称呼</label>
+                            <div class="col-sm-4">
+                                <select class="form-select" name="appellation" id="add-contacts-appellation">
+                                    <option></option>
+                                    <option th:each="i:${application.appellation}" th:value="${i.value}">[[${i.text}]]
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row gx-6 gy-3 px-6 pt-3 pb-3">
+                            <label for="add-contacts-job" class="col-1 col-form-label text-end">职位</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control bg-white" id="add-contacts-job" autocomplete="off">
+                            </div>
+                            <div class="col-1"></div>
+
+                            <label for="add-contacts-mphone" class="col-1 col-form-label text-end">手机</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control bg-white" id="add-contacts-mphone" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="row gx-6 gy-3 px-6 pt-3 pb-3">
+                            <label for="add-contacts-email" class="col-1 col-form-label text-end">邮箱</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control bg-white" id="add-contacts-email" autocomplete="off">
+                            </div>
+                            <div class="col-1"></div>
+
+                            <label for="add-contacts-birth" class="col-1 col-form-label text-end">生日</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control bg-white time" id="add-contacts-birth"
+                                    autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="row gx-6 gy-3 px-6 pt-3 pb-3">
+                            <label for="add-contacts-description" class="col-1 col-form-label text-end">描述</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="add-contacts-description"
+                                    placeholder="来简要介绍一下客户吧~"></textarea>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row gx-6 gy-3 px-6 pt-3 pb-3">
+                            <label for="add-contacts-nextContactTime" class="col-1 col-form-label text-end">时间</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control time bg-white" id="add-contacts-nextContactTime"
+                                    autocomplete="off">
+                            </div>
+                            <div class="col-1"></div>
+
+                            <label for="add-contacts-address" class="col-1 col-form-label text-end">地址</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control bg-white" id="add-contacts-address" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="row gx-6 gy-3 px-6 pt-3 pb-3">
+                            <label for="add-contacts-contactSummary" class="col-1 col-form-label text-end">纪要</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="add-contacts-contactSummary"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="addContactsBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../../../static/js/lib/bootstrap.bundle.min.js" th:src="@{/js/lib/bootstrap.bundle.min.js}">
+    </script>
+</body>
+
+</html>

@@ -24,4 +24,11 @@ public interface TransactionDao {
      * @return 交易列表
      */
     List<Transaction> queryTransactionsByContactsId(String contactsId);
+
+    /**
+     * 通过客户 id 获取交易
+     * @param customerId 客户 id
+     * @return 交易列表
+     */
+    List<Transaction> queryTransactionsByCustomerId(String customerId);
 }

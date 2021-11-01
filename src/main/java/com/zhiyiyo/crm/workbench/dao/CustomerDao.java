@@ -23,4 +23,20 @@ public interface CustomerDao {
      * @return 受影响的行数
      */
     Integer insert(Customer customer);
+
+    /**
+     * 通过客户的 id 查询客户，客户的所有者是用户的 UUID 而不是用户名
+     * @param id 客户 id
+     * @return 客户
+     */
+    Customer queryCustomerById(String id);
+
+    /**
+     * 通过客户的 id 查询客户，客户的所有者是用户名
+     * @param id 客户 id
+     * @return 客户
+     */
+    Customer queryCustomer(String id);
+
+    Integer update(Customer customer);
 }

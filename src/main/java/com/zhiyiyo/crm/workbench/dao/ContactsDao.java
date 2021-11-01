@@ -25,5 +25,10 @@ public interface ContactsDao {
      */
     Contacts getContactsById(String id);
 
-
+    /**
+     * 通过客户 id 获取联系人信息
+     * @param customerId 客户 id
+     * @return 联系人
+     */
+    List<Contacts> queryContactsByCustomerId(String customerId);
 }

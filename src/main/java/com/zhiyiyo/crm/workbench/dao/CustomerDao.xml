@@ -8,6 +8,21 @@
              #{nextContactTime}, #{description}, #{address})
     </insert>
 
+    <update id="update">
+        update tbl_customer
+        set owner=#{owner},
+            name= #{name},
+            website= #{website},
+            phone= #{phone},
+            editBy= #{editBy},
+            editTime= #{editTime},
+            contactSummary= #{contactSummary},
+            nextContactTime= #{nextContactTime},
+            description= #{description},
+            address= #{address}
+        where id = #{id}
+    </update>
+
     <select id="queryCustomerByCondition" resultType="com.zhiyiyo.crm.workbench.entity.Customer">
         select
         cus.id,
@@ -71,5 +86,42 @@
                address
         from tbl_customer
         where name = #{name}
+    </select>
+
+    <select id="queryCustomerById" resultType="com.zhiyiyo.crm.workbench.entity.Customer">
+        select id,
+               owner,
+               name,
+               website,
+               phone,
+               createBy,
+               createTime,
+               editBy,
+               editTime,
+               contactSummary,
+               nextContactTime,
+               description,
+               address
+        from tbl_customer
+        where id = #{id}
+    </select>
+
+    <select id="queryCustomer" resultType="com.zhiyiyo.crm.workbench.entity.Customer">
+        select c.id,
+               u.name as owner,
+               c.name,
+               c.website,
+               c.phone,
+               c.createBy,
+               c.createTime,
+               c.editBy,
+               c.editTime,
+               c.contactSummary,
+               c.nextContactTime,
+               c.description,
+               c.address
+        from tbl_customer c
+                 join tbl_user u on u.id = c.owner
+        where c.id=#{id}
     </select>
 </mapper>

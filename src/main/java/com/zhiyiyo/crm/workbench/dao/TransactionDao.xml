@@ -102,4 +102,26 @@
         from tbl_transaction
         where contactsId = #{contactsId}
     </select>
+    <select id="queryTransactionsByCustomerId" resultType="com.zhiyiyo.crm.workbench.entity.Transaction">
+        select id,
+               owner,
+               money,
+               name,
+               expectedDate,
+               customerId,
+               stage,
+               type,
+               source,
+               activityId,
+               contactsId,
+               createBy,
+               createTime,
+               editBy,
+               editTime,
+               description,
+               contactSummary,
+               nextContactTime
+        from tbl_transaction
+        where customerId = #{customerId}
+    </select>
 </mapper>

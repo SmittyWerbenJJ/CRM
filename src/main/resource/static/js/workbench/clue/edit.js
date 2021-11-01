@@ -17,21 +17,6 @@ $(function () {
     // 清除表单的状态
     cleanInValidState()
 
-    // 获取所有者列表
-    $.ajax({
-        type: "get",
-        url: "/workbench/clue/getUserList",
-        dataType: "json",
-    }).done(function (data) {
-        let html = '<option></option>'
-
-        for (const user of data) {
-            html += `<option value="${user.id}">${user.name}</option>`
-        }
-
-        $("#edit-owner").html(html);
-    });
-
     // 提交表单
     $("#updateBtn").on("click", function () {
         cleanInValidState()
