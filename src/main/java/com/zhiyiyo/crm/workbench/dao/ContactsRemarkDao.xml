@@ -11,4 +11,29 @@
             )
         </foreach>
     </insert>
+
+    <insert id="insert">
+        insert into tbl_contacts_remark value
+            (#{id}, #{noteContent}, #{createBy},
+             #{createTime}, #{editBy},
+             #{editTime}, #{contactsId})
+    </insert>
+
+    <update id="update">
+        update tbl_contacts_remark
+        set noteContent=#{noteContent},
+            editBy= #{editBy},
+            editTime= #{editTime}
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from tbl_contacts_remark where id=#{id}
+    </delete>
+
+    <select id="getRemarksByCId" resultType="com.zhiyiyo.crm.workbench.entity.ContactsRemark">
+        select id, noteContent, createBy, createTime, editBy, editTime, contactsId
+        from tbl_contacts_remark
+        where contactsId = #{id}
+    </select>
 </mapper>

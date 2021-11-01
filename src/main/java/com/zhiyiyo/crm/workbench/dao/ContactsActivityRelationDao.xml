@@ -7,4 +7,25 @@
             (#{relation.id}, #{relation.contactsId}, #{relation.activityId})
         </foreach>
     </insert>
+
+    <delete id="deleteByIds">
+        delete from tbl_contacts_activity_relation where id in
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByActivityIds">
+        delete from tbl_contacts_activity_relation where activityId in
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="queryCountByActivityIds" resultType="java.lang.Integer">
+        select count(*) from tbl_contacts_activity_relation where activityId in
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

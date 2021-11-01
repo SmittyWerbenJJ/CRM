@@ -1,8 +1,8 @@
 $(function () {
-    $(".nav-item>a:eq(3)").addClass("active")
+    $(".nav-item>a:eq(5)").addClass("active")
 
-    // 线索的 id
-    var clueId = $("#hidden-clue-id").val()
+    // 联系人的 id
+    var contactsId = $("#hidden-contacts-id").val()
 
     // 添加日历
     $(".time").datetimepicker({
@@ -23,12 +23,12 @@ $(function () {
         }
 
         $.ajax({
-            url: "/workbench/clue/addRemark",
+            url: "/workbench/contacts/addRemark",
             dataType: "json",
             type: "post",
             data: {
                 "noteContent": comment,
-                "clueId": clueId
+                "contactsId": contactsId
             }
         }).done(function (data) {
             showToast(data.success, "吐槽")
@@ -44,9 +44,9 @@ $(function () {
 
     // 发送获取评论列表的请求
     $.ajax({
-        url: "/workbench/clue/getRemarksByCId",
+        url: "/workbench/contacts/getRemarksByCId",
         data: {
-            "id": clueId
+            "id": contactsId
         }
     }).done(function (data) {
         let html = ''
@@ -80,7 +80,7 @@ $(function () {
         }
 
         $.ajax({
-            url: "/workbench/clue/updateRemark",
+            url: "/workbench/contacts/updateRemark",
             dataType: "json",
             type: "post",
             data: {
@@ -114,7 +114,7 @@ $(function () {
         // 发出删除评论的请求
         $.ajax({
             type: "post",
-            url: "/workbench/clue/deleteRemark",
+            url: "/workbench/contacts/deleteRemark",
             data: {
                 id: remarkId
             },
@@ -133,12 +133,20 @@ $(function () {
     getBoundActivities()
 
     // 全选功能
+    $("#delete-transaction-qx").on("click", function () {
+        $("#boundTransactionBody .dx").prop("checked", this.checked)
+    });
+
     $("#unbind-qx").on("click", function () {
         $("#boundActivityBody .dx").prop("checked", this.checked)
     })
 
     $("#bind-qx").on("click", function () {
         $("#unboundActivityBody .dx").prop("checked", this.checked)
+    })
+
+    $("#boundTransactionBody").on("click", ".dx", function () {
+        $("#delete-transaction-qx").prop("checked", $("#boundTransactionBody .dx:checked").length == $("#boundTransactionBody .dx").length)
     })
 
     $("#boundActivityBody").on("click", ".dx", function () {
@@ -170,7 +178,7 @@ $(function () {
 
         $.ajax({
             type: "post",
-            url: "/workbench/clue/unbindActivities",
+            url: "/workbench/contacts/unbindActivities",
             data: {
                 ids
             },
@@ -214,9 +222,9 @@ $(function () {
 
         $.ajax({
             type: "post",
-            url: "/workbench/clue/bindActivities",
+            url: "/workbench/contacts/bindActivities",
             data: {
-                clueId, activityIds
+                contactsId, activityIds
             },
             dataType: "json",
         }).done(function (data) {
@@ -228,37 +236,31 @@ $(function () {
     });
 
     // 点击编辑按钮
-    $("#editClueBtn").on("click", function () {
-        location.href = "/workbench/clue/editClue?id=" + clueId
-    });
-
-    // 点击转换按钮
-    $("#convertClueBtn").on("click", function () {
-        var owner = $("#owner").text()
-        var customer = $("#company").text()
-        var contacts = $("#hidden-clue-fullname").val()
-        var appellation = $("#hidden-clue-appellation").val()
-        location.href = `/workbench/clue/convert.html?id=${clueId}&customer=${customer}&contacts=${contacts}&appellation=${appellation}&owner=${owner}`
+    $("#editContactsBtn").on("click", function () {
+        location.href = "/workbench/contacts/editContacts?id=" + contactsId
     });
 
     // 点击删除按钮
-    $("#deleteClueBtn").on("click", function () {
-        if (!confirm("前辈确定删除这条线索吗？")) {
+    $("#deleteContactsBtn").on("click", function () {
+        if (!confirm("前辈确定删除这条联系人吗？")) {
             return
         }
 
         $.ajax({
             type: "post",
-            url: "/workbench/clue/deleteClues",
+            url: "/workbench/contacts/deleteContacts",
             dataType: "json",
             data: {
-                ids: [clueId]
+                ids: [contactsId]
             }
         }).done(function (data) {
-            showToast(data.success, "删除线索")
-            setTimeout(() => { location.href = "/workbench/clue/index.html" }, 1500)
+            showToast(data.success, "删除联系人")
+            setTimeout(() => { location.href = "/workbench/contacts/index.html" }, 1500)
         })
     });
+
+    // 获取绑定的交易
+    getBoundTransactions()
 })
 
 
@@ -333,13 +335,13 @@ function showToast(isSuccess, action) {
     }
 }
 
-
+/* 获取绑定的市场活动 */
 function getBoundActivities() {
-    var clueId = $("#hidden-clue-id").val()
+    var contactsId = $("#hidden-contacts-id").val()
     $.ajax({
-        url: "/workbench/clue/getBoundActivities",
+        url: "/workbench/contacts/getBoundActivities",
         data: {
-            clueId
+            contactsId
         },
         dataType: "json"
     }).done(function (data) {
@@ -352,12 +354,12 @@ function getBoundActivities() {
  * @param {string} name 市场活动名称
  */
 function getUnboundActivities(name = '') {
-    var clueId = $("#hidden-clue-id").val()
+    var contactsId = $("#hidden-contacts-id").val()
     $.ajax({
-        url: "/workbench/clue/getUnboundActivities",
+        url: "/workbench/contacts/getUnboundActivities",
         dataType: "json",
         data: {
-            name, clueId
+            name, contactsId
         }
     }).done(function (data) {
         renderActivityTableBody('unboundActivityBody', data)
@@ -384,4 +386,32 @@ function renderActivityTableBody(id, activities) {
             `
     }
     $("#" + id).html(html)
+}
+
+/* 获取绑定的交易 */
+function getBoundTransactions() {
+    var contactsId = $("#hidden-contacts-id").val()
+    $.ajax({
+        url: "/workbench/contacts/getBoundTransactions",
+        data: {
+            contactsId
+        },
+        dataType: "json"
+    }).done(function (data) {
+        let html = ''
+        for (const transaction of data) {
+            html += `
+            <tr>
+                <td><input class="form-check-input dx" type="checkbox" value='${transaction.id}' /></td>
+                <td>${transaction.name}</td>
+                <td>${transaction.money}</td>
+                <td>${transaction.stage}</td>
+                <td></td>
+                <td>${transaction.expectedDate}</td>
+                <td>${transaction.type}</td>
+            </tr>
+            `
+        }
+        $("#boundTransactionBody").html(html)
+    })
 }

@@ -15,6 +15,13 @@ public interface ClueActivityRelationDao {
     Integer deleteById(String id);
 
     /**
+     * 删除多条记录
+     * @param ids 行 id 列表
+     * @return 受影响的行数
+     */
+    Integer deleteByIds(String[] ids);
+
+    /**
      * 插入一条关联信息
      * @param relation 关联关系
      * @return 受影响的行数
@@ -36,6 +43,13 @@ public interface ClueActivityRelationDao {
     Integer deleteByClueIds(String[] ids);
 
     /**
+     * 根据市场活动 id 删除行
+     * @param ids 市场活动 id 列表
+     * @return 受影响的行数
+     */
+    Integer deleteByActivityIds(String[] ids);
+
+    /**
      * 根据线索 id 删除行
      * @param id 线索 id
      * @return 受影响的行数
@@ -48,6 +62,13 @@ public interface ClueActivityRelationDao {
      * @return 总记录数
      */
     Integer queryCountByClueIds(String[] ids);
+
+    /**
+     * 根据市场活动 id 统计记录数量
+     * @param ids 市场活动 id 列表
+     * @return 总记录数
+     */
+    Integer queryCountByActivityIds(String[] ids);
 
     /**
      * 通过线索 id 查询记录

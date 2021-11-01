@@ -17,4 +17,11 @@ public interface TransactionDao {
      * @return 受影响的行数
      */
     Integer insert(Transaction tran);
+
+    /**
+     * 通过联系人 id 获取交易
+     * @param contactsId 联系人 id
+     * @return 交易列表
+     */
+    List<Transaction> queryTransactionsByContactsId(String contactsId);
 }

@@ -7,6 +7,7 @@ import com.zhiyiyo.crm.utils.UUIDUtil;
 import com.zhiyiyo.crm.vo.PaginationVo;
 import com.zhiyiyo.crm.workbench.entity.Activity;
 import com.zhiyiyo.crm.workbench.entity.ActivityRemark;
+import com.zhiyiyo.crm.workbench.exception.ActivityException;
 import com.zhiyiyo.crm.workbench.service.ActivityService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,8 +78,8 @@ public class ActivityController {
 
     @PostMapping("/deleteActivities")
     @ResponseBody
-    public Map<String, Object> deleteActivities(@RequestParam("ids[]") String[] ids) {
-        boolean success = activityService.deleteActivity(ids);
+    public Map<String, Object> deleteActivities(@RequestParam("ids[]") String[] ids) throws ActivityException {
+        boolean success = activityService.deleteActivities(ids);
 
         Map<String, Object> data = new HashMap<>();
         data.put("success", success);

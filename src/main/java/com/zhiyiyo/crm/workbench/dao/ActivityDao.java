@@ -77,6 +77,21 @@ public interface ActivityDao {
      * @return 匹配名字的市场活动列表
      */
     List<Activity> queryUnboundClueActivities(Map<String, String> map);
+
+    /**
+     * 查询所有和指定联系人 id 相关联的市场活动
+     * @param id 联系人 id
+     * @return 市场活动列表
+     */
+    List<Activity> queryActivitiesByContactsId(String id);
+
+
+    /**
+     * 获取还没和线索绑定的市场活动
+     * @param map 市场活动名称和线索 id 组成的字典
+     * @return 匹配名字的市场活动列表
+     */
+    List<Activity> queryUnboundContactsActivities(Map<String, String> map);
 }
 
 

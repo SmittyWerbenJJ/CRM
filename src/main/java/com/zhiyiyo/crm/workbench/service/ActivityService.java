@@ -3,6 +3,7 @@ package com.zhiyiyo.crm.workbench.service;
 import com.zhiyiyo.crm.vo.PaginationVo;
 import com.zhiyiyo.crm.workbench.entity.Activity;
 import com.zhiyiyo.crm.workbench.entity.ActivityRemark;
+import com.zhiyiyo.crm.workbench.exception.ActivityException;
 
 import java.util.List;
 import java.util.Map;
@@ -27,8 +28,9 @@ public interface ActivityService {
      * 删除多条市场活动
      *
      * @param ids 市场活动列表
+     * @exception ActivityException 删除市场活动失败时抛出异常
      */
-    boolean deleteActivity(String[] ids);
+    boolean deleteActivities(String[] ids) throws ActivityException;
 
     /**
      * 根据条件查询市场活动

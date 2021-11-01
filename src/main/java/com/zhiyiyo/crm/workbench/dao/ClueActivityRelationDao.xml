@@ -18,6 +18,13 @@
         where id = #{id}
     </delete>
 
+    <delete id="deleteByIds">
+        delete from tbl_clue_activity_relation where id in
+        <foreach collection="array" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
     <delete id="deleteByClueIds">
         delete from tbl_clue_activity_relation where clueId in
         <foreach collection="array" open="(" close=")" separator="," item="clueId">
@@ -27,6 +34,13 @@
 
     <delete id="deleteByClueId">
         delete from tbl_clue_activity_relation where clueId=#{id}
+    </delete>
+
+    <delete id="deleteByActivityIds">
+        delete from tbl_clue_activity_relation where activityId in
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
     </delete>
 
     <select id="queryCountByClueIds" resultType="java.lang.Integer">
@@ -40,6 +54,13 @@
         select id, clueId, activityId
         from tbl_clue_activity_relation
         where clueId = #{id}
+    </select>
+
+    <select id="queryCountByActivityIds" resultType="java.lang.Integer">
+        select count(*) from tbl_clue_activity_relation where activityId in
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
     </select>
 
 </mapper>

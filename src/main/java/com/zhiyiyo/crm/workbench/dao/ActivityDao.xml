@@ -51,10 +51,10 @@
                 and u.name like '%' #{owner} '%'
             </if>
             <if test="startDate!=null and startDate!=''">
-                and a.startDate &gt; #{startDate}
+                and a.startDate &gt;= #{startDate}
             </if>
             <if test="endDate!=null and endDate!=''">
-                and a.endDate &lt; #{endDate}
+                and a.endDate &lt;= #{endDate}
             </if>
         </where>
     </select>
@@ -73,10 +73,10 @@
                 and u.name like '%' #{owner} '%'
             </if>
             <if test="startDate!=null and startDate!=''">
-                and a.startDate &gt; #{startDate}
+                and a.startDate &gt;= #{startDate}
             </if>
             <if test="endDate!=null and endDate!=''">
-                and a.endDate &lt; #{endDate}
+                and a.endDate &lt;= #{endDate}
             </if>
         </where>
         order by a.createTime DESC limit #{start},#{pageSize}
@@ -156,5 +156,36 @@
         from tbl_activity a
                  join tbl_user u on a.owner = u.id
         where a.name like '%' #{name} '%'
+    </select>
+
+    <select id="queryActivitiesByContactsId" resultType="com.zhiyiyo.crm.workbench.entity.Activity">
+        select car.id,
+               a.name,
+               a.startDate,
+               a.endDate,
+               u.name as owner
+        from tbl_activity a
+                 join tbl_user u
+                      on a.owner = u.id
+                 join tbl_contacts_activity_relation car
+                      on a.id = car.activityId
+        where car.contactsId = #{id}
+    </select>
+
+    <select id="queryUnboundContactsActivities" resultType="com.zhiyiyo.crm.workbench.entity.Activity">
+        select a.id,
+               a.name,
+               a.startDate,
+               a.endDate,
+               u.name as owner
+        from tbl_activity a
+                 join tbl_user u
+                      on a.owner = u.id
+        where a.name like '%' #{name} '%'
+          and a.id not in (
+            select car.activityId
+            from tbl_contacts_activity_relation car
+            where car.contactsId = #{contactsId}
+        )
     </select>
 </mapper>

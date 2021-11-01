@@ -64,4 +64,30 @@
         </where>
         order by con.createTime DESC limit #{start},#{pageSize}
     </select>
+
+    <select id="getContactsById" resultType="com.zhiyiyo.crm.workbench.entity.Contacts">
+        select con.id,
+               u.name   as owner,
+               con.source,
+               cus.name as customerId,
+               con.fullname,
+               con.appellation,
+               con.email,
+               con.mphone,
+               con.job,
+               con.birth,
+               con.createBy,
+               con.createTime,
+               con.editBy,
+               con.editTime,
+               con.description,
+               con.contactSummary,
+               con.nextContactTime,
+               con.address
+        from tbl_contacts con
+                 join tbl_user u on u.id = con.owner
+                 join tbl_customer cus on cus.id = con.customerId
+        where con.id = #{id}
+    </select>
+
 </mapper>

@@ -97,11 +97,7 @@ public class ClueServiceImpl implements ClueService {
 
     @Override
     public boolean unbindActivities(String[] ids) {
-        boolean success = true;
-        for (String id : ids) {
-            success &= clueActivityRelationDao.deleteById(id).equals(1);
-        }
-        return success;
+        return clueActivityRelationDao.deleteByIds(ids).equals(ids.length);
     }
 
     @Override
@@ -249,7 +245,7 @@ public class ClueServiceImpl implements ClueService {
             throw new ConvertException("线索转换失败");
         }
 
-        return success;
+        return true;
     }
 
 

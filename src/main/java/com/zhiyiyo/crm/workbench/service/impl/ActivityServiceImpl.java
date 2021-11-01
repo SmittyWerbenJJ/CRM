@@ -3,10 +3,14 @@ package com.zhiyiyo.crm.workbench.service.impl;
 import com.zhiyiyo.crm.vo.PaginationVo;
 import com.zhiyiyo.crm.workbench.dao.ActivityDao;
 import com.zhiyiyo.crm.workbench.dao.ActivityRemarkDao;
+import com.zhiyiyo.crm.workbench.dao.ClueActivityRelationDao;
+import com.zhiyiyo.crm.workbench.dao.ContactsActivityRelationDao;
 import com.zhiyiyo.crm.workbench.entity.Activity;
 import com.zhiyiyo.crm.workbench.entity.ActivityRemark;
+import com.zhiyiyo.crm.workbench.exception.ActivityException;
 import com.zhiyiyo.crm.workbench.service.ActivityService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -22,6 +26,12 @@ public class ActivityServiceImpl implements ActivityService {
     @Resource
     private ActivityRemarkDao activityRemarkDao;
 
+    @Resource
+    private ClueActivityRelationDao clueActivityRelationDao;
+
+    @Resource
+    private ContactsActivityRelationDao contactsActivityRelationDao;
+
     @Override
     public boolean addActivity(Activity activity) {
         return activityDao.insert(activity).equals(1);
@@ -33,12 +43,26 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public boolean deleteActivity(String[] ids) {
+    @Transactional(rollbackFor = ActivityException.class)
+    public boolean deleteActivities(String[] ids) throws ActivityException {
         Integer remarkCount = activityRemarkDao.queryRemarkCountByIds(ids);
-        Integer deleteRemarkCount = activityRemarkDao.deleteRemarkByActivityIds(ids);
-        Integer deleteActivityCount = activityDao.delete(ids);
+        Integer deletedRemarkCount = activityRemarkDao.deleteRemarkByActivityIds(ids);
+        Integer clueRelationCount = clueActivityRelationDao.queryCountByActivityIds(ids);
+        Integer deletedClueRelationCount = clueActivityRelationDao.deleteByActivityIds(ids);
+        Integer contactsRelationCount = contactsActivityRelationDao.queryCountByActivityIds(ids);
+        Integer deletedContactsRelationCount = contactsActivityRelationDao.deleteByActivityIds(ids);
+        Integer deletedActivityCount = activityDao.delete(ids);
 
-        return deleteActivityCount.equals(ids.length) && remarkCount.equals(deleteRemarkCount);
+        boolean success = deletedActivityCount.equals(ids.length)
+                && remarkCount.equals(deletedRemarkCount)
+                && clueRelationCount.equals(deletedClueRelationCount)
+                && contactsRelationCount.equals(deletedContactsRelationCount);
+
+        if (!success) {
+            throw new ActivityException("删除市场活动失败");
+        }
+
+        return true;
     }
 
     @Override
