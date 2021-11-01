@@ -51,4 +51,9 @@ public class WorkbenchController {
     public String transactionIndex(){
         return "workbench/transaction/index";
     }
+
+    @RequestMapping("/transaction/add.html")
+    public String transactionAdd(){
+        return "workbench/transaction/add";
+    }
 }

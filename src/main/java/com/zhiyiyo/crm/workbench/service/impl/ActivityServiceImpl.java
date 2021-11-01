@@ -110,5 +110,4 @@ public class ActivityServiceImpl implements ActivityService {
         return activityRemarkDao.deleteRemark(id).equals(1);
     }
 
-
 }

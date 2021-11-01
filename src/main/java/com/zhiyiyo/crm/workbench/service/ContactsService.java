@@ -36,4 +36,6 @@ public interface ContactsService {
     List<Transaction> getBoundTransactions(String contactsId);
 
     List<Contacts> getContactsByCustomerId(String customerId);
+
+    List<Contacts> getContactsByName(String name);
 }

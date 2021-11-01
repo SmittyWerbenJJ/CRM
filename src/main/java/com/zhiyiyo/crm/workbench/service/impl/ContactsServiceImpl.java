@@ -107,4 +107,9 @@ public class ContactsServiceImpl implements ContactsService {
     public List<Contacts> getContactsByCustomerId(String customerId) {
         return contactsDao.queryContactsByCustomerId(customerId);
     }
+
+    @Override
+    public List<Contacts> getContactsByName(String name) {
+        return contactsDao.queryContactsByName(name);
+    }
 }

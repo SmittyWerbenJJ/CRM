@@ -1,7 +1,13 @@
 package com.zhiyiyo.crm.workbench.controller;
 
+import com.zhiyiyo.crm.settings.entity.User;
+import com.zhiyiyo.crm.settings.service.UserService;
 import com.zhiyiyo.crm.vo.PaginationVo;
+import com.zhiyiyo.crm.workbench.entity.Activity;
+import com.zhiyiyo.crm.workbench.entity.Contacts;
 import com.zhiyiyo.crm.workbench.entity.Transaction;
+import com.zhiyiyo.crm.workbench.service.ActivityService;
+import com.zhiyiyo.crm.workbench.service.ContactsService;
 import com.zhiyiyo.crm.workbench.service.TransactionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -17,6 +24,15 @@ import java.util.Map;
 public class TransactionController {
     @Resource
     private TransactionService transactionService;
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private ActivityService activityService;
+
+    @Resource
+    private ContactsService contactsService;
 
     @GetMapping("/getTransactionsByCondition")
     @ResponseBody
@@ -39,5 +55,23 @@ public class TransactionController {
         vo.setDataList(transactionService.getTransactionsByCondition(condition));
 
         return vo;
+    }
+
+    @GetMapping("/getUserList")
+    @ResponseBody
+    public List<User> getUserList() {
+        return userService.getUserList();
+    }
+
+    @GetMapping("/getActivitiesByName")
+    @ResponseBody
+    public List<Activity> getActivitiesByName(String name) {
+        return activityService.getActivitiesByName(name);
+    }
+
+    @GetMapping("/getContactsByName")
+    @ResponseBody
+    public List<Contacts> getContactsByName(String name) {
+        return contactsService.getContactsByName(name);
     }
 }

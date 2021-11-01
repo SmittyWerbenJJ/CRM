@@ -31,4 +31,11 @@ public interface ContactsDao {
      * @return 联系人
      */
     List<Contacts> queryContactsByCustomerId(String customerId);
+
+    /**
+     * 通过联系人的名字模糊查询所有匹配联系人
+     * @param name 联系人名字
+     * @return 联系人列表
+     */
+    List<Contacts> queryContactsByName(String name);
 }

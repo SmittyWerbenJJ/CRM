@@ -11,7 +11,7 @@ $(function () {
         format: 'yyyy-mm-dd',
         autoclose: true,
         todayBtn: true,
-        pickerPosition: "bottom-left"
+        pickerPosition: "top-left"
     });
 
     //弹出编辑客户信息模态框
