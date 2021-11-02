@@ -5,4 +5,12 @@
         insert into tbl_transaction_history VALUE
             (#{id}, #{stage}, #{money}, #{expectedDate}, #{createTime}, #{createBy}, #{tranId})
     </insert>
+
+    <select id="queryHistoriesByTransactionId"
+            resultType="com.zhiyiyo.crm.workbench.entity.TransactionHistory">
+        select id, stage, money, expectedDate, createTime, createBy, tranId
+        from tbl_transaction_history
+        where tranId = #{id}
+        order by createTime
+    </select>
 </mapper>

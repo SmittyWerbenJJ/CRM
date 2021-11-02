@@ -18,8 +18,18 @@
     </script>
     <script src="../../../static/js/lib/bootstrap-datetimepicker.zh-CN.js"
         th:src="@{/js/lib/bootstrap-datetimepicker.zh-CN.js}"></script>
-    <script src="../../../static/js/workbench/clue/details.js" th:src="@{/js/workbench/clue/details.js}"></script>
-    <title>线索详细信息 - CRM</title>
+    <script src="../../../static/js/lib/bootstrap.bundle.min.js" th:src="@{/js/lib/bootstrap.bundle.min.js}">
+    </script>
+    <script src="../../../static/js/workbench/transaction/details.js" th:src="@{/js/workbench/transaction/details.js}">
+    </script>
+    <style>
+        .popover-body {
+            padding: 0.5rem 0.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            border: none;
+        }
+    </style>
+    <title>交易详细信息 - CRM</title>
 </head>
 
 
@@ -33,12 +43,10 @@
     <!-- 工作区 -->
     <div class="page-holder">
         <div class="container-fluid px-xl-7">
-            <h2>线索详细信息</h2>
+            <h2>交易详细信息</h2>
 
             <div class="card mt-5">
-                <input type="hidden" id="hidden-clue-id" th:value="${clue.id}">
-                <input type="hidden" id="hidden-clue-fullname" th:value="${clue.fullname}">
-                <input type="hidden" id="hidden-clue-appellation" th:value="${clue.appellation}">
+                <input type="hidden" id="hidden-transaction-id" th:value="${transaction.id}">
                 <div class="card-header">
                     <h4>详细信息</h4>
                 </div>
@@ -48,53 +56,79 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <div class="row align-items-center">
+                                    <div class="col-2 fw-bold">流程</div>
+
+                                    <!-- 阶段 -->
+                                    <div class="col-10 fs-3 md-6" id="stageIcons">
+
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row align-items-center">
                                     <div class="col-2"><strong>名称</strong></div>
-                                    <div class="col-4" id="fullname_appellation">
-                                        [[|${clue.fullname}]][[${clue.appellation}]]
+                                    <div class="col-4" id="name">
+                                        [[|${transaction.name}]]
                                     </div>
                                     <div class="col-2"><strong>所有者</strong></div>
                                     <div class="col-4" id="owner">
-                                        [[${clue.owner}]]
+                                        [[${transaction.owner}]]
                                     </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="row align-items-center">
-                                    <div class="col-2"><strong>职位</strong></div>
-                                    <div class="col-4">
-                                        [[${clue.job}]]
+                                    <div class="col-2"><strong>预计成交日期</strong></div>
+                                    <div class="col-4" id="expectedDate">
+                                        [[${transaction.expectedDate}]]
                                     </div>
-                                    <div class="col-2"><strong>手机</strong></div>
-                                    <div class="col-4">
-                                        [[${clue.mphone}]]
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row align-items-center">
-                                    <div class="col-2"><strong>邮箱</strong></div>
-                                    <div class="col-10">
-                                        [[${clue.email}]]
+                                    <div class="col-2"><strong>金额</strong></div>
+                                    <div class="col-4" id="money">
+                                        [[${transaction.money}]]
                                     </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="row align-items-center">
-                                    <div class="col-2"><strong>公司</strong></div>
-                                    <div class="col-4" id="company">
-                                        [[${clue.company}]]
+                                    <div class="col-2"><strong>客户名称</strong></div>
+                                    <div class="col-4" id="customerId">
+                                        [[${transaction.customerId}]]
                                     </div>
-                                    <div class="col-2"><strong>公司座机</strong></div>
-                                    <div class="col-4">
-                                        [[${clue.phone}]]
+                                    <div class="col-2"><strong>类型</strong></div>
+                                    <div class="col-4" id="type">
+                                        [[${transaction.type}]]
                                     </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="row align-items-center">
-                                    <div class="col-2"><strong>公司网站</strong></div>
-                                    <div class="col-10">
-                                        [[${clue.website}]]
+                                    <div class="col-2"><strong>当前阶段</strong></div>
+                                    <div class="col-4" id="stage">
+                                        [[${transaction.stage}]]
+                                    </div>
+                                    <div class="col-2"><strong>可能性</strong></div>
+                                    <div class="col-4" id="possibility">
+                                        [[${possibility}]]
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col-2"><strong>来源</strong></div>
+                                    <div class="col-4" id="source">
+                                        [[${transaction.source}]]
+                                    </div>
+                                    <div class="col-2"><strong>市场活动源</strong></div>
+                                    <div class="col-4" id="activityId">
+                                        [[${transaction.activityId}]]
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col-2"><strong>联系人名称</strong></div>
+                                    <div class="col-10" id="contactsId">
+                                        [[${transaction.contactsId}]]
                                     </div>
                                 </div>
                             </li>
@@ -102,57 +136,41 @@
                                 <div class="row align-items-center">
                                     <div class="col-2"><strong>创建者</strong></div>
                                     <div class="col-10">
-                                        [[${clue.createBy}]]
-                                        <small class="fs-8 text-secondary ms-2">[[${clue.createTime}]]</small>
+                                        [[${transaction.createBy}]]
+                                        <small class="fs-8 text-secondary ms-2">[[${transaction.createTime}]]</small>
                                     </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="row align-items-center">
                                     <div class="col-2"><strong>修改者</strong></div>
-                                    <div class="col-10">
-                                        [[${clue.editBy}]]
-                                        <small class="fs-8 text-secondary ms-2">[[${clue.editTime}]]</small>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row align-items-center">
-                                    <div class="col-2"><strong>线索来源</strong></div>
-                                    <div class="col-4">
-                                        [[${clue.source}]]
-                                    </div>
-                                    <div class="col-2"><strong>线索状态</strong></div>
-                                    <div class="col-4">
-                                        [[${clue.state}]]
+                                    <div class="col-10" id="editBy">
+                                        [[${transaction.editBy}]]
+                                        <small class="fs-8 text-secondary ms-2">[[${transaction.editTime}]]</small>
                                     </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
-                                    <div class="col-2"><strong>详细信息</strong></div>
-                                    <div class="col-10">
-                                        [[${clue.description}]]
+                                    <div class="col-2"><strong>描述</strong></div>
+                                    <div class="col-10" id="description">
+                                        [[${transaction.description}]]
                                     </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="row align-items-center">
                                     <div class="col-2"><strong>下次联系时间</strong></div>
-                                    <div class="col-4">
-                                        [[${clue.nextContactTime}]]
-                                    </div>
-                                    <div class="col-2"><strong>详细地址</strong></div>
-                                    <div class="col-4">
-                                        [[${clue.address}]]
+                                    <div class="col-10" id="nextContactTime">
+                                        [[${transaction.nextContactTime}]]
                                     </div>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-2"><strong>联系纪要</strong></div>
-                                    <div class="col-10">
-                                        [[${clue.contactSummary}]]
+                                    <div class="col-10" id="contactSummary">
+                                        [[${transaction.contactSummary}]]
                                     </div>
                                 </div>
                             </li>
@@ -160,9 +178,8 @@
                     </div>
                 </div>
                 <div class="text-end card-footer">
-                    <button class="btn btn-primary" id="convertClueBtn">转换</button>
-                    <button class="btn btn-outline-dark" id="editClueBtn">编辑</button>
-                    <button class="btn btn-danger" id="deleteClueBtn">删除</button>
+                    <button class="btn btn-outline-dark" id="editTransactionBtn">编辑</button>
+                    <button class="btn btn-danger" id="deleteTransactionBtn">删除</button>
                 </div>
             </div>
 
@@ -178,7 +195,7 @@
                 </div>
 
                 <!-- 发表评论 -->
-                <div class="list-group py-6 px-6">
+                <div class="list-group p-6">
                     <div class="input-group">
                         <input class="form-control" type="text" placeholder="快来吐槽一波吧~" id="commentInput">
                         <button class="btn btn-primary" type="button" id="addCommentBtn">发送</button>
@@ -187,36 +204,34 @@
 
             </div>
 
-            <!-- 关联的市场活动 -->
+            <!-- 交易历史 -->
             <div class="card mt-7">
                 <div class="card-header">
-                    <h4>市场活动</h4>
+                    <h4>交易历史</h4>
                 </div>
 
+                <!-- 交易历史列表 -->
                 <div class="card-body">
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <td><input class="form-check-input" type="checkbox" id="unbind-qx" /></td>
-                                <td>名称</td>
-                                <td>开始时间</td>
-                                <td>结束时间</td>
-                                <td>所有者</td>
+                                <td>阶段</td>
+                                <td>金额</td>
+                                <td>可能性</td>
+                                <td>预计成交日期</td>
+                                <td>创建人</td>
+                                <td>创建时间</td>
                             </tr>
                         </thead>
 
-                        <tbody id="boundActivityBody">
+                        <tbody id="transactionHistoryBody">
 
                         </tbody>
                     </table>
                 </div>
 
-                <div class="card-footer d-flex justify-content-end">
-                    <button class="btn btn-outline-dark" id="show-bind-model-btn">添加关联</button>
-                    <button class="btn btn-danger ms-2" id="unbindBtn">解除关联</button>
-                </div>
-
             </div>
+
 
         </div>
 
@@ -244,52 +259,9 @@
             </div>
         </div>
 
-        <!--  添加关联模态框  -->
-        <div class="modal fade" id="bind-modal" tabindex="-1" aria-labelledby="bindModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="bindModalLabel">关联市场活动</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body px-5 py-5">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="前辈可以在这里输入市场活动名称哦" aria-label=""
-                                aria-describedby="search-activity-btn" id="search-activity-input">
-                            <button class="btn btn-outline-success" type="button" id="search-activity-btn"><i
-                                    class="bi bi-search"></i></button>
-                        </div>
-
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox" id="bind-qx" /></td>
-                                    <td>名称</td>
-                                    <td>开始时间</td>
-                                    <td>结束时间</td>
-                                    <td>所有者</td>
-                                </tr>
-                            </thead>
-
-                            <tbody id="unboundActivityBody">
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" id="bindBtn">关联</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
 
-    <script src="../../../static/js/lib/bootstrap.bundle.min.js" th:src="@{/js/lib/bootstrap.bundle.min.js}">
-    </script>
 </body>
 
 </html>

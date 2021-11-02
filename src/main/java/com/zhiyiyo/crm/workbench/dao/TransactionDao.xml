@@ -8,6 +8,14 @@
              #{contactSummary}, #{nextContactTime})
     </insert>
 
+    <update id="updateStage">
+        update tbl_transaction
+        set stage=#{stage},
+            editBy=#{editBy},
+            editTime=#{editTime}
+        where id = #{id}
+    </update>
+
     <select id="queryTransactionsByCondition" resultType="com.zhiyiyo.crm.workbench.entity.Transaction">
         select
         tran.id,
@@ -123,5 +131,32 @@
                nextContactTime
         from tbl_transaction
         where customerId = #{customerId}
+    </select>
+
+    <select id="queryTransactionById" resultType="com.zhiyiyo.crm.workbench.entity.Transaction">
+        select t.id,
+               u.name       as owner,
+               t.money,
+               t.name,
+               t.expectedDate,
+               cus.name     as customerId,
+               t.stage,
+               t.type,
+               t.source,
+               a.name       as activityId,
+               con.fullname as contactsId,
+               t.createBy,
+               t.createTime,
+               t.editBy,
+               t.editTime,
+               t.description,
+               t.contactSummary,
+               t.nextContactTime
+        from tbl_transaction t
+                 join tbl_user u on u.id = t.owner
+                 join tbl_customer cus on cus.id = t.customerId
+                 left join tbl_activity a on a.id = t.activityId
+                 left join tbl_contacts con on con.id = t.contactsId
+        where t.id = #{id}
     </select>
 </mapper>

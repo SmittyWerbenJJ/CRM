@@ -131,16 +131,18 @@
                     <h4>评论列表</h4>
                 </div>
 
-                <!-- 用户评论列表 -->
-                <div class="list-group rounded-0" id="comment-list">
+                <div class="card-body">
+                    <!-- 用户评论列表 -->
+                    <div class="list-group rounded-0" id="comment-list">
 
-                </div>
+                    </div>
 
-                <!-- 发表评论 -->
-                <div class="list-group py-6 px-6">
-                    <div class="input-group">
-                        <input class="form-control" type="text" placeholder="快来吐槽一波吧~" id="commentInput">
-                        <button class="btn btn-primary" type="button" id="addCommentBtn">发送</button>
+                    <!-- 发表评论 -->
+                    <div class="list-group">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="快来吐槽一波吧~" id="commentInput">
+                            <button class="btn btn-primary" type="button" id="addCommentBtn">发送</button>
+                        </div>
                     </div>
                 </div>
 
@@ -325,7 +327,8 @@
                             <div class="col-sm-4">
                                 <select class="form-select" name="source" id="add-contacts-source">
                                     <option></option>
-                                    <option th:each="i:${application.source}" th:value="${i.value}">[[${i.text}]]</option>
+                                    <option th:each="i:${application.source}" th:value="${i.value}">[[${i.text}]]
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -352,20 +355,23 @@
                         <div class="row gx-6 gy-3 px-6 pt-3 pb-3">
                             <label for="add-contacts-job" class="col-1 col-form-label text-end">职位</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control bg-white" id="add-contacts-job" autocomplete="off">
+                                <input type="text" class="form-control bg-white" id="add-contacts-job"
+                                    autocomplete="off">
                             </div>
                             <div class="col-1"></div>
 
                             <label for="add-contacts-mphone" class="col-1 col-form-label text-end">手机</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control bg-white" id="add-contacts-mphone" autocomplete="off">
+                                <input type="text" class="form-control bg-white" id="add-contacts-mphone"
+                                    autocomplete="off">
                             </div>
                         </div>
 
                         <div class="row gx-6 gy-3 px-6 pt-3 pb-3">
                             <label for="add-contacts-email" class="col-1 col-form-label text-end">邮箱</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control bg-white" id="add-contacts-email" autocomplete="off">
+                                <input type="text" class="form-control bg-white" id="add-contacts-email"
+                                    autocomplete="off">
                             </div>
                             <div class="col-1"></div>
 
@@ -396,7 +402,8 @@
 
                             <label for="add-contacts-address" class="col-1 col-form-label text-end">地址</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control bg-white" id="add-contacts-address" autocomplete="off">
+                                <input type="text" class="form-control bg-white" id="add-contacts-address"
+                                    autocomplete="off">
                             </div>
                         </div>
 

@@ -11,6 +11,18 @@ $(function () {
         pickerPosition: "bottom-left"
     });
 
+    // 自动补全
+    $("#add-customerName").typeahead({
+        ajax: {
+            url: "/workbench/transaction/getCustomersLikeName",
+            timeout: 500,
+            valueField: 'id',
+            displayField: "name",
+            triggerLength: 1,
+            method: "get",
+        }
+    })
+
     // 获取所有者列表
     $.ajax({
         type: "get",
@@ -80,8 +92,6 @@ $(function () {
         $("#add-contactsId").val(checkedRadio.parent().next().text());
         $("#contacts-modal").modal("hide")
     });
-
-
 
     // 提交表单
     $("#addBtn").on("click", function () {

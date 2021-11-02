@@ -78,4 +78,9 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Transaction> getBoundTransactions(String customerId) {
         return transactionDao.queryTransactionsByCustomerId(customerId);
     }
+
+    @Override
+    public List<Customer> getCustomersLikeName(String name) {
+        return customerDao.queryCustomersLikeName(name);
+    }
 }

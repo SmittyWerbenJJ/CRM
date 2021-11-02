@@ -71,37 +71,15 @@
     </select>
 
     <select id="queryCustomerByName" resultType="com.zhiyiyo.crm.workbench.entity.Customer">
-        select id,
-               owner,
-               name,
-               website,
-               phone,
-               createBy,
-               createTime,
-               editBy,
-               editTime,
-               contactSummary,
-               nextContactTime,
-               description,
-               address
+        select
+        <include refid="allFields"/>
         from tbl_customer
         where name = #{name}
     </select>
 
     <select id="queryCustomerById" resultType="com.zhiyiyo.crm.workbench.entity.Customer">
-        select id,
-               owner,
-               name,
-               website,
-               phone,
-               createBy,
-               createTime,
-               editBy,
-               editTime,
-               contactSummary,
-               nextContactTime,
-               description,
-               address
+        select
+        <include refid="allFields"/>
         from tbl_customer
         where id = #{id}
     </select>
@@ -122,6 +100,29 @@
                c.address
         from tbl_customer c
                  join tbl_user u on u.id = c.owner
-        where c.id=#{id}
+        where c.id = #{id}
     </select>
+
+    <select id="queryCustomersLikeName" resultType="com.zhiyiyo.crm.workbench.entity.Customer">
+        select
+        <include refid="allFields"/>
+        from tbl_customer
+        where name like '%' #{name} '%'
+    </select>
+
+    <sql id="allFields">
+        id,
+        owner,
+        name,
+        website,
+        phone,
+        createBy,
+        createTime,
+        editBy,
+        editTime,
+        contactSummary,
+        nextContactTime,
+        description,
+        address
+    </sql>
 </mapper>

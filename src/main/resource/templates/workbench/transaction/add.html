@@ -20,6 +20,7 @@
     </script>
     <script src="../../../static/js/lib/bootstrap-datetimepicker.zh-CN.js"
         th:src="@{/js/lib/bootstrap-datetimepicker.zh-CN.js}"></script>
+    <script src="../../../static/js/lib/bootstrap-typeahead.js" th:src="@{/js/lib/bootstrap-typeahead.js}"></script>
     <script src="../../../static/js/workbench/transaction/add.js" th:src="@{/js/workbench/transaction/add.js}"></script>
     <title>创建交易 - CRM</title>
 </head>
@@ -84,7 +85,7 @@
                                 <label class="form-label" for="add-money">金额</label>
                                 <div class="mb-4 input-group">
                                     <span class="input-group-text"><i class="bi bi-cash-coin"></i></span>
-                                    <input id="add-money" type="text" class="form-control time">
+                                    <input id="add-money" type="text" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -128,7 +129,7 @@
                                 <div class="mb-4 input-group">
                                     <span class="input-group-text"><i class="bi bi-building"></i></span>
                                     <input id="add-customerName" type="text" class="form-control"
-                                        placeholder="支持自动补全，客户不存在则新建">
+                                        placeholder="支持自动补全，客户不存在则新建" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
@@ -143,13 +144,13 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-6">
+                            <!-- <div class="col-md-3 col-sm-6">
                                 <label class="form-label" for="add-posibility">可能性</label>
                                 <div class="mb-4 input-group">
                                     <span class="input-group-text"><i class="bi bi-lightbulb"></i></span>
                                     <input type="text" class="form-control bg-white" id="add-posibility" readonly>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="row">

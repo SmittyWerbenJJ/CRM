@@ -31,4 +31,13 @@ public interface TransactionDao {
      * @return 交易列表
      */
     List<Transaction> queryTransactionsByCustomerId(String customerId);
+
+    /**
+     * 通过交易的 id 查询交易
+     * @param id
+     * @return 交易
+     */
+    Transaction queryTransactionById(String id);
+
+    Integer updateStage(Transaction tran);
 }

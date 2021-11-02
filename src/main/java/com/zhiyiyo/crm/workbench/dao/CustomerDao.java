@@ -18,6 +18,13 @@ public interface CustomerDao {
     Customer queryCustomerByName(String name);
 
     /**
+     * 通过客户名称模糊查询客户
+     * @param name 客户名称
+     * @return 客户
+     */
+    List<Customer> queryCustomersLikeName(String name);
+
+    /**
      * 插入一个客户
      * @param customer 客户
      * @return 受影响的行数

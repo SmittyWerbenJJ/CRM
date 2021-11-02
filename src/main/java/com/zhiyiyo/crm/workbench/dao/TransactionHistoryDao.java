@@ -2,6 +2,8 @@ package com.zhiyiyo.crm.workbench.dao;
 
 import com.zhiyiyo.crm.workbench.entity.TransactionHistory;
 
+import java.util.List;
+
 public interface TransactionHistoryDao {
 
     /**
@@ -10,4 +12,6 @@ public interface TransactionHistoryDao {
      * @return 受影响的行数
      */
     Integer insert(TransactionHistory history);
+
+    List<TransactionHistory> queryHistoriesByTransactionId(String id);
 }

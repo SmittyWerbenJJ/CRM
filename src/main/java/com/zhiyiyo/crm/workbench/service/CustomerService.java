@@ -40,4 +40,6 @@ public interface CustomerService {
     boolean deleteRemark(String id);
 
     List<Transaction> getBoundTransactions(String customerId);
+
+    List<Customer> getCustomersLikeName(String name);
 }
