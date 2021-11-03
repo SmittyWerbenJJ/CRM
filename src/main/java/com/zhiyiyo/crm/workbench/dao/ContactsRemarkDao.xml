@@ -31,9 +31,23 @@
         delete from tbl_contacts_remark where id=#{id}
     </delete>
 
-    <select id="getRemarksByCId" resultType="com.zhiyiyo.crm.workbench.entity.ContactsRemark">
+    <delete id="deleteByContactsIds">
+        delete from tbl_contacts_remark where contactsId in
+        <foreach collection="array" item="contactsId" open="(" separator="," close=")">
+            #{contactsId}
+        </foreach>
+    </delete>
+
+    <select id="queryRemarksByContactsId" resultType="com.zhiyiyo.crm.workbench.entity.ContactsRemark">
         select id, noteContent, createBy, createTime, editBy, editTime, contactsId
         from tbl_contacts_remark
         where contactsId = #{id}
+    </select>
+
+    <select id="queryCountByContactsIds" resultType="java.lang.Integer">
+        select count(*) from tbl_contacts_remark where contactsId in
+        <foreach collection="array" item="contactsId" open="(" separator="," close=")">
+            #{contactsId}
+        </foreach>
     </select>
 </mapper>

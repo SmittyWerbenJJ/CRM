@@ -116,7 +116,7 @@ public class ActivityController {
 
     @GetMapping("/showDetails")
     public ModelAndView showDetails(String id) {
-        ModelAndView mv = new ModelAndView("/workbench/activity/details");
+        ModelAndView mv = new ModelAndView("workbench/activity/details");
         mv.addObject("activity", activityService.getActivityById(id));
         return mv;
     }

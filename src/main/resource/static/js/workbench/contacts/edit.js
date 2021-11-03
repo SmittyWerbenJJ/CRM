@@ -12,7 +12,7 @@ $(function () {
     });
 
     // 自动补全
-    $("#add-customerName").typeahead({
+    $("#edit-customerName").typeahead({
         ajax: {
             url: "/workbench/contacts/getCustomersLikeName",
             timeout: 500,
@@ -23,49 +23,35 @@ $(function () {
         }
     })
 
-    // 获取所有者列表
-    $.ajax({
-        type: "get",
-        url: "/workbench/contacts/getUserList",
-        dataType: "json",
-    }).done(function (data) {
-        let html = '<option></option>'
-
-        for (const user of data) {
-            html += `<option value="${user.id}">${user.name}</option>`
-        }
-
-        $("#add-owner").html(html);
-    });
-
     // 提交表单
     $("#addBtn").on("click", function () {
         cleanInValidState()
 
         // 获取表单数据
-        var owner = $("#add-owner").val();
-        var customerName = $("#add-customerName").val().trim();
-        var fullname = $("#add-fullname").val().trim();
-        var appellation = $("#add-appellation").val();
-        var email = $("#add-email").val().trim();
-        var mphone = $("#add-mphone").val().trim();
-        var birth = $("#add-birth").val()
-        var job = $("#add-job").val().trim();
-        var source = $("#add-source").val();
-        var description = $("#add-description").val().trim();
-        var contactSummary = $("#add-contactSummary").val().trim();
-        var nextContactTime = $("#add-nextContactTime").val().trim();
-        var address = $("#add-address").val().trim();
+        var id = $("#hidden-contacts-id").val()
+        var owner = $("#edit-owner").val();
+        var customerName = $("#edit-customerName").val().trim()
+        var fullname = $("#edit-fullname").val().trim()
+        var appellation = $("#edit-appellation").val()
+        var email = $("#edit-email").val().trim()
+        var mphone = $("#edit-mphone").val().trim()
+        var birth = $("#edit-birth").val()
+        var job = $("#edit-job").val().trim()
+        var source = $("#edit-source").val()
+        var description = $("#edit-description").val().trim()
+        var contactSummary = $("#edit-contactSummary").val().trim()
+        var nextContactTime = $("#edit-nextContactTime").val().trim()
+        var address = $("#edit-address").val().trim()
 
         // 重要数据不能为空
         if (!owner) {
-            $("#add-owner").addClass("is-invalid")
+            $("#edit-owner").addClass("is-invalid")
         }
         if (!fullname) {
-            $("#add-fullname").addClass("is-invalid")
+            $("#edit-fullname").addClass("is-invalid")
         }
         if (!customerName) {
-            $("#add-customerName").addClass("is-invalid")
+            $("#edit-customerName").addClass("is-invalid")
         }
         if (![owner, customerName, fullname].every(i => i.length > 0)) {
             alert("所有者、公司和姓名必须填写！")
@@ -74,7 +60,7 @@ $(function () {
 
         // 验证手机号码
         if (mphone && !/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(mphone)) {
-            $("#add-mphone").addClass("is-invalid")
+            $("#edit-mphone").addClass("is-invalid")
             alert("手机号码格式错误")
             return
         }
@@ -82,23 +68,23 @@ $(function () {
         // 验证邮箱
         var emailRegex = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/
         if (email && !emailRegex.test(email)) {
-            $("#add-email").addClass("is-invalid")
+            $("#edit-email").addClass("is-invalid")
             alert("邮箱格式错误")
             return
         }
 
         // 发送请求
         $.ajax({
-            url: "/workbench/contacts/addContacts",
+            url: "/workbench/contacts/updateContacts",
             type: "post",
             dataType: "json",
             data: {
-                fullname, appellation, owner, customerName,
+                id, fullname, appellation, owner, customerName,
                 job, email, mphone, source, description,
                 contactSummary, nextContactTime, address, birth
             }
         }).done(function (data) {
-            showToast(data.success, "添加联系人")
+            showToast(data.success, "编辑联系人")
             if (data.success) {
                 setTimeout(() => { location.href = "/workbench/contacts/index.html" }, 1500)
             }
@@ -112,7 +98,7 @@ $(function () {
  * 清除表单的非法状态
  */
 function cleanInValidState() {
-    $("[id^='add-']").removeClass("is-invalid")
+    $("[id^='edit-']").removeClass("is-invalid")
 }
 
 

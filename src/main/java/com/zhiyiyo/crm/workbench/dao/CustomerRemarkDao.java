@@ -30,4 +30,8 @@ public interface CustomerRemarkDao {
     Integer update(CustomerRemark remark);
 
     Integer delete(String id);
+
+    Integer queryCountByCustomerIds(String[] ids);
+
+    Integer deleteByCustomerIds(String[] ids);
 }

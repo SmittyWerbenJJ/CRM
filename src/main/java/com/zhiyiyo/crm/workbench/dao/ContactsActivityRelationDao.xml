@@ -22,8 +22,22 @@
         </foreach>
     </delete>
 
+    <delete id="deleteByContactsIds">
+        delete from tbl_contacts_activity_relation where contactsId in
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
     <select id="queryCountByActivityIds" resultType="java.lang.Integer">
         select count(*) from tbl_contacts_activity_relation where activityId in
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="queryCountByContactsIds" resultType="java.lang.Integer">
+        select count(*) from tbl_contacts_activity_relation where contactsId in
         <foreach collection="array" open="(" close=")" separator="," item="id">
             #{id}
         </foreach>

@@ -19,11 +19,18 @@ public interface ContactsDao {
     Integer insert(Contacts contacts);
 
     /**
-     * 通过联系人 id 获取联系人信息，其中的部分信息被其他表的信息所替代
+     * 通过联系人 id 获取联系人信息，其中 <code>customerId</code> 是客户名字而非 UUID
      * @param id 联系人 id
      * @return 联系人
      */
-    Contacts getContactsById(String id);
+    Contacts queryContactsById(String id);
+
+    /**
+     * 通过联系人 id 获取联系人信息，其中 <code>customerId</code> 是 UUID
+     * @param id 联系人 id
+     * @return 联系人
+     */
+    Contacts queryContacts(String id);
 
     /**
      * 通过客户 id 获取联系人信息
@@ -38,4 +45,12 @@ public interface ContactsDao {
      * @return 联系人列表
      */
     List<Contacts> queryContactsByName(String name);
+
+    Integer update(Contacts contacts);
+
+    Integer deleteByIds(String[] ids);
+
+    Integer queryCountByCustomerIds(String[] ids);
+
+    Integer deleteByCustomerIds(String[] ids);
 }

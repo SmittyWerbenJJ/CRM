@@ -14,6 +14,11 @@ $(function () {
         pickerPosition: "top-left"
     });
 
+    // 跳转到编辑信息页面
+    $("#editTransactionBtn").on("click", function () {
+        location.href = "/workbench/transaction/editTransaction?id=" + transactionId
+    })
+
     // 获取阶段-可能性字典
     var currentStage = $("#stage").text().trim()
     var stagePossibilityMap = {}
@@ -23,6 +28,7 @@ $(function () {
     }).done(function (data) {
         stagePossibilityMap = data
         renderStageIcons(currentStage, data)
+        getTransactionHistories(data)
     })
 
     // 发送获取评论列表的请求
@@ -135,9 +141,6 @@ $(function () {
             }
         });
     })
-
-    // 获取交易历史
-    getTransactionHistories(stagePossibilityMap)
 
     // 点击发出添加交易历史的请求并更新信息
     $("#stageIcons").on("click", ".stageIcon", function () {
@@ -351,7 +354,7 @@ function renderStageIcons(currentStage, stagePossibilityMap) {
  * @param {string} content 弹出气泡内容
  * @param {string} color 图标颜色类型，比如 `text-success`
  */
-function createStageIcon(name, content, color = '') {
+function createStageIcon(name, content, color = 'text-secondary') {
     return `<i class="bi ${name} ${color} stageIcon" data-bs-toggle="popover"
                 data-bs-trigger="hover focus" data-bs-content="${content}"
                 data-bs-placement="top" type="button"></i>`

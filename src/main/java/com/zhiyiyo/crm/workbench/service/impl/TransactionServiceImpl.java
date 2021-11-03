@@ -75,6 +75,11 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    public Transaction getTransaction(String id) {
+        return transactionDao.queryTransaction(id);
+    }
+
+    @Override
     public boolean addRemark(TransactionRemark remark) {
         return transactionRemarkDao.insert(remark).equals(1);
     }
@@ -120,4 +125,73 @@ public class TransactionServiceImpl implements TransactionService {
         return success;
     }
 
+    @Override
+    public boolean updateTransaction(Transaction tran, String customerName) {
+        boolean success = true;
+
+        // 如果客户不存在则新建
+        Customer customer = customerDao.queryCustomerByName(customerName);
+        if (customer == null) {
+            customer = new Customer();
+            BeanUtils.copyProperties(tran, customer);
+            customer.setId(UUIDUtil.getUUID());
+            customer.setName(customerName);
+            success &= customerDao.insert(customer).equals(1);
+        }
+
+        tran.setCustomerId(customer.getId());
+        success &= transactionDao.update(tran).equals(1);
+        return success;
+    }
+
+    @Override
+    public boolean deleteTransactions(String[] ids) {
+        boolean success;
+
+        // 删除交易历史
+        Integer historyCount = transactionHistoryDao.queryCountByTransactionIds(ids);
+        Integer deletedHistoryCount = transactionHistoryDao.deleteByTransactionIds(ids);
+
+        // 删除交易评论
+        Integer remarkCount = transactionRemarkDao.queryCountByTransactionId(ids);
+        Integer deletedRemarkCount = transactionRemarkDao.deleteByTransactionId(ids);
+
+        // 删除交易
+        Integer deletedTransactionCount = transactionDao.deleteByIds(ids);
+
+        success = deletedTransactionCount.equals(ids.length)
+                && historyCount.equals(deletedHistoryCount)
+                && remarkCount.equals(deletedRemarkCount);
+
+        return success;
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

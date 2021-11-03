@@ -184,17 +184,44 @@ $(function () {
     // 切换到页面时自动查询客户列表
     getCustomer(1, pageSize)
 
-    // 全选
+    // 全选/取消全选
     $("#qx").on("click", function () {
         $(".dx").prop("checked", this.checked)
     })
 
-    // 为动态生成的复选框添加监听器
     $("#customerBody").on("click", "input.dx", function () {
         $("#qx").prop("checked", $("input.dx:checked").length == $("input.dx").length)
     })
 
+    // 删除客户
+    $("#deleteBtn").on("click", function () {
+        var checkedInputs = $(".dx:checked")
 
+        if (checkedInputs.length == 0) {
+            alert("至少选中一个客户才能删除哦~")
+            return
+        }
+        if (!confirm("前辈确定删除这些客户吗？")) {
+            return
+        }
+
+        var ids = []
+        for (const checkedInput of checkedInputs) {
+            ids.push(checkedInput.value)
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/workbench/customer/deleteCustomers",
+            dataType: "json",
+            data: {
+                ids
+            }
+        }).done(function (data) {
+            showToast(data.success, "删除客户")
+            getCustomer(1, pageSize)
+        })
+    });
 })
 
 

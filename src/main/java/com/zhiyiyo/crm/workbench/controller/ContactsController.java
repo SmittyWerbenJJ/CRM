@@ -5,11 +5,9 @@ import com.zhiyiyo.crm.settings.service.UserService;
 import com.zhiyiyo.crm.utils.DateTimeUtil;
 import com.zhiyiyo.crm.utils.UUIDUtil;
 import com.zhiyiyo.crm.vo.PaginationVo;
-import com.zhiyiyo.crm.workbench.entity.Activity;
-import com.zhiyiyo.crm.workbench.entity.Contacts;
-import com.zhiyiyo.crm.workbench.entity.ContactsRemark;
-import com.zhiyiyo.crm.workbench.entity.Transaction;
+import com.zhiyiyo.crm.workbench.entity.*;
 import com.zhiyiyo.crm.workbench.service.ContactsService;
+import com.zhiyiyo.crm.workbench.service.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,6 +26,9 @@ public class ContactsController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private CustomerService customerService;
 
     @GetMapping("/getContactsByCondition")
     @ResponseBody
@@ -56,13 +57,13 @@ public class ContactsController {
 
     @PostMapping("/addContacts")
     @ResponseBody
-    public Map<String, Object> addContacts(HttpSession session, Contacts contacts) {
+    public Map<String, Object> addContacts(HttpSession session, Contacts contacts, String customerName) {
         contacts.setId(UUIDUtil.getUUID());
         contacts.setCreateBy(((User) session.getAttribute("user")).getName());
         contacts.setCreateTime(DateTimeUtil.getSysTime());
 
         Map<String, Object> data = new HashMap<>();
-        data.put("success", contactsService.addContacts(contacts));
+        data.put("success", contactsService.addContacts(contacts, customerName));
 
         return data;
     }
@@ -150,6 +151,41 @@ public class ContactsController {
     @ResponseBody
     public List<Transaction> getBoundTransactions(String contactsId){
         return contactsService.getBoundTransactions(contactsId);
+    }
+
+    @GetMapping("/getCustomersLikeName")
+    @ResponseBody
+    public List<Customer> getCustomersLikeName(@RequestParam("query") String name) {
+        return customerService.getCustomersLikeName(name);
+    }
+
+    @GetMapping("/editContacts")
+    public ModelAndView editContacts(String id){
+        ModelAndView mv= new ModelAndView("workbench/contacts/edit");
+        mv.addObject("userList", userService.getUserList());
+        mv.addObject("contacts", contactsService.getContactsById(id));
+        return mv;
+    }
+
+    @PostMapping("/updateContacts")
+    @ResponseBody
+    public Map<String, Object> updateContacts(HttpSession session, Contacts contacts, String customerName){
+        contacts.setEditBy(((User) session.getAttribute("user")).getName());
+        contacts.setEditTime(DateTimeUtil.getSysTime());
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", contactsService.updateContacts(contacts, customerName));
+        data.put("contacts", contacts);
+
+        return data;
+    }
+
+    @PostMapping("/deleteContacts")
+    @ResponseBody
+    public Map<String, Object> deleteContacts(@RequestParam("ids[]") String[] ids){
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", contactsService.deleteContacts(ids));
+        return data;
     }
 }
 

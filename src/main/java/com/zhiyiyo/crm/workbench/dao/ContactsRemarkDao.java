@@ -25,9 +25,13 @@ public interface ContactsRemarkDao {
      * @param id 联系人 id
      * @return 评论列表
      */
-    List<ContactsRemark> getRemarksByCId(String id);
+    List<ContactsRemark> queryRemarksByContactsId(String id);
 
     Integer update(ContactsRemark remark);
 
     Integer delete(String id);
+
+    Integer queryCountByContactsIds(String[] ids);
+
+    Integer deleteByContactsIds(String[] ids);
 }

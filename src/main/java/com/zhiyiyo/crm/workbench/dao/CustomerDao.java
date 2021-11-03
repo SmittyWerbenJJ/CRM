@@ -46,4 +46,6 @@ public interface CustomerDao {
     Customer queryCustomer(String id);
 
     Integer update(Customer customer);
+
+    Integer deleteByIds(String[] ids);
 }

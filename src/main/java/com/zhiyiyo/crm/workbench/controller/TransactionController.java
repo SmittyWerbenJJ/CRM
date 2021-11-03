@@ -80,8 +80,7 @@ public class TransactionController {
     @GetMapping("/getCustomersLikeName")
     @ResponseBody
     public List<Customer> getCustomersLikeName(@RequestParam("query") String name) {
-        List<Customer> list = customerService.getCustomersLikeName(name);
-        return list;
+        return customerService.getCustomersLikeName(name);
     }
 
     @PostMapping("/addTransaction")
@@ -100,7 +99,7 @@ public class TransactionController {
 
     @GetMapping("/showDetails")
     public ModelAndView showDetails(HttpSession session, String id) {
-        ModelAndView mv = new ModelAndView("/workbench/transaction/details");
+        ModelAndView mv = new ModelAndView("workbench/transaction/details");
 
         // 获取交易
         Transaction tran = transactionService.getTransactionById(id);
@@ -175,9 +174,38 @@ public class TransactionController {
 
         Map<String, Object> data = new HashMap<>();
         data.put("success", transactionService.updateStage(tran));
-        //data.put("stagePossibilityMap", session.getServletContext().getAttribute("stagePossibilityMap"));
         data.put("transaction", tran);
 
+        return data;
+    }
+
+    @GetMapping("/editTransaction")
+    public ModelAndView editTransaction(String id){
+        ModelAndView mv= new ModelAndView("workbench/transaction/edit");
+        mv.addObject("userList", userService.getUserList());
+        mv.addObject("transaction", transactionService.getTransactionById(id));
+        mv.addObject("rawTransaction", transactionService.getTransaction(id));
+        return mv;
+    }
+
+    @PostMapping("/updateTransaction")
+    @ResponseBody
+    public Map<String, Object> updateTransaction(HttpSession session, Transaction tran, String customerName){
+        tran.setEditBy(((User) session.getAttribute("user")).getName());
+        tran.setEditTime(DateTimeUtil.getSysTime());
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", transactionService.updateTransaction(tran, customerName));
+        data.put("transaction", tran);
+
+        return data;
+    }
+
+    @PostMapping("/deleteTransactions")
+    @ResponseBody
+    public Map<String, Object> deleteTransactions(@RequestParam("ids[]") String[] ids){
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", transactionService.deleteTransactions(ids));
         return data;
     }
 }

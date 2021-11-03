@@ -15,12 +15,28 @@
     </update>
 
     <delete id="delete">
-        delete from tbl_transaction_remark where id=#{id}
+        delete
+        from tbl_transaction_remark
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteByTransactionId">
+        delete from tbl_transaction_remark where tranId in
+        <foreach collection="array" item="tranId" open="(" separator="," close=")">
+            #{tranId}
+        </foreach>
     </delete>
 
     <select id="queryRemarksByTransactionId" resultType="com.zhiyiyo.crm.workbench.entity.TransactionRemark">
         select id, noteContent, createBy, createTime, editBy, editTime, tranId
         from tbl_transaction_remark
         where tranId = #{id}
+    </select>
+
+    <select id="queryCountByTransactionId" resultType="java.lang.Integer">
+        select count(*) from tbl_transaction_remark where tranId in
+        <foreach collection="array" item="tranId" open="(" separator="," close=")">
+            #{tranId}
+        </foreach>
     </select>
 </mapper>

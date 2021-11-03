@@ -8,6 +8,40 @@
              #{editTime}, #{description}, #{contactSummary}, #{nextContactTime}, #{address})
     </insert>
 
+    <update id="update">
+        update tbl_contacts
+        set owner= #{owner},
+            source= #{source},
+            customerId= #{customerId},
+            fullname= #{fullname},
+            appellation= #{appellation},
+            email= #{email},
+            mphone= #{mphone},
+            job= #{job},
+            birth= #{birth},
+            editBy= #{editBy},
+            editTime= #{editTime},
+            description= #{description},
+            contactSummary= #{contactSummary},
+            nextContactTime= #{nextContactTime},
+            address= #{address}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteByIds">
+        delete from tbl_contacts where id in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByCustomerIds">
+        delete from tbl_contacts where customerId in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
     <select id="queryContactsByCondition" resultType="com.zhiyiyo.crm.workbench.entity.Contacts">
         select
         con.id,
@@ -65,7 +99,7 @@
         order by con.createTime DESC limit #{start},#{pageSize}
     </select>
 
-    <select id="getContactsById" resultType="com.zhiyiyo.crm.workbench.entity.Contacts">
+    <select id="queryContactsById" resultType="com.zhiyiyo.crm.workbench.entity.Contacts">
         select con.id,
                u.name   as owner,
                con.source,
@@ -91,50 +125,52 @@
     </select>
 
     <select id="queryContactsByCustomerId" resultType="com.zhiyiyo.crm.workbench.entity.Contacts">
-        select id,
-               owner,
-               source,
-               customerId,
-               fullname,
-               appellation,
-               email,
-               mphone,
-               job,
-               birth,
-               createBy,
-               createTime,
-               editBy,
-               editTime,
-               description,
-               contactSummary,
-               nextContactTime,
-               address
+        select
+        <include refid="allFields"/>
         from tbl_contacts
         where customerId = #{customerId}
         order by createTime desc
     </select>
 
     <select id="queryContactsByName" resultType="com.zhiyiyo.crm.workbench.entity.Contacts">
-        select id,
-               owner,
-               source,
-               customerId,
-               fullname,
-               appellation,
-               email,
-               mphone,
-               job,
-               birth,
-               createBy,
-               createTime,
-               editBy,
-               editTime,
-               description,
-               contactSummary,
-               nextContactTime,
-               address
+        select
+        <include refid="allFields"/>
         from tbl_contacts
         where fullname like '%' #{name} '%'
     </select>
 
+    <select id="queryContacts" resultType="com.zhiyiyo.crm.workbench.entity.Contacts">
+        select
+        <include refid="allFields"/>
+        from tbl_contacts
+        where id = #{id}
+    </select>
+
+    <select id="queryCountByCustomerIds" resultType="java.lang.Integer">
+        select count(*) from tbl_contacts where customerId in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <sql id="allFields">
+        id,
+        owner,
+        source,
+        customerId,
+        fullname,
+        appellation,
+        email,
+        mphone,
+        job,
+        birth,
+        createBy,
+        createTime,
+        editBy,
+        editTime,
+        description,
+        contactSummary,
+        nextContactTime,
+        address
+    </sql>
 </mapper>

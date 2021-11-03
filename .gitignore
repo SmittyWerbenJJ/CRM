@@ -1,18 +1,14 @@
-# 忽略.vscode文件夹
 .vscode/
 .VSCodeCounter
 
-# 忽略一些配置文件
 .settings
 *.iml
 *.classpath
 *.project
+.factorypath
 
-# 忽略 .idea 文件夹
 .idea
 
-# 忽略 target 文件夹
 target/
 
-# 忽略 demo 文件
 test.js

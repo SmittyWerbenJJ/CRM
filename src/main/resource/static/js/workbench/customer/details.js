@@ -240,6 +240,11 @@ $(function () {
         })
     });
 
+    // 创建交易
+    $("#addTransactionBtn").on("click", function () {
+        location.href = "/workbench/transaction/add.html"
+    })
+
     // 创建联系人
     $("#addContactsBtn").on("click", function () {
         var owner = $("#add-contacts-owner").val()
@@ -296,9 +301,85 @@ $(function () {
         })
     })
 
+    // 全选功能
+    $("#delete-transaction-qx").on("click", function () {
+        $("#boundTransactionBody .dx").prop("checked", this.checked)
+    });
+
+    $("#delete-contacts-qx").on("click", function () {
+        $("#boundContactsBody .dx").prop("checked", this.checked)
+    })
+
+    $("#boundTransactionBody").on("click", ".dx", function () {
+        $("#delete-transaction-qx").prop("checked", $("#boundTransactionBody .dx:checked").length == $("#boundTransactionBody .dx").length)
+    })
+
+    $("#boundContactsBody").on("click", ".dx", function () {
+        $("#delete-contacts-qx").prop("checked", $("#boundContactsBody .dx:checked").length == $("#boundContactsBody .dx").length)
+    })
 
     // 获取联系人列表
     getBoundContacts()
+
+    // 删除选中的联系人
+    $("#deleteContactsBtn").on("click", function () {
+        var checkedInputs = $("#boundContactsBody .dx:checked")
+
+        if (checkedInputs.length == 0) {
+            alert("至少选中一个联系人才能删除哦~")
+            return
+        }
+        if (!confirm("前辈确定删除这些联系人吗？")) {
+            return
+        }
+
+        var ids = []
+        for (const checkedInput of checkedInputs) {
+            ids.push(checkedInput.value)
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/workbench/customer/deleteContacts",
+            dataType: "json",
+            data: {
+                ids
+            }
+        }).done(function (data) {
+            showToast(data.success, "删除联系人")
+            getBoundContacts()
+        })
+    })
+
+    // 删除选中的交易
+    $("#deleteTransactionBtn").on("click", function () {
+        var checkedInputs = $("#boundTransactionBody .dx:checked")
+
+        if (checkedInputs.length == 0) {
+            alert("至少选中一个交易才能删除哦~")
+            return
+        }
+        if (!confirm("前辈确定删除这些交易吗？")) {
+            return
+        }
+
+        var ids = []
+        for (const checkedInput of checkedInputs) {
+            ids.push(checkedInput.value)
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/workbench/customer/deleteTransactions",
+            dataType: "json",
+            data: {
+                ids
+            }
+        }).done(function (data) {
+            showToast(data.success, "删除交易")
+            getBoundTransactions()
+        })
+    })
 
 })
 

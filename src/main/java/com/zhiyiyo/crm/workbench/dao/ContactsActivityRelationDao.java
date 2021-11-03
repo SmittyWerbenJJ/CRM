@@ -33,4 +33,18 @@ public interface ContactsActivityRelationDao {
      * @return 行数
      */
     Integer queryCountByActivityIds(String[] ids);
+
+    /**
+     * 通过联系人 id 查询关联关系数
+     * @param ids 联系人 id 列表
+     * @return 受影响的行数
+     */
+    Integer queryCountByContactsIds(String[] ids);
+
+    /**
+     * 通过联系人 id 删除关联关系
+     * @param ids 联系人 id 列表
+     * @return 受影响的行数
+     */
+    Integer deleteByContactsIds(String[] ids);
 }

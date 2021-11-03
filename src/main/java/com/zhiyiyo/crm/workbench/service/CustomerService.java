@@ -4,6 +4,7 @@ import com.zhiyiyo.crm.workbench.entity.Activity;
 import com.zhiyiyo.crm.workbench.entity.Customer;
 import com.zhiyiyo.crm.workbench.entity.CustomerRemark;
 import com.zhiyiyo.crm.workbench.entity.Transaction;
+import com.zhiyiyo.crm.workbench.exception.CustomerException;
 
 import java.util.List;
 import java.util.Map;
@@ -42,4 +43,6 @@ public interface CustomerService {
     List<Transaction> getBoundTransactions(String customerId);
 
     List<Customer> getCustomersLikeName(String name);
+
+    boolean deleteCustomers(String[] ids) throws CustomerException;
 }

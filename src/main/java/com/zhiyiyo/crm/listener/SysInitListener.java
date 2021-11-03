@@ -7,6 +7,7 @@ import com.zhiyiyo.crm.settings.service.DicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.context.WebApplicationContext;
@@ -35,8 +36,8 @@ public class SysInitListener implements ApplicationListener<ApplicationStartedEv
 
         // 保存阶段-可能性字典
         try {
-            File file = ResourceUtils.getFile("classpath:static/data/stage_possibility.json");
-            Map<String, Integer> stagePossibilityMap = new ObjectMapper().readValue(file, HashMap.class);
+            ClassPathResource resource = new ClassPathResource("static/data/stage_possibility.json");
+            Map<String, Integer> stagePossibilityMap = new ObjectMapper().readValue(resource.getInputStream(), HashMap.class);
             servletContext.setAttribute("stagePossibilityMap", stagePossibilityMap);
         } catch (Exception e) {
             e.printStackTrace();

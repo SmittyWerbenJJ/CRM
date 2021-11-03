@@ -21,8 +21,9 @@
     <script src="../../../static/js/lib/bootstrap-datetimepicker.zh-CN.js"
         th:src="@{/js/lib/bootstrap-datetimepicker.zh-CN.js}"></script>
     <script src="../../../static/js/lib/bootstrap-typeahead.js" th:src="@{/js/lib/bootstrap-typeahead.js}"></script>
-    <script src="../../../static/js/workbench/transaction/add.js" th:src="@{/js/workbench/transaction/add.js}"></script>
-    <title>创建交易 - CRM</title>
+    <script src="../../../static/js/workbench/transaction/edit.js" th:src="@{/js/workbench/transaction/edit.js}">
+    </script>
+    <title>编辑交易 - CRM</title>
 </head>
 
 <body>
@@ -42,7 +43,7 @@
                         <a href="index.html" th:href="@{/workbench/transaction/index.html}"
                             class="text-decoration-none">交易</a>
                     </li>
-                    <li class="breadcrumb-item active">创建</li>
+                    <li class="breadcrumb-item active">编辑</li>
                 </ul>
             </div>
 
@@ -50,66 +51,78 @@
             <div class="card">
                 <form>
                     <div class="card-header">
-                        <h4>创建交易</h4>
+                        <h4>编辑交易</h4>
                     </div>
+
+                    <input type="hidden" id="hidden-transaction-id" th:value="${transaction.id}">
+                    <input type="hidden" id="hidden-transaction-activityId" th:value="${rawTransaction.activityId}">
+                    <input type="hidden" id="hidden-transaction-contactsId" th:value="${rawTransaction.contactsId}">
 
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
-                                <label class="form-label" for="add-owner">所有者<span class="text-danger">*</span></label>
+                                <label class="form-label" for="edit-owner">所有者<span class="text-danger">*</span></label>
                                 <div class="mb-4 input-group">
                                     <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
-                                    <select id="add-owner" class="form-select"></select>
+                                    <select id="edit-owner" class="form-select">
+                                        <option></option>
+                                        <option th:each="user:${userList}" th:value="${user.id}"
+                                            th:selected="${user.name == transaction.owner}">[[${user.name}]]</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
-                                <label class="form-label" for="add-name">名称<span class="text-danger">*</span></label>
+                                <label class="form-label" for="edit-name">名称<span class="text-danger">*</span></label>
                                 <div class="mb-4 input-group">
                                     <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
-                                    <input id="add-name" type="text" class="form-control">
+                                    <input id="edit-name" type="text" class="form-control"
+                                        th:value="${transaction.name}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
-                                <label class="form-label" for="add-expectedDate">预计成交日期<span
+                                <label class="form-label" for="edit-expectedDate">预计成交日期<span
                                         class="text-danger">*</span></label>
                                 <div class="mb-4 input-group">
                                     <span class="input-group-text"><i class="bi bi-calendar-month"></i></span>
-                                    <input id="add-expectedDate" type="text" class="form-control time"
-                                        autocomplete="off">
+                                    <input id="edit-expectedDate" type="text" class="form-control time"
+                                        autocomplete="off" th:value="${transaction.expectedDate}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
-                                <label class="form-label" for="add-money">金额</label>
+                                <label class="form-label" for="edit-money">金额</label>
                                 <div class="mb-4 input-group">
                                     <span class="input-group-text"><i class="bi bi-cash-coin"></i></span>
-                                    <input id="add-money" type="text" class="form-control">
+                                    <input id="edit-money" type="text" class="form-control"
+                                        th:value="${transaction.money}">
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
-                                <label class="form-label" for="add-source">来源</label>
+                                <label class="form-label" for="edit-source">来源</label>
                                 <div class="mb-0 input-group">
                                     <span class="input-group-text"><i class="bi bi-cursor"></i></span>
-                                    <select id="add-source" class="form-select">
+                                    <select id="edit-source" class="form-select">
                                         <option></option>
-                                        <option th:each="i:${application.source}" th:value="${i.value}">
+                                        <option th:each="i:${application.source}" th:value="${i.value}"
+                                            th:selected="${transaction.source == i.value}">
                                             [[${i.text}]]
                                         </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
-                                <label class="form-label" for="add-type">类型</label>
+                                <label class="form-label" for="edit-type">类型</label>
                                 <div class="mb-0 input-group">
                                     <span class="input-group-text"><i class="bi bi-tags"></i></span>
-                                    <select id="add-type" class="form-select">
+                                    <select id="edit-type" class="form-select">
                                         <option></option>
-                                        <option th:each="i:${application.transactionType}" th:value="${i.value}">
+                                        <option th:each="i:${application.transactionType}" th:value="${i.value}"
+                                            th:selected="${transaction.type == i.value}">
                                             [[${i.text}]]
                                         </option>
                                     </select>
@@ -124,21 +137,22 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
-                                <label class="form-label" for="add-customerName">客户名称<span
+                                <label class="form-label" for="edit-customerName">客户名称<span
                                         class="text-danger">*</span></label>
                                 <div class="mb-4 input-group">
                                     <span class="input-group-text"><i class="bi bi-building"></i></span>
-                                    <input id="add-customerName" type="text" class="form-control"
-                                        placeholder="支持自动补全，客户不存在则新建" autocomplete="off">
+                                    <input id="edit-customerName" type="text" class="form-control"
+                                        placeholder="支持自动补全，客户不存在则新建" autocomplete="off" th:value="${transaction.customerId}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
-                                <label class="form-label" for="add-stage">阶段</label>
+                                <label class="form-label" for="edit-stage">阶段</label>
                                 <div class="mb-4 input-group">
                                     <span class="input-group-text"><i class="bi bi-signpost-2"></i></span>
-                                    <select id="add-stage" class="form-select">
+                                    <select id="edit-stage" class="form-select">
                                         <option></option>
-                                        <option th:each="i:${application.stage}" th:value="${i.value}">
+                                        <option th:each="i:${application.stage}" th:value="${i.value}"
+                                            th:selected="${transaction.stage == i.value}">
                                             [[${i.text}]]
                                         </option>
                                     </select>
@@ -148,17 +162,19 @@
 
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
-                                <label class="form-label" for="add-activityId">市场活动源</label>
+                                <label class="form-label" for="edit-activityId">市场活动源</label>
                                 <div class="mb-4 input-group">
                                     <span class="input-group-text"><i class="bi bi-shop"></i></span>
-                                    <input id="add-activityId" type="text" class="form-control bg-white" readonly>
+                                    <input id="edit-activityId" type="text" class="form-control bg-white" readonly
+                                        th:value="${transaction.activityId}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
-                                <label class="form-label" for="add-contactsId">联系人名称</label>
+                                <label class="form-label" for="edit-contactsId">联系人名称</label>
                                 <div class="mb-4 input-group">
                                     <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-                                    <input id="add-contactsId" type="text" class="form-control bg-white" readonly>
+                                    <input id="edit-contactsId" type="text" class="form-control bg-white" readonly
+                                        th:value="${transaction.contactsId}">
                                 </div>
                             </div>
                         </div>
@@ -166,9 +182,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div>
-                                    <label class="form-label" for="add-description">描述</label>
+                                    <label class="form-label" for="edit-description">描述</label>
                                     <textarea rows="5" placeholder="来详细介绍一下交易吧~" class="form-control"
-                                        id="add-description"></textarea>
+                                        id="edit-description">[[${transaction.description}]]</textarea>
                                 </div>
                             </div>
                         </div>
@@ -179,19 +195,19 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
-                                <label class="form-label" for="add-nextContactTime">下次联系时间</label>
+                                <label class="form-label" for="edit-nextContactTime">下次联系时间</label>
                                 <div class="mb-4 input-group">
                                     <span class="input-group-text"><i class="bi bi-calendar-date"></i></span>
-                                    <input id="add-nextContactTime" type="text" class="form-control time"
-                                        autocomplete="off">
+                                    <input id="edit-nextContactTime" type="text" class="form-control time"
+                                        autocomplete="off" th:value="${transaction.nextContactTime}">
                                 </div>
                             </div>
 
                             <div class="col-md-12">
                                 <div class="mb-0">
-                                    <label class="form-label" for="add-contactSummary">联系纪要</label>
+                                    <label class="form-label" for="edit-contactSummary">联系纪要</label>
                                     <textarea rows="5" placeholder="来详细介绍一下联系信息吧~" class="form-control"
-                                        id="add-contactSummary"></textarea>
+                                        id="edit-contactSummary">[[${transaction.contactSummary}]]</textarea>
                                 </div>
                             </div>
                         </div>

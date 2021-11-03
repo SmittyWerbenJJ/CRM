@@ -5,15 +5,13 @@ import com.zhiyiyo.crm.settings.service.UserService;
 import com.zhiyiyo.crm.utils.DateTimeUtil;
 import com.zhiyiyo.crm.utils.UUIDUtil;
 import com.zhiyiyo.crm.vo.PaginationVo;
-import com.zhiyiyo.crm.workbench.dao.ContactsDao;
 import com.zhiyiyo.crm.workbench.entity.*;
+import com.zhiyiyo.crm.workbench.exception.CustomerException;
 import com.zhiyiyo.crm.workbench.service.ContactsService;
 import com.zhiyiyo.crm.workbench.service.CustomerService;
+import com.zhiyiyo.crm.workbench.service.TransactionService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -33,6 +31,9 @@ public class CustomerController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private TransactionService transactionService;
 
     @GetMapping("/getCustomersByCondition")
     @ResponseBody
@@ -100,7 +101,7 @@ public class CustomerController {
 
     @RequestMapping("/showDetails")
     public ModelAndView showDetails(String id) {
-        ModelAndView mv = new ModelAndView("/workbench/customer/details");
+        ModelAndView mv = new ModelAndView("workbench/customer/details");
         mv.addObject("customer", customerService.getCustomer(id));
         return mv;
     }
@@ -169,6 +170,30 @@ public class CustomerController {
     @ResponseBody
     public List<Contacts> getBoundContacts(String customerId){
         return contactsService.getContactsByCustomerId(customerId);
+    }
+
+    @PostMapping("/deleteCustomers")
+    @ResponseBody
+    public Map<String, Object> deleteCustomers(@RequestParam("ids[]") String[] ids) throws CustomerException {
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", customerService.deleteCustomers(ids));
+        return data;
+    }
+
+    @PostMapping("/deleteTransactions")
+    @ResponseBody
+    public Map<String, Object> deleteTransactions(@RequestParam("ids[]") String[] ids){
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", transactionService.deleteTransactions(ids));
+        return data;
+    }
+
+    @PostMapping("/deleteContacts")
+    @ResponseBody
+    public Map<String, Object> deleteContacts(@RequestParam("ids[]") String[] ids){
+        Map<String, Object> data = new HashMap<>();
+        data.put("success", contactsService.deleteContacts(ids));
+        return data;
     }
 }
 

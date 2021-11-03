@@ -33,11 +33,28 @@ public interface TransactionDao {
     List<Transaction> queryTransactionsByCustomerId(String customerId);
 
     /**
-     * 通过交易的 id 查询交易
-     * @param id
+     * 通过交易的 id 查询交易其中 <code>customerId</code>、
+     * <code>activityId</code>、<code>contactsId</code> 都是名字而不是 UUID
+     * @param id 交易 id
      * @return 交易
      */
     Transaction queryTransactionById(String id);
 
     Integer updateStage(Transaction tran);
+
+    Integer update(Transaction tran);
+
+    /**
+     * 通过交易的 id 查询交易其中 <code>customerId</code>、
+     * <code>activityId</code>、<code>contactsId</code> 都是 UUID
+     * @param id 交易 id
+     * @return 交易
+     */
+    Transaction queryTransaction(String id);
+
+    Integer deleteByIds(String[] ids);
+
+    Integer queryCountByCustomerIds(String[] ids);
+
+    Integer deleteByCustomerIds(String[] ids);
 }

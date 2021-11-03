@@ -4,7 +4,7 @@
     text: "默认文字", //消息提示的文字，必填
     duration: 2000, //经过多少秒后关闭消息提示，可选，默认2s后消失
     positon: "top-center", //消息提示的位置，可选，默认显示在顶部中间
-    showClose: true, //是否显示关闭按钮，可选，默认开启
+    showClose: false, //是否显示关闭按钮，可选，默认开启
   };
 
   function MessageTip(options) {

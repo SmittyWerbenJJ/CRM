@@ -24,16 +24,32 @@
         set noteContent=#{noteContent},
             editBy=#{editBy},
             editTime=#{editTime}
-        where id=#{id}
+        where id = #{id}
     </update>
 
     <delete id="delete">
-        delete from tbl_customer_remark where id=#{id}
+        delete
+        from tbl_customer_remark
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteByCustomerIds">
+        delete from tbl_contacts_remark where contactsId in
+        <foreach collection="array" item="contactsId" open="(" separator="," close=")">
+            #{contactsId}
+        </foreach>
     </delete>
 
     <select id="queryRemarksByCId" resultType="com.zhiyiyo.crm.workbench.entity.CustomerRemark">
         select id, noteContent, createBy, createTime, editBy, editTime, customerId
         from tbl_customer_remark
         where customerId = #{id}
+    </select>
+
+    <select id="queryCountByCustomerIds" resultType="java.lang.Integer">
+        select count(*) from tbl_contacts_remark where contactsId in
+        <foreach collection="array" item="contactsId" open="(" separator="," close=")">
+            #{contactsId}
+        </foreach>
     </select>
 </mapper>

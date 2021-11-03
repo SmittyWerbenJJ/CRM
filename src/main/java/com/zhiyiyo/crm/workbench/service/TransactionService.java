@@ -14,7 +14,21 @@ public interface TransactionService {
 
     boolean addTransaction(Transaction tran, String customerName);
 
+    /**
+     * 根据交易的 id 查询交易，其中 <code>customerId</code>、
+     * <code>activityId</code>、<code>contactsId</code> 都是名字而不是 UUID
+     * @param id 交易 id
+     * @return 交易信息
+     */
     Transaction getTransactionById(String id);
+
+    /**
+     * 根据交易的 id 查询交易，其中 <code>customerId</code>、
+     * <code>activityId</code>、<code>contactsId</code> 都是 UUID
+     * @param id 交易 id
+     * @return 交易信息
+     */
+    Transaction getTransaction(String id);
 
     boolean addRemark(TransactionRemark remark);
 
@@ -27,4 +41,8 @@ public interface TransactionService {
     List<TransactionHistory> getHistories(String id);
 
     boolean updateStage(Transaction tran);
+
+    boolean updateTransaction(Transaction tran, String customerName);
+
+    boolean deleteTransactions(String[] ids);
 }

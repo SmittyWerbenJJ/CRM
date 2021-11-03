@@ -12,4 +12,8 @@ public interface TransactionRemarkDao {
     Integer update(TransactionRemark remark);
 
     Integer delete(String id);
+
+    Integer queryCountByTransactionId(String[] ids);
+
+    Integer deleteByTransactionId(String[] ids);
 }

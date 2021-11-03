@@ -6,11 +6,25 @@
             (#{id}, #{stage}, #{money}, #{expectedDate}, #{createTime}, #{createBy}, #{tranId})
     </insert>
 
+    <delete id="deleteByTransactionIds">
+        delete from tbl_transaction_history where tranId in
+        <foreach collection="array" item="tranId" open="(" separator="," close=")">
+            #{tranId}
+        </foreach>
+    </delete>
+
     <select id="queryHistoriesByTransactionId"
             resultType="com.zhiyiyo.crm.workbench.entity.TransactionHistory">
         select id, stage, money, expectedDate, createTime, createBy, tranId
         from tbl_transaction_history
         where tranId = #{id}
         order by createTime
+    </select>
+
+    <select id="queryCountByTransactionIds" resultType="java.lang.Integer">
+        select count(*) from tbl_transaction_history where tranId in
+        <foreach collection="array" item="tranId" open="(" separator="," close=")">
+            #{tranId}
+        </foreach>
     </select>
 </mapper>

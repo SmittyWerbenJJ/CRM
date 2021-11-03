@@ -4,9 +4,54 @@ $(function () {
     // 每页的条数
     var pageSize = 4
 
-    // 添加线索
+    // 添加联系人
     $("#addBtn").on("click", function () {
         location.href = "/workbench/contacts/add.html"
+    });
+
+    // 编辑联系人
+    $("#editBtn").on("click", function () {
+        var checkedInputs = $(".dx:checked")
+
+        if (checkedInputs.length == 0) {
+            alert("必须选中一个联系人才能编辑哦~")
+            return
+        } else if (checkedInputs.length > 1) {
+            alert("一次只能编辑一个联系人哦~")
+            return
+        }
+
+        location.href = "/workbench/contacts/editContacts?id=" + checkedInputs.val()
+    });
+
+    // 删除联系人
+    $("#deleteBtn").on("click", function () {
+        var checkedInputs = $(".dx:checked")
+
+        if (checkedInputs.length == 0) {
+            alert("至少选中一个联系人才能删除哦~")
+            return
+        }
+        if (!confirm("前辈确定删除这些联系人吗？")) {
+            return
+        }
+
+        var ids = []
+        for (const checkedInput of checkedInputs) {
+            ids.push(checkedInput.value)
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/workbench/contacts/deleteContacts",
+            dataType: "json",
+            data: {
+                ids
+            }
+        }).done(function (data) {
+            showToast(data.success, "删除联系人")
+            getContacts(1, pageSize)
+        })
     });
 
     // 点击查询按钮发送获取联系人列表的请求
@@ -60,7 +105,7 @@ function getContacts(pageNum, pageSize, isCreatePagination = true) {
         url: "/workbench/contacts/getContactsByCondition",
         dataType: "json",
         data: {
-            fullname, customerName, birth,  source, owner, pageNum, pageSize
+            fullname, customerName, birth, source, owner, pageNum, pageSize
         }
     }).done(function (data) {
         let html = ''

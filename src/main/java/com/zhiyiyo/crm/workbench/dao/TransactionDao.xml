@@ -16,6 +16,40 @@
         where id = #{id}
     </update>
 
+    <update id="update">
+        update tbl_transaction
+        set owner= #{owner},
+            money= #{money},
+            name= #{name},
+            expectedDate= #{expectedDate},
+            customerId= #{customerId},
+            stage= #{stage},
+            type= #{type},
+            source= #{source},
+            activityId= #{activityId},
+            contactsId= #{contactsId},
+            editBy= #{editBy},
+            editTime= #{editTime},
+            description= #{description},
+            contactSummary= #{contactSummary},
+            nextContactTime= #{nextContactTime}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteByIds">
+        delete from tbl_transaction where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByCustomerIds">
+        delete from tbl_transaction where customerId in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
     <select id="queryTransactionsByCondition" resultType="com.zhiyiyo.crm.workbench.entity.Transaction">
         select
         tran.id,
@@ -29,7 +63,7 @@
         from tbl_transaction tran
         join tbl_user u on tran.owner=u.id
         join tbl_customer cus on cus.id=tran.customerId
-        join tbl_contacts con on con.id=tran.contactsId
+        left join tbl_contacts con on con.id=tran.contactsId
         <where>
             <if test="name!=null and name!=''">
                 tran.name like '%' #{name} '%'
@@ -62,7 +96,7 @@
         from tbl_transaction tran
         join tbl_user u on tran.owner=u.id
         join tbl_customer cus on cus.id=tran.customerId
-        join tbl_contacts con on con.id=tran.contactsId
+        left join tbl_contacts con on con.id=tran.contactsId
         <where>
             <if test="name!=null and name!=''">
                 tran.name like '%' #{name} '%'
@@ -89,46 +123,14 @@
     </select>
 
     <select id="queryTransactionsByContactsId" resultType="com.zhiyiyo.crm.workbench.entity.Transaction">
-        select id,
-               owner,
-               money,
-               name,
-               expectedDate,
-               customerId,
-               stage,
-               type,
-               source,
-               activityId,
-               contactsId,
-               createBy,
-               createTime,
-               editBy,
-               editTime,
-               description,
-               contactSummary,
-               nextContactTime
+        select
+        <include refid="allFields"/>
         from tbl_transaction
         where contactsId = #{contactsId}
     </select>
     <select id="queryTransactionsByCustomerId" resultType="com.zhiyiyo.crm.workbench.entity.Transaction">
-        select id,
-               owner,
-               money,
-               name,
-               expectedDate,
-               customerId,
-               stage,
-               type,
-               source,
-               activityId,
-               contactsId,
-               createBy,
-               createTime,
-               editBy,
-               editTime,
-               description,
-               contactSummary,
-               nextContactTime
+        select
+        <include refid="allFields"/>
         from tbl_transaction
         where customerId = #{customerId}
     </select>
@@ -159,4 +161,39 @@
                  left join tbl_contacts con on con.id = t.contactsId
         where t.id = #{id}
     </select>
+
+    <select id="queryTransaction" resultType="com.zhiyiyo.crm.workbench.entity.Transaction">
+        select
+        <include refid="allFields"/>
+        from tbl_transaction
+        where id = #{id}
+    </select>
+
+    <select id="queryCountByCustomerIds" resultType="java.lang.Integer">
+        select count(*) from tbl_transaction where customerId in
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <sql id="allFields">
+        id,
+        owner,
+        money,
+        name,
+        expectedDate,
+        customerId,
+        stage,
+        type,
+        source,
+        activityId,
+        contactsId,
+        createBy,
+        createTime,
+        editBy,
+        editTime,
+        description,
+        contactSummary,
+        nextContactTime
+    </sql>
 </mapper>

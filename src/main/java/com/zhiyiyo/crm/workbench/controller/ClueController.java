@@ -79,7 +79,7 @@ public class ClueController {
 
     @RequestMapping("/showDetails")
     public ModelAndView showDetails(String id) {
-        ModelAndView mv = new ModelAndView("/workbench/clue/details");
+        ModelAndView mv = new ModelAndView("workbench/clue/details");
         mv.addObject("clue", clueService.getClueById(id));
         return mv;
     }

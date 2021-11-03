@@ -14,4 +14,8 @@ public interface TransactionHistoryDao {
     Integer insert(TransactionHistory history);
 
     List<TransactionHistory> queryHistoriesByTransactionId(String id);
+
+    Integer queryCountByTransactionIds(String[] ids);
+
+    Integer deleteByTransactionIds(String[] ids);
 }

@@ -21,8 +21,8 @@
     <script src="../../../static/js/lib/bootstrap-datetimepicker.zh-CN.js"
         th:src="@{/js/lib/bootstrap-datetimepicker.zh-CN.js}"></script>
     <script src="../../../static/js/lib/bootstrap-typeahead.js" th:src="@{/js/lib/bootstrap-typeahead.js}"></script>
-    <script src="../../../static/js/workbench/contacts/add.js" th:src="@{/js/workbench/contacts/add.js}"></script>
-    <title>创建联系人 - CRM</title>
+    <script src="../../../static/js/workbench/contacts/edit.js" th:src="@{/js/workbench/contacts/edit.js}"></script>
+    <title>编辑联系人 - CRM</title>
 </head>
 
 <body>
@@ -42,7 +42,7 @@
                         <a href="index.html" th:href="@{/workbench/contacts/index.html}"
                             class="text-decoration-none">联系人</a>
                     </li>
-                    <li class="breadcrumb-item active">创建</li>
+                    <li class="breadcrumb-item active">编辑</li>
                 </ul>
             </div>
 
@@ -50,16 +50,22 @@
             <div class="card">
                 <form>
                     <div class="card-header">
-                        <h4>创建联系人</h4>
+                        <h4>编辑联系人</h4>
                     </div>
+
+                    <input type="hidden" id="hidden-contacts-id" th:value="${contacts.id}">
 
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
-                                    <label class="form-label" for="add-owner">所有者<span
+                                    <label class="form-label" for="edit-owner">所有者<span
                                             class="text-danger">*</span></label>
-                                    <select id="add-owner" class="form-select"></select>
+                                    <select id="edit-owner" class="form-select">
+                                        <option></option>
+                                        <option th:each="user:${userList}" th:value="${user.id}"
+                                            th:selected="${user.name == contacts.owner}">[[${user.name}]]</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -67,19 +73,20 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
-                                    <label class="form-label" for="add-customer">客户名称<span
+                                    <label class="form-label" for="edit-customer">客户名称<span
                                             class="text-danger">*</span></label>
-                                    <input id="add-customerName" type="text" class="form-control" autocomplete="off"
-                                        placeholder="支持自动补全，客户不存在则新建">
+                                    <input id="edit-customerName" type="text" class="form-control" autocomplete="off"
+                                        placeholder="支持自动补全，客户不存在则新建" th:value="${contacts.customerId}">
                                 </div>
                             </div>
 
                             <div class="col-md-3 col-sm-6">
                                 <div class="mb-4">
-                                    <label class="form-label" for="add-source">来源</label>
-                                    <select id="add-source" class="form-select">
+                                    <label class="form-label" for="edit-source">来源</label>
+                                    <select id="edit-source" class="form-select">
                                         <option></option>
-                                        <option th:each="i:${application.source}" th:value="${i.value}">
+                                        <option th:each="i:${application.source}" th:value="${i.value}"
+                                            th:selected="${contacts.source == i.value}">
                                             [[${i.text}]]
                                         </option>
                                     </select>
@@ -90,17 +97,19 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
-                                    <label class="form-label" for="add-fullname">姓名<span
+                                    <label class="form-label" for="edit-fullname">姓名<span
                                             class="text-danger">*</span></label>
-                                    <input id="add-fullname" type="text" class="form-control">
+                                    <input id="edit-fullname" type="text" class="form-control"
+                                        th:value="${contacts.fullname}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
                                 <div class="mb-4">
-                                    <label class="form-label" for="add-appellation">称呼</label>
-                                    <select id="add-appellation" class="form-select">
+                                    <label class="form-label" for="edit-appellation">称呼</label>
+                                    <select id="edit-appellation" class="form-select">
                                         <option></option>
-                                        <option th:each="i:${application.appellation}" th:value="${i.value}">
+                                        <option th:each="i:${application.appellation}" th:value="${i.value}"
+                                            th:selected="${contacts.appellation == i.value}">
                                             [[${i.text}]]
                                         </option>
                                     </select>
@@ -108,27 +117,29 @@
                             </div>
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
-                                    <label class="form-label" for="add-email">邮箱</label>
+                                    <label class="form-label" for="edit-email">邮箱</label>
                                     <input placeholder="example@qq.com" type="email" class="form-control"
-                                        id="add-email">
+                                        id="edit-email" th:value="${contacts.email}">
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
-                                    <label class="form-label" for="add-mphone">手机</label>
-                                    <input id="add-mphone" type="text" class="form-control">
+                                    <label class="form-label" for="edit-mphone">手机</label>
+                                    <input id="edit-mphone" type="text" class="form-control"
+                                        th:value="${contacts.mphone}">
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6">
                                 <div class="mb-4">
-                                    <label class="form-label" for="add-job">职位</label>
-                                    <input id="add-job" type="text" class="form-control">
+                                    <label class="form-label" for="edit-job">职位</label>
+                                    <input id="edit-job" type="text" class="form-control" th:value="${contacts.job}">
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
-                                    <label class="form-label" for="add-birth">生日</label>
-                                    <input id="add-birth" type="text" class="form-control time" autocomplete="off">
+                                    <label class="form-label" for="edit-birth">生日</label>
+                                    <input id="edit-birth" type="text" class="form-control time" autocomplete="off"
+                                        th:value="${contacts.birth}">
                                 </div>
                             </div>
                         </div>
@@ -137,9 +148,9 @@
 
                             <div class="col-md-12">
                                 <div>
-                                    <label class="form-label" for="add-description">描述</label>
+                                    <label class="form-label" for="edit-description">描述</label>
                                     <textarea rows="5" placeholder="来详细介绍一下联系人吧~" class="form-control"
-                                        id="add-description"></textarea>
+                                        id="edit-description">[[${contacts.description}]]</textarea>
                                 </div>
                             </div>
                         </div>
@@ -149,26 +160,26 @@
 
                     <div class="card-body">
 
-
                         <div class="row">
                             <div class="col-md-4 col-sm-6">
                                 <div class="mb-4">
-                                    <label class="form-label" for="add-nextContactTime">下次联系时间</label>
-                                    <input id="add-nextContactTime" type="text" class="form-control time"
-                                        autocomplete="off">
+                                    <label class="form-label" for="edit-nextContactTime">下次联系时间</label>
+                                    <input id="edit-nextContactTime" type="text" class="form-control time"
+                                        autocomplete="off" th:value="${contacts.nextContactTime}">
                                 </div>
                             </div>
                             <div class="col-md-8 col-sm-12">
                                 <div class="mb-4">
-                                    <label class="form-label" for="add-address">详细地址</label>
-                                    <input id="add-address" type="text" class="form-control">
+                                    <label class="form-label" for="edit-address">详细地址</label>
+                                    <input id="edit-address" type="text" class="form-control"
+                                        th:value="${contacts.address}">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="mb-0">
-                                    <label class="form-label" for="add-contactSummary">联系纪要</label>
+                                    <label class="form-label" for="edit-contactSummary">联系纪要</label>
                                     <textarea rows="5" placeholder="来详细介绍一下联系信息吧" class="form-control"
-                                        id="add-contactSummary"></textarea>
+                                        id="edit-contactSummary">[[${contactscontactSummary}]]</textarea>
                                 </div>
                             </div>
                         </div>
