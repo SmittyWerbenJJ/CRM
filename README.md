@@ -1,5 +1,5 @@
 # CRM
-A user relationship management system based on SpringBoot and Bootstrap.
+A customer relationship management system based on SpringBoot and Bootstrap.
 
 ## Quick start
 1. Use the `src/main/resource/static/sql/crm.sql` file to create the database.
